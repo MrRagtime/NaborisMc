@@ -36,6 +36,23 @@ index 7e31c5c8659d24948fd45a2d6ee7bdeca6027d27..95221434fd8eef388f0308b72af3f934
      }
  
      protected NonNullList(List<E> list, @Nullable E defaultValue) {
+diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
+index a6bf257ca93e4b3819b65b4ef4ba71d9e2b40933..038d75aa39a158b65887c81f2687cb3c8140a6e2 100644
+--- a/net/minecraft/server/level/ChunkMap.java
++++ b/net/minecraft/server/level/ChunkMap.java
+@@ -132,8 +132,10 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+     public final AtomicInteger tickingGenerated = new AtomicInteger();  // Paper - public
+     private final String storageName;
+     private final PlayerMap playerMap = new PlayerMap();
+-    public final Int2ObjectMap<ChunkMap.TrackedEntity> entityMap = new Int2ObjectOpenHashMap<>();
+-    private final Long2ByteMap chunkTypeCache = new Long2ByteOpenHashMap();
++    // DivineMC start - Optimize collections
++    public final Int2ObjectMap<ChunkMap.TrackedEntity> entityMap = new org.bxteam.divinemc.util.map.Int2ObjectConcurrentHashMap<>();
++    private final Long2ByteMap chunkTypeCache = it.unimi.dsi.fastutil.longs.Long2ByteMaps.synchronize(new Long2ByteOpenHashMap());
++    // DivineMC end - Optimize collections
+     // Paper - rewrite chunk system
+     public int serverViewDistance;
+     public final WorldGenContext worldGenContext; // Paper - public
 diff --git a/net/minecraft/world/entity/ai/sensing/NearestLivingEntitySensor.java b/net/minecraft/world/entity/ai/sensing/NearestLivingEntitySensor.java
 index b0c5e41fefc7c9adf1a61bd5b52861736657d37e..dfc62772d5617f0dce72b45a1bebf1b2f051efd5 100644
 --- a/net/minecraft/world/entity/ai/sensing/NearestLivingEntitySensor.java
