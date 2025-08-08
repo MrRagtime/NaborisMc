@@ -824,14 +824,17 @@ index 8eb4a35b08f0d0325608f782ac617bc6b01787a0..00cd08ebbb2cc8b258e0e2b68db1728a
              });
          }
 diff --git a/net/minecraft/world/entity/projectile/ThrownEnderpearl.java b/net/minecraft/world/entity/projectile/ThrownEnderpearl.java
-index 2258736e6f9f52efe5bd353b8949a7a0b9a4fdb8..440fbe301782e81cec679a27a876dd3c0bf8615e 100644
+index ebc7db0fc6e8fb8f4bd19945e61287b2ff61cdbc..25428faa9a79408e6c230e92bd7352788d9286fe 100644
 --- a/net/minecraft/world/entity/projectile/ThrownEnderpearl.java
 +++ b/net/minecraft/world/entity/projectile/ThrownEnderpearl.java
-@@ -119,40 +119,50 @@ public class ThrownEnderpearl extends ThrowableItemProjectile {
+@@ -119,43 +119,53 @@ public class ThrownEnderpearl extends ThrowableItemProjectile {
                  Vec3 vec3 = this.oldPosition();
                  if (owner instanceof ServerPlayer serverPlayer) {
                      if (serverPlayer.connection.isAcceptingMessages()) {
 -                        // CraftBukkit start
+-                        // Store pre teleportation position as the teleport has been moved up.
+-                        final double preTeleportX = serverPlayer.getX(), preTeleportY = serverPlayer.getY(), preTeleportZ = serverPlayer.getZ();
+-                        final float preTeleportYRot = serverPlayer.getYRot(), preTeleportXRot = serverPlayer.getXRot();
 -                        ServerPlayer serverPlayer1 = serverPlayer.teleport(new TeleportTransition(serverLevel, vec3, Vec3.ZERO, 0.0F, 0.0F, Relative.union(Relative.ROTATION, Relative.DELTA), TeleportTransition.DO_NOTHING, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.ENDER_PEARL));
 -                        if (serverPlayer1 == null) {
 -                            this.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.HIT);
@@ -842,11 +845,14 @@ index 2258736e6f9f52efe5bd353b8949a7a0b9a4fdb8..440fbe301782e81cec679a27a876dd3c
 -                            Endermite endermite = EntityType.ENDERMITE.create(serverLevel, EntitySpawnReason.TRIGGERED);
 -                            if (endermite != null) {
 -                                endermite.setPlayerSpawned(true); // Purpur - Add back player spawned endermite API
--                                endermite.snapTo(owner.getX(), owner.getY(), owner.getZ(), owner.getYRot(), owner.getXRot());
+-                                endermite.snapTo(preTeleportX, preTeleportY, preTeleportZ, preTeleportYRot, preTeleportXRot); // Paper - spawn endermite at pre teleport position as teleport has been moved up
 -                                serverLevel.addFreshEntity(endermite, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.ENDER_PEARL);
 +                        // DivineMC start - Parallel world ticking
 +                        java.util.function.Consumer<ServerPlayer> teleportPlayerCrossDimensionTask = taskServerPlayer -> {
 +                            // CraftBukkit start
++                            // Store pre teleportation position as the teleport has been moved up.
++                            final double preTeleportX = serverPlayer.getX(), preTeleportY = serverPlayer.getY(), preTeleportZ = serverPlayer.getZ();
++                            final float preTeleportYRot = serverPlayer.getYRot(), preTeleportXRot = serverPlayer.getXRot();
 +                            ServerPlayer serverPlayer1 = serverPlayer.teleport(new TeleportTransition(serverLevel, vec3, Vec3.ZERO, 0.0F, 0.0F, Relative.union(Relative.ROTATION, Relative.DELTA), TeleportTransition.DO_NOTHING, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.ENDER_PEARL));
 +                            if (serverPlayer1 == null) {
 +                                this.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.HIT);
@@ -857,7 +863,7 @@ index 2258736e6f9f52efe5bd353b8949a7a0b9a4fdb8..440fbe301782e81cec679a27a876dd3c
 +                                Endermite endermite = EntityType.ENDERMITE.create(serverLevel, EntitySpawnReason.TRIGGERED);
 +                                if (endermite != null) {
 +                                    endermite.setPlayerSpawned(true); // Purpur - Add back player spawned endermite API
-+                                    endermite.snapTo(owner.getX(), owner.getY(), owner.getZ(), owner.getYRot(), owner.getXRot());
++                                    endermite.snapTo(preTeleportX, preTeleportY, preTeleportZ, preTeleportYRot, preTeleportXRot); // Paper - spawn endermite at pre teleport position as teleport has been moved up
 +                                    serverLevel.addFreshEntity(endermite, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.ENDER_PEARL);
 +                                }
                              }
