@@ -10,6 +10,7 @@ import org.leavesmc.leaves.protocol.core.ProtocolUtils;
 
 @LeavesProtocol.Register(namespace = "xaerominimap_or_xaeroworldmap_i_dont_care")
 public class XaeroMapProtocol implements LeavesProtocol {
+
     public static final String PROTOCOL_ID_MINI = "xaerominimap";
     public static final String PROTOCOL_ID_WORLD = "xaeroworldmap";
 

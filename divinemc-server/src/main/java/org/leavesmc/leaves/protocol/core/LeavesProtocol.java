@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 public interface LeavesProtocol {
+
     boolean isActive();
 
     default int tickerInterval(String tickerID) {

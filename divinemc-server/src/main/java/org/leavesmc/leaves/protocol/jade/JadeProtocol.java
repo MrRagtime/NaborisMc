@@ -81,7 +81,6 @@ import org.leavesmc.leaves.protocol.jade.util.PairHierarchyLookup;
 import org.leavesmc.leaves.protocol.jade.util.PriorityStore;
 import org.leavesmc.leaves.protocol.jade.util.WrappedHierarchyLookup;
 import org.leavesmc.leaves.util.NbtUtils;
-import org.purpurmc.purpur.util.MinecraftInternalPlugin;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -92,7 +91,7 @@ import java.util.Set;
 public class JadeProtocol implements LeavesProtocol {
 
     public static final String PROTOCOL_ID = "jade";
-    public static final String PROTOCOL_VERSION = "7";
+    public static final String PROTOCOL_VERSION = "8";
     public static final HierarchyLookup<IServerDataProvider<EntityAccessor>> entityDataProviders = new HierarchyLookup<>(Entity.class);
     public static final PairHierarchyLookup<IServerDataProvider<BlockAccessor>> blockDataProviders = new PairHierarchyLookup<>(new HierarchyLookup<>(Block.class), new HierarchyLookup<>(BlockEntity.class));
     public static final WrappedHierarchyLookup<IServerExtensionProvider<ItemStack>> itemStorageProviders = WrappedHierarchyLookup.forAccessor();

@@ -39,10 +39,10 @@ index 02c02314a4a6a7a6da427f0d064dbc61ce92301d..56efd53d22f6d7338ef7d7cc36d612d4
 +    // DivineMC end - Do not send spectator change packet
  }
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 2b4a87643e4f2d2564597b923a025b432bcf5d23..a0b7d7046b762e6a3142408051ee327cafe80f45 100644
+index 0888ba7853f07909e9915d35f706d39a1c6cf307..48a02a25c4fa6f3bacefaccd122694156da1a331 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -359,6 +359,8 @@ public abstract class PlayerList {
+@@ -356,6 +356,8 @@ public abstract class PlayerList {
              // CraftBukkit start - sendAll above replaced with this loop
              ClientboundPlayerInfoUpdatePacket packet = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(player)); // Paper - Add Listing API for Player
  
@@ -51,7 +51,7 @@ index 2b4a87643e4f2d2564597b923a025b432bcf5d23..a0b7d7046b762e6a3142408051ee327c
              final List<ServerPlayer> onlinePlayers = Lists.newArrayListWithExpectedSize(this.players.size() - 1); // Paper - Use single player info update packet on join
              for (int i = 0; i < this.players.size(); ++i) {
                  ServerPlayer entityplayer1 = (ServerPlayer) this.players.get(i);
-@@ -367,7 +369,7 @@ public abstract class PlayerList {
+@@ -364,7 +366,7 @@ public abstract class PlayerList {
                      // Paper start - Add Listing API for Player
                      if (entityplayer1.getBukkitEntity().isListed(bukkitPlayer)) {
                          // Paper end - Add Listing API for Player
@@ -60,7 +60,7 @@ index 2b4a87643e4f2d2564597b923a025b432bcf5d23..a0b7d7046b762e6a3142408051ee327c
                          // Paper start - Add Listing API for Player
                      } else {
                          entityplayer1.connection.send(ClientboundPlayerInfoUpdatePacket.createSinglePlayerInitializing(player, false));
-@@ -383,7 +385,10 @@ public abstract class PlayerList {
+@@ -380,7 +382,10 @@ public abstract class PlayerList {
              }
              // Paper start - Use single player info update packet on join
              if (!onlinePlayers.isEmpty()) {
@@ -72,7 +72,7 @@ index 2b4a87643e4f2d2564597b923a025b432bcf5d23..a0b7d7046b762e6a3142408051ee327c
              }
              // Paper end - Use single player info update packet on join
              player.sentListPacket = true;
-@@ -1471,4 +1476,69 @@ public abstract class PlayerList {
+@@ -1468,4 +1473,69 @@ public abstract class PlayerList {
      public boolean isAllowCommandsForAllPlayers() {
          return this.allowCommandsForAllPlayers;
      }

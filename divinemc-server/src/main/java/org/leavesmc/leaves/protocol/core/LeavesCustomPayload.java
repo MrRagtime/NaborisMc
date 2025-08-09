@@ -10,6 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 public interface LeavesCustomPayload extends CustomPacketPayload {
+
     Type<? extends CustomPacketPayload> LEAVES_TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("leaves", "custom_payload"));
 
     @Override
