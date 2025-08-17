@@ -333,7 +333,7 @@ index 3836d60ce84fb26f30a609486a5755d3fd1c94f1..1aab02441e4dfa7703963855d77bb918
                      }
                  } else if (this.visible.remove(advancementHolder)) {
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index 46adbe6ccf1e4291e33a52a6612f624558c18f96..374abd7e1502edefb78cd6451a36c3b8ad6d8f8f 100644
+index d90341ff814bb2b14867b7d9a401ae9672076f5b..f61470206e2c689187f37b44eda0d1942ac3bbc4 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -218,6 +218,13 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -351,17 +351,24 @@ index 46adbe6ccf1e4291e33a52a6612f624558c18f96..374abd7e1502edefb78cd6451a36c3b8
          this.setFlightAllowed(properties.allowFlight);
          this.setMotd(properties.motd);
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index bf680624bc6c618dfa0eeeb74c103ff6716fd27e..654d03368f06ab9870c11745b0994ea6722fa7bf 100644
+index bf680624bc6c618dfa0eeeb74c103ff6716fd27e..2039e636b1a52aff5403621e7281d618e4b87864 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
-@@ -175,7 +175,6 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -175,8 +175,12 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
  
              // call mid-tick tasks for chunk system
              if ((i & 7) == 0) {
 -                ((ca.spottedleaf.moonrise.patches.chunk_system.server.ChunkSystemMinecraftServer)this.level.getServer()).moonrise$executeMidTickTasks();
-                 continue;
+-                continue;
++                // DivineMC start - Parallel world ticking
++                if (!org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking) {
++                    ((ca.spottedleaf.moonrise.patches.chunk_system.server.ChunkSystemMinecraftServer) this.level.getServer()).moonrise$executeMidTickTasks();
++                    continue;
++                }
++                // DivineMC end - Parallel world ticking
              }
          }
+     }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
 index 3c1795eb56900cd80cfec38bd1d922d566463ecb..b752bcc03b558a26f9c592c829efb44a299be8de 100644
 --- a/net/minecraft/server/level/ServerLevel.java

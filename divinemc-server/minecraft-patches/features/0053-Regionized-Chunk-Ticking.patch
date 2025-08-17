@@ -21,7 +21,7 @@ index 411e1284a208ca1a097cf6eaa92e1e0d2203d83d..3f60d1b0ac91cfd3418e791222cd7267
              if (var2 instanceof ClosedChannelException) {
                  LOGGER.info("Connection closed during protocol change");
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index 654d03368f06ab9870c11745b0994ea6722fa7bf..440bd8f16664fdc29db69b92f2c856dd7cc4ffd1 100644
+index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0e3754963 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
 @@ -57,6 +57,7 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
@@ -45,7 +45,7 @@ index 654d03368f06ab9870c11745b0994ea6722fa7bf..440bd8f16664fdc29db69b92f2c856dd
      @Nullable
      @VisibleForDebug
      private NaturalSpawner.SpawnState lastSpawnState;
-@@ -153,31 +156,248 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -153,36 +156,253 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          return load ? this.syncLoad(chunkX, chunkZ, toStatus) : null;
      }
      // Paper end - rewrite chunk system
@@ -242,7 +242,13 @@ index 654d03368f06ab9870c11745b0994ea6722fa7bf..440bd8f16664fdc29db69b92f2c856dd
 +                                return regionChunksIDs;
 +                            }, REGION_EXECUTOR));
 +                        }
-+
+ 
+-            // call mid-tick tasks for chunk system
+-            if ((i & 7) == 0) {
+-                // DivineMC start - Parallel world ticking
+-                if (!org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking) {
+-                    ((ca.spottedleaf.moonrise.patches.chunk_system.server.ChunkSystemMinecraftServer) this.level.getServer()).moonrise$executeMidTickTasks();
+-                    continue;
 +                        CompletableFuture.runAsync(() -> {
 +                            try {
 +                                CompletableFuture.allOf(ticked.toArray(new CompletableFuture[0])).join();
@@ -276,10 +282,7 @@ index 654d03368f06ab9870c11745b0994ea6722fa7bf..440bd8f16664fdc29db69b92f2c856dd
 +                        latch.await();
 +                        return true;
 +                    }
- 
--            // call mid-tick tasks for chunk system
--            if ((i & 7) == 0) {
--                continue;
++
 +                    @Override
 +                    public boolean isReleasable() {
 +                        return latch.getCount() == 0;
@@ -295,15 +298,21 @@ index 654d03368f06ab9870c11745b0994ea6722fa7bf..440bd8f16664fdc29db69b92f2c856dd
 +
 +                // call mid-tick tasks for chunk system
 +                if ((i & 7) == 0) {
-+                    continue;
-+                }
++                    // DivineMC start - Parallel world ticking
++                    if (!org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking) {
++                        ((ca.spottedleaf.moonrise.patches.chunk_system.server.ChunkSystemMinecraftServer) this.level.getServer()).moonrise$executeMidTickTasks();
++                        continue;
++                    }
++                    // DivineMC end - Parallel world ticking
+                 }
+-                // DivineMC end - Parallel world ticking
              }
          }
 +        // DivineMC end - Regionized Chunk Ticking
      }
      // Paper end - chunk tick iteration optimisations
  
-@@ -502,14 +722,21 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -507,14 +727,21 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          long gameTime = this.level.getGameTime();
          long l = gameTime - this.lastInhabitedUpdate;
          this.lastInhabitedUpdate = gameTime;
@@ -329,7 +338,7 @@ index 654d03368f06ab9870c11745b0994ea6722fa7bf..440bd8f16664fdc29db69b92f2c856dd
          // DivineMC start - Pufferfish: Optimize mob spawning
          if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableAsyncSpawning) {
              for (ServerPlayer player : this.level.players) {
-@@ -553,14 +780,18 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -558,14 +785,18 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
      }
  
      private void broadcastChangedChunks() {
@@ -354,7 +363,7 @@ index 654d03368f06ab9870c11745b0994ea6722fa7bf..440bd8f16664fdc29db69b92f2c856dd
      }
  
      private void tickChunks(long timeInhabited) {
-@@ -610,23 +841,28 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -615,23 +846,28 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
              filteredSpawningCategories = List.of();
          }
  
