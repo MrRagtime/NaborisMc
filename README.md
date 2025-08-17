@@ -1,13 +1,15 @@
-<img src="/public/logo.png" height="220" alt="DivineMC Face" align="right">
 <div align="center">
 
 # DivineMC
-
-[![Github Releases](https://img.shields.io/badge/Download-Releases-blue?&style=for-the-badge)](https://github.com/BX-Team/DivineMC/releases)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/BX-Team/DivineMC/build-1218.yml?logo=GoogleAnalytics&logoColor=ffffff&style=for-the-badge)](https://github.com/BX-Team/DivineMC/actions)
-[![Discord](https://img.shields.io/discord/931595732752953375?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/qNyybSSPm5)
-
 DivineMC is a multi-functional fork of [Purpur](https://github.com/PurpurMC/Purpur), which focuses on the flexibility of your server and its optimization
+
+[![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg)](https://github.com/BX-Team/DivineMC/releases/latest)
+[![mcjars](https://raw.githubusercontent.com/NONPLAYT/badges/refs/heads/master/avaiable-on-mcjars.svg)](https://mcjars.app/DIVINEMC/versions)
+
+
+[![Chat on Discord](https://raw.githubusercontent.com/vLuckyyy/badges/main//chat-with-us-on-discord.svg)](https://discord.gg/qNyybSSPm5)
+[![Read the Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://bxteam.org/docs/divinemc)
+[![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/server-implementation/DivineMC)
 </div>
 
 ## ⚙️ Features
@@ -28,9 +30,6 @@ DivineMC is a multi-functional fork of [Purpur](https://github.com/PurpurMC/Purp
 If you want to install DivineMC, you can read our [installation documentation](https://bxteam.org/docs/divinemc/getting-started/installation).
 
 You can find the latest successful build in [Releases](https://github.com/BX-Team/DivineMC/releases) or you can use [MCJars](https://mcjars.app/DIVINEMC/versions) website.
-
-## 📈 bStats
-[![bStats](https://bstats.org/signatures/server-implementation/DivineMC.svg)](https://bstats.org/plugin/server-implementation/DivineMC)
 
 ## 📦 Building and setting up
 Run the following commands in the root directory:
@@ -82,7 +81,6 @@ DivineMC includes patches from other projects, and without these projects, Divin
 
 - [Purpur](https://github.com/PurpurMC/Purpur)
 - [Petal](https://github.com/Bloom-host/Petal)
-- [carpet-fixes](https://github.com/fxmorin/carpet-fixes)
 - [Parchment](https://github.com/ProjectEdenGG/Parchment)
 - [Leaves](https://github.com/LeavesMC/Leaves)
 - [SparklyPaper](https://github.com/SparklyPower/SparklyPaper)
@@ -91,6 +89,7 @@ DivineMC includes patches from other projects, and without these projects, Divin
 - [C2ME](https://github.com/RelativityMC/C2ME-fabric)
 - [VMP](https://github.com/RelativityMC/VMP-fabric)
 - [EntityCulling](https://github.com/tr7zw/EntityCulling)
+- [carpet-fixes](https://github.com/fxmorin/carpet-fixes)
 - ... and others
 
 If you want to know more about other forks and see other Minecraft projects, you can go to our [list of different Minecraft server Software](https://gist.github.com/NONPLAYT/48742353af8ae36bcef5d1c36de9730a).
