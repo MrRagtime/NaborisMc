@@ -4,12 +4,11 @@
 DivineMC is a multi-functional fork of [Purpur](https://github.com/PurpurMC/Purpur), which focuses on the flexibility of your server and its optimization
 
 [![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg)](https://github.com/BX-Team/DivineMC/releases/latest)
-[![mcjars](https://raw.githubusercontent.com/NONPLAYT/badges/refs/heads/master/avaiable-on-mcjars.svg)](https://mcjars.app/DIVINEMC/versions)
+[![mcjars](https://raw.githubusercontent.com/NONPLAYT/badges/refs/heads/master/available-on-mcjars.svg)](https://mcjars.app/DIVINEMC/versions)
 
-
-[![Chat on Discord](https://raw.githubusercontent.com/vLuckyyy/badges/main//chat-with-us-on-discord.svg)](https://discord.gg/qNyybSSPm5)
-[![Read the Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://bxteam.org/docs/divinemc)
-[![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/server-implementation/DivineMC)
+[![Chat on Discord](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/qNyybSSPm5)
+[![Read the Docs](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/documentation/generic_vector.svg)](https://bxteam.org/docs/divinemc)
+[![Available on BStats](https://raw.githubusercontent.com/NONPLAYT/badges/refs/heads/master/available-on-bstats.svg)](https://bstats.org/plugin/server-implementation/DivineMC)
 </div>
 
 ## ⚙️ Features
