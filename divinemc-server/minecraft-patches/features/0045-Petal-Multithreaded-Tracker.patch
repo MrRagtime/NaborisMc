@@ -399,7 +399,7 @@ index 78bf3365b426e7090182af84630111d410a2460e..3c1795eb56900cd80cfec38bd1d922d5
                          }
                      }
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 7b10fe7cf66757ed68f9e39e03259700dfabf184..c537d22fd97225c1b6d58bed61add83a20d9be24 100644
+index 2d3200834e46a24156659a32170aa4974caf8060..4d37b16adc5491db24fce1ce656f6cde575e10f4 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -1936,7 +1936,6 @@ public class ServerGamePacketListenerImpl
@@ -411,7 +411,7 @@ index 7b10fe7cf66757ed68f9e39e03259700dfabf184..c537d22fd97225c1b6d58bed61add83a
          if (this.player.isRemoved()) {
              LOGGER.info("Attempt to teleport removed player {} restricted", player.getScoreboardName());
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 327b3b1463caafc69e6a5dc0eee577f4af49d202..683a8913ef4e71ae3072b520d0e0a6a73c96a13c 100644
+index 76a7898c040cd46df6a889535b1d77c8e6de5a91..e903e60c8914899d9be14cce9fdef9cc33ee71d5 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -1353,13 +1353,13 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -434,13 +434,13 @@ index 327b3b1463caafc69e6a5dc0eee577f4af49d202..683a8913ef4e71ae3072b520d0e0a6a7
  
      protected void onAttributeUpdated(Holder<Attribute> attribute) {
 diff --git a/net/minecraft/world/entity/ai/attributes/Attribute.java b/net/minecraft/world/entity/ai/attributes/Attribute.java
-index f8419dde44ebc7324e783f8bee42132d5ec973c3..776445dd2dfee9d386ccb3ad17746d4c405a96b9 100644
+index 18563961e9dba1a11265c6ea708881d4e46846ff..355e552f77e7639ddf1c8b4da9868775017563c3 100644
 --- a/net/minecraft/world/entity/ai/attributes/Attribute.java
 +++ b/net/minecraft/world/entity/ai/attributes/Attribute.java
 @@ -16,10 +16,15 @@ public class Attribute {
      private boolean syncable;
      private final String descriptionId;
-     private Attribute.Sentiment sentiment = Attribute.Sentiment.POSITIVE;
+     public Attribute.Sentiment sentiment = Attribute.Sentiment.POSITIVE;
 +    // DivineMC start - Multithreaded Tracker
 +    public final int uid;
 +    private static final java.util.concurrent.atomic.AtomicInteger SIZE = new java.util.concurrent.atomic.AtomicInteger();
@@ -449,7 +449,7 @@ index f8419dde44ebc7324e783f8bee42132d5ec973c3..776445dd2dfee9d386ccb3ad17746d4c
      protected Attribute(String descriptionId, double defaultValue) {
          this.defaultValue = defaultValue;
          this.descriptionId = descriptionId;
-+        this.uid = SIZE.getAndAdd(1);
++        this.uid = SIZE.getAndAdd(1); // DivineMC - Multithreaded Tracker
      }
  
      public double getDefaultValue() {
