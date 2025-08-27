@@ -38,6 +38,7 @@ public net.minecraft.world.level.levelgen.DensityFunctions$TwoArgumentSimpleFunc
 public net.minecraft.world.level.levelgen.DensityFunctions$WeirdScaledSampler
 public net.minecraft.world.level.levelgen.DensityFunctions$WeirdScaledSampler$RarityValueMapper mapper
 public net.minecraft.world.level.levelgen.DensityFunctions$YClampedGradient
+public net.minecraft.world.level.levelgen.Heightmap setHeight(III)V
 public net.minecraft.world.level.levelgen.NoiseChunk$BlendAlpha
 public net.minecraft.world.level.levelgen.NoiseChunk$BlendOffset
 public net.minecraft.world.level.levelgen.NoiseRouterData$QuantizedSpaghettiRarity
