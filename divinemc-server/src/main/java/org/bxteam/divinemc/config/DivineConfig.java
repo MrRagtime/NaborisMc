@@ -222,6 +222,7 @@ public class DivineConfig {
 
         // Async chunk sending settings
         public static boolean asyncChunkSendingEnabled = true;
+        public static int asyncChunkSendingMaxThreads = 1;
 
         // Async mob spawning settings
         public static boolean enableAsyncSpawning = true;
@@ -338,6 +339,13 @@ public class DivineConfig {
         private static void asyncChunkSending() {
             asyncChunkSendingEnabled = getBoolean(ConfigCategory.ASYNC.key("chunk-sending.enable"), asyncChunkSendingEnabled,
                 "Makes chunk sending asynchronous, which can significantly reduce main thread load when many players are loading chunks.");
+            asyncChunkSendingMaxThreads = getInt(ConfigCategory.ASYNC.key("chunk-sending.max-threads"), asyncChunkSendingMaxThreads);
+
+            if (asyncChunkSendingMaxThreads < 0) {
+                asyncChunkSendingMaxThreads = Math.max(Runtime.getRuntime().availableProcessors() + asyncChunkSendingMaxThreads, 1);
+            } else if (asyncChunkSendingMaxThreads == 0) {
+                asyncChunkSendingMaxThreads = Math.max(Runtime.getRuntime().availableProcessors() / 4, 1);
+            }
         }
 
         private static void asyncMobSpawning() {
