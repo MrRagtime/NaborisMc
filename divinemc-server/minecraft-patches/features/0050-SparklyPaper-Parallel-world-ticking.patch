@@ -82,7 +82,7 @@ index ac27ff24f018d8798921c5152e679ceed1e88d8d..ec7d1353b19e55b00c558df8981323ef
                      List<org.bukkit.block.BlockState> states = new java.util.ArrayList<>(level.capturedBlockStates.values());
                      level.capturedBlockStates.clear();
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index cd084854b4c9938f5d18b9c16fbfa763323f8d8f..a67f276b4b3692207f093930c00eac67553be3b4 100644
+index 3e06aac4f1a4d3e21efac94bdc78b360c8998ee4..6b658ae60ef9a6733749e9bd77fc491b69bbad44 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -290,6 +290,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -143,7 +143,7 @@ index cd084854b4c9938f5d18b9c16fbfa763323f8d8f..a67f276b4b3692207f093930c00eac67
      }
  
      @Override
-@@ -1661,6 +1674,18 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1662,6 +1675,18 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      public final io.papermc.paper.threadedregions.EntityScheduler.EntitySchedulerTickList entitySchedulerTickList = new io.papermc.paper.threadedregions.EntityScheduler.EntitySchedulerTickList(); // Paper - optimise Folia entity scheduler
  
@@ -162,7 +162,7 @@ index cd084854b4c9938f5d18b9c16fbfa763323f8d8f..a67f276b4b3692207f093930c00eac67
      protected void tickChildren(BooleanSupplier hasTimeLeft) {
          this.getPlayerList().getPlayers().forEach(serverPlayer1 -> serverPlayer1.connection.suspendFlushing());
          this.server.getScheduler().mainThreadHeartbeat(); // CraftBukkit
-@@ -1706,28 +1731,43 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1707,28 +1732,43 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
  
          this.isIteratingOverLevels = true; // Paper - Throw exception on world create while being ticked
@@ -224,7 +224,7 @@ index cd084854b4c9938f5d18b9c16fbfa763323f8d8f..a67f276b4b3692207f093930c00eac67
          this.isIteratingOverLevels = false; // Paper - Throw exception on world create while being ticked
  
          this.tickConnection();
-@@ -1805,6 +1845,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1806,6 +1846,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          Map<ResourceKey<Level>, ServerLevel> oldLevels = this.levels;
          Map<ResourceKey<Level>, ServerLevel> newLevels = Maps.newLinkedHashMap(oldLevels);
          newLevels.remove(level.dimension());
@@ -640,7 +640,7 @@ index f9e7532f86122a379692561a639a209a126e8bba..839f6b7696ef85314da185bedba7cfc5
              if (isLocatorBarEnabledFor(player)) {
                  if (!connection.isBroken()) {
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 6963be899ac218bd091e73b72c9ccef82e33de36..85da5aec677d84aea005449d97c1ee3ca616e2e4 100644
+index 9e53b4297fa786ee863d0cf1855aa0ebd9afc221..cb77b3ab59542bc4e8b50aecb23d98186206a0ad 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -3480,14 +3480,34 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess

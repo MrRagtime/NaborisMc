@@ -203,7 +203,7 @@ public class DivineConfig {
 
         // Async pathfinding settings
         public static boolean asyncPathfinding = true;
-        public static int asyncPathfindingMaxThreads = 2;
+        public static int asyncPathfindingMaxThreads = 1;
         public static int asyncPathfindingKeepalive = 60;
         public static int asyncPathfindingQueueSize = 0;
         public static PathfindTaskRejectPolicy asyncPathfindingRejectPolicy = PathfindTaskRejectPolicy.FLUSH_ALL;

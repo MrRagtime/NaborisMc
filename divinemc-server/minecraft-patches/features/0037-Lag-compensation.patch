@@ -5,7 +5,7 @@ Subject: [PATCH] Lag compensation
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 824f9200b66639ad1e3e821c8ae2ea4c66fe0b30..dd88e4d0f72a482e4feea38bc194fc16799adf02 100644
+index d716f0b5f183d09bd7fc149eaa30b853916e585c..519296e58787a15a0d77de94bc3a591ace2d2ae0 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -288,6 +288,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -16,7 +16,7 @@ index 824f9200b66639ad1e3e821c8ae2ea4c66fe0b30..dd88e4d0f72a482e4feea38bc194fc16
  
      public static <S extends MinecraftServer> S spin(Function<Thread, S> threadFunction) {
          ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry.init(); // Paper - rewrite data converter system
-@@ -1535,6 +1536,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1536,6 +1537,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
  
          this.server.spark.tickStart(); // Paper - spark
@@ -66,7 +66,7 @@ index 4a2cace22512fe06c1713bc8735e775e3012f3bc..85c4d709b6d04e8f43baf7b900ee59ea
          this.serverLevelData.setDayTime(time);
          // Purpur start - Configurable daylight cycle
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 33f33a51a7016e214bca1aec8e6cc3910ec3bb42..327b3b1463caafc69e6a5dc0eee577f4af49d202 100644
+index 3344c477a55b3ed28e8e9847be642ce2cf233995..76a7898c040cd46df6a889535b1d77c8e6de5a91 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -523,6 +523,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -183,7 +183,7 @@ index 40cb5e6bbcf9dbdb400f1503e86c0804b60e07be..d5352cbb4a64631a0a831de880efa21e
              BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
              return blocksAttacks != null ? 72000 : 0;
 diff --git a/net/minecraft/world/level/GameRules.java b/net/minecraft/world/level/GameRules.java
-index d510503a8ad272255aeba20a916642828023fd19..2def087994cb6676b6346e7062fd050e7e346c05 100644
+index c78a68df7f088338b18b6c2511d8db62bb809c52..5ad9ad7303b1322e811f178f03b1853afcd13c96 100644
 --- a/net/minecraft/world/level/GameRules.java
 +++ b/net/minecraft/world/level/GameRules.java
 @@ -366,8 +366,31 @@ public class GameRules {
