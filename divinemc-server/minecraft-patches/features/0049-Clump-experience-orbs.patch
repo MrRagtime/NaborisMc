@@ -5,7 +5,7 @@ Subject: [PATCH] Clump experience orbs
 
 
 diff --git a/net/minecraft/world/entity/ExperienceOrb.java b/net/minecraft/world/entity/ExperienceOrb.java
-index c8354d46ed909090f7c15f396863bf7d73afcefa..96d22f93fc07de0fecf3249081a997c280b8fde2 100644
+index 66ae0b340c7e9ebccfeaee786577e27916ace38c..c3144a0e2a839c0d8ae2d1c450213fa6a56a58c4 100644
 --- a/net/minecraft/world/entity/ExperienceOrb.java
 +++ b/net/minecraft/world/entity/ExperienceOrb.java
 @@ -50,6 +50,10 @@ public class ExperienceOrb extends Entity {
@@ -147,7 +147,7 @@ index c8354d46ed909090f7c15f396863bf7d73afcefa..96d22f93fc07de0fecf3249081a997c2
 +        // Canvas end
          if (entity instanceof ServerPlayer serverPlayer) {
              if (entity.takeXpDelay == 0 && new com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent(serverPlayer.getBukkitEntity(), (org.bukkit.entity.ExperienceOrb) this.getBukkitEntity()).callEvent()) { // Paper - PlayerPickupExperienceEvent
-                 entity.takeXpDelay = org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerXpCooldownEvent(entity, this.level().purpurConfig.playerExpPickupDelay, org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason.PICKUP_ORB).getNewCooldown(); // CraftBukkit - entityhuman.takeXpDelay = 2; // Purpur - Configurable player pickup exp delay
+                 entity.takeXpDelay = org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerXpCooldownEvent(entity, this.level().purpurConfig.playerExpPickupDelay, org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason.PICKUP_ORB).getNewCooldown(); // CraftBukkit - entity.takeXpDelay = 2; // Purpur - Configurable player pickup exp delay
 @@ -373,10 +460,60 @@ public class ExperienceOrb extends Entity {
          }
      }
