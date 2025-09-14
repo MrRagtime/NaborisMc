@@ -380,6 +380,18 @@ index 2cc0e7c72d2b2e562452138f2b41fd1dcaf0570a..affa0dac8633ce3a43c9609888ed96d0
  
      void addFullStatusConsumer(final FullChunkStatus status, final Consumer<LevelChunk> consumer) {
          this.fullStatusWaiters.computeIfAbsent(status, (final FullChunkStatus keyInMap) -> {
+diff --git a/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java b/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java
+index 93fd23027c00cef76562098306737272fda1350a..10c9aecb99bc3055104f50266542e249dc842ee7 100644
+--- a/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java
++++ b/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java
+@@ -23,6 +23,7 @@ public final class ParallelSearchRadiusIteration {
+     }
+ 
+     public static long[] getSearchIteration(final int radius) {
++        if (radius >= SEARCH_RADIUS_ITERATION_LIST.length) return SEARCH_RADIUS_ITERATION_LIST[SEARCH_RADIUS_ITERATION_LIST.length - 1]; // DivineMC - Optimize Moonrise
+         return SEARCH_RADIUS_ITERATION_LIST[radius];
+     }
+ 
 diff --git a/ca/spottedleaf/moonrise/patches/starlight/light/SWMRNibbleArray.java b/ca/spottedleaf/moonrise/patches/starlight/light/SWMRNibbleArray.java
 index 4ca68a903e67606fc4ef0bfa9862a73797121c8b..1ac37db68341672481cd4bbdf7bab90572c35453 100644
 --- a/ca/spottedleaf/moonrise/patches/starlight/light/SWMRNibbleArray.java
