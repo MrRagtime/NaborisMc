@@ -82,7 +82,7 @@ index ac27ff24f018d8798921c5152e679ceed1e88d8d..ec7d1353b19e55b00c558df8981323ef
                      List<org.bukkit.block.BlockState> states = new java.util.ArrayList<>(level.capturedBlockStates.values());
                      level.capturedBlockStates.clear();
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 3e06aac4f1a4d3e21efac94bdc78b360c8998ee4..6b658ae60ef9a6733749e9bd77fc491b69bbad44 100644
+index dddcde2716bbdca1240bd60bc5ca17aeb1999d57..aad1f6dffc6831baa8a573add5bbd229cd7b2a9d 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -290,6 +290,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -796,10 +796,10 @@ index 3614551856c594f3c0cfee984fcf03fad672b007..d972bcdba9c26cb66fedae58ca9658bb
          entity.getBrain().eraseMemory(MemoryModuleType.POTENTIAL_JOB_SITE);
      }
 diff --git a/net/minecraft/world/entity/npc/Villager.java b/net/minecraft/world/entity/npc/Villager.java
-index 8eb4a35b08f0d0325608f782ac617bc6b01787a0..00cd08ebbb2cc8b258e0e2b68db1728a9b4335a9 100644
+index c2c6f5e8837ae2ac685b56562686b552b3e1bd8f..d74ec0f5b7dbdada6c2465f9eae07cfe0590ecff 100644
 --- a/net/minecraft/world/entity/npc/Villager.java
 +++ b/net/minecraft/world/entity/npc/Villager.java
-@@ -795,13 +795,24 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -793,13 +793,24 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
              this.brain.getMemory(moduleType).ifPresent(pos -> {
                  ServerLevel level = server.getLevel(pos.dimension());
                  if (level != null) {

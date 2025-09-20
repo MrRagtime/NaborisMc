@@ -213,7 +213,7 @@ index 18071dcc69cc28471dddb7de94e803ec1e5fc2e4..aa25f5ebaf7d1b22825b962b02dcae02
      }
  }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 6e95dfb560448e2fc97a4e6c9aa5766aa37a39f4..d716f0b5f183d09bd7fc149eaa30b853916e585c 100644
+index 5610ef19cf26f984c13f6bf784f36f0e11a56e96..221afb586fa0a0826809fb2c0c956450b461b341 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -114,19 +114,8 @@ import net.minecraft.util.TimeUtil;
@@ -290,7 +290,7 @@ index 6e95dfb560448e2fc97a4e6c9aa5766aa37a39f4..d716f0b5f183d09bd7fc149eaa30b853
 -                    this.mayHaveDelayedTasks = true;
 -                    this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + l, this.nextTickTimeNanos);
 -                    // Purpur start - Configurable TPS Catchup
--                    if (!org.purpurmc.purpur.PurpurConfig.tpsCatchup /*|| !gg.pufferfish.pufferfish.PufferfishConfig.tpsCatchup*/) { // Purpur - Configurable TPS Catchup
+-                    if (!org.purpurmc.purpur.PurpurConfig.tpsCatchup) {
 -                        this.nextTickTimeNanos = currentTime + l;
 -                        this.delayedTasksMaxNextTickTimeNanos = nextTickTimeNanos;
 -                    }
@@ -319,7 +319,7 @@ index 6e95dfb560448e2fc97a4e6c9aa5766aa37a39f4..d716f0b5f183d09bd7fc149eaa30b853
 +                this.mayHaveDelayedTasks = true;
 +                this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + l, this.nextTickTimeNanos);
 +                // Purpur start - Configurable TPS Catchup
-+                if (!org.purpurmc.purpur.PurpurConfig.tpsCatchup /*|| !gg.pufferfish.pufferfish.PufferfishConfig.tpsCatchup*/) { // Purpur - Configurable TPS Catchup
++                if (!org.purpurmc.purpur.PurpurConfig.tpsCatchup) {
 +                    this.nextTickTimeNanos = currentTime + l;
 +                    this.delayedTasksMaxNextTickTimeNanos = nextTickTimeNanos;
 +                }
@@ -4467,7 +4467,7 @@ index fb37669b4d66bb853eabf2d15a369d7ad5a2dbb9..9763a5e24e0fed9b49b6ac59911f6c9f
  
          this.checkRestriction();
 diff --git a/net/minecraft/world/entity/animal/allay/Allay.java b/net/minecraft/world/entity/animal/allay/Allay.java
-index cf6ff7b7b4a007d7ff4b3c5a25d4f5a36422c683..c5275d6069a491c3c2b2de175b76fb871b667b0c 100644
+index f372d8b21282e8fdd00dd19eb14ce6ee45b358b0..dd10b0535baf48aea47020d890f102800b0af11a 100644
 --- a/net/minecraft/world/entity/animal/allay/Allay.java
 +++ b/net/minecraft/world/entity/animal/allay/Allay.java
 @@ -25,8 +25,6 @@ import net.minecraft.tags.GameEventTags;
@@ -4485,7 +4485,7 @@ index cf6ff7b7b4a007d7ff4b3c5a25d4f5a36422c683..c5275d6069a491c3c2b2de175b76fb87
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("allayBrain");
-         //if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish // Purpur - only use brain if no rider
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
 -        profilerFiller.push("allayActivityUpdate");
@@ -4522,7 +4522,7 @@ index e4578193f58417c7ef2776bb3d831ba55c553aec..2a7a078e05e16e73e43a24e108d207bc
              this.forceDrops = true; // CraftBukkit
              if (this.dropFromGiftLootTable(level, BuiltInLootTables.ARMADILLO_SHED, this::spawnAtLocation)) {
 diff --git a/net/minecraft/world/entity/animal/axolotl/Axolotl.java b/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-index 05070562ee7ea23d4e2fa602466f097827ffa35b..6931bc84594362579a1832cb8ccda501e9fb0631 100644
+index 40e4cc14f10bd465ee7bee124e7e194c74c070b4..deb2fdea7be9dda1c4b267ac25326bb9b05ae739 100644
 --- a/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 +++ b/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 @@ -31,8 +31,6 @@ import net.minecraft.util.ByIdMap;
@@ -4540,7 +4540,7 @@ index 05070562ee7ea23d4e2fa602466f097827ffa35b..6931bc84594362579a1832cb8ccda501
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("axolotlBrain");
-         //if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish // Purpur - only use brain if no rider
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
 -        profilerFiller.push("axolotlActivityUpdate");
@@ -4578,7 +4578,7 @@ index 0c698241b10f84afb17ae10d3661a90bc62ec243..949b6c563658e6e46ac5842d6f088eca
      }
  
 diff --git a/net/minecraft/world/entity/animal/frog/Frog.java b/net/minecraft/world/entity/animal/frog/Frog.java
-index 1d5079602e7ae1042e2bb92209dded4007f703da..c6e4966d3e4fdb7c91577fc1693fb66930b4f3dc 100644
+index 8d6da6ce15c266c7b4b9763a37516d2b160f1b85..f67d18f32f73e0e6be35939781bd0bd0188cdfbd 100644
 --- a/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/net/minecraft/world/entity/animal/frog/Frog.java
 @@ -28,8 +28,6 @@ import net.minecraft.tags.ItemTags;
@@ -4596,7 +4596,7 @@ index 1d5079602e7ae1042e2bb92209dded4007f703da..c6e4966d3e4fdb7c91577fc1693fb669
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("frogBrain");
-         //if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish // Purpur - only use brain if no rider
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
 -        profilerFiller.push("frogActivityUpdate");
@@ -4606,7 +4606,7 @@ index 1d5079602e7ae1042e2bb92209dded4007f703da..c6e4966d3e4fdb7c91577fc1693fb669
      }
  
 diff --git a/net/minecraft/world/entity/animal/frog/Tadpole.java b/net/minecraft/world/entity/animal/frog/Tadpole.java
-index 3bb197054f5197c0b8c4e2d4714d695255d5ecfa..f85626b690b02908fac3979d277b293ec48aa451 100644
+index d5336192b0f5e58627daa669e456b9d14487f5ec..c25cfd8f176819efd64e5ce45632b0cc1b69d420 100644
 --- a/net/minecraft/world/entity/animal/frog/Tadpole.java
 +++ b/net/minecraft/world/entity/animal/frog/Tadpole.java
 @@ -12,8 +12,6 @@ import net.minecraft.server.level.ServerLevel;
@@ -4624,7 +4624,7 @@ index 3bb197054f5197c0b8c4e2d4714d695255d5ecfa..f85626b690b02908fac3979d277b293e
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("tadpoleBrain");
-         //if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish // Purpur - only use brain if no rider
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
 -        profilerFiller.push("tadpoleActivityUpdate");
@@ -4634,7 +4634,7 @@ index 3bb197054f5197c0b8c4e2d4714d695255d5ecfa..f85626b690b02908fac3979d277b293e
      }
  
 diff --git a/net/minecraft/world/entity/animal/goat/Goat.java b/net/minecraft/world/entity/animal/goat/Goat.java
-index 386591ff45c45146b75d44071f54c2789db15a21..70b32e0d06f9b8b7999df5fdfd773c09394e23fb 100644
+index 979befb6a51c855e439d7576db57abf1143731be..d8b726fb954a3b8ca20f3f500e4087d5936e7646 100644
 --- a/net/minecraft/world/entity/animal/goat/Goat.java
 +++ b/net/minecraft/world/entity/animal/goat/Goat.java
 @@ -20,8 +20,6 @@ import net.minecraft.tags.ItemTags;
@@ -4652,7 +4652,7 @@ index 386591ff45c45146b75d44071f54c2789db15a21..70b32e0d06f9b8b7999df5fdfd773c09
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("goatBrain");
-         //if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish // Purpur - only use brain if no rider
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
 -        profilerFiller.push("goatActivityUpdate");
@@ -4662,7 +4662,7 @@ index 386591ff45c45146b75d44071f54c2789db15a21..70b32e0d06f9b8b7999df5fdfd773c09
      }
  
 diff --git a/net/minecraft/world/entity/animal/sniffer/Sniffer.java b/net/minecraft/world/entity/animal/sniffer/Sniffer.java
-index 9ad310cbc5fa41c949a37c1a5db6d6cd024f1483..a762fc8a4616c4e48e11accdca2129fd47f300e6 100644
+index 745c821facbbf0e9641e371bb26a8d6abde7a813..71e7931f7007f73b552bbc2cbc8e843e10b40b43 100644
 --- a/net/minecraft/world/entity/animal/sniffer/Sniffer.java
 +++ b/net/minecraft/world/entity/animal/sniffer/Sniffer.java
 @@ -29,8 +29,6 @@ import net.minecraft.tags.BlockTags;
@@ -4674,12 +4674,13 @@ index 9ad310cbc5fa41c949a37c1a5db6d6cd024f1483..a762fc8a4616c4e48e11accdca2129fd
  import net.minecraft.world.InteractionHand;
  import net.minecraft.world.InteractionResult;
  import net.minecraft.world.damagesource.DamageSource;
-@@ -497,12 +495,8 @@ public class Sniffer extends Animal {
+@@ -497,13 +495,9 @@ public class Sniffer extends Animal {
  
      @Override
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("snifferBrain");
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.popPush("snifferActivityUpdate");
          SnifferAi.updateActivity(this);
@@ -4713,7 +4714,7 @@ index e37c6dcbe62cba2cb7f33ac1792d539f9b07aa24..2a905e8cdf22f9d7f38cc41c1474e80f
      }
  
 diff --git a/net/minecraft/world/entity/monster/breeze/Breeze.java b/net/minecraft/world/entity/monster/breeze/Breeze.java
-index c12653070d62c44b97a07676f24caf7ab570cd2a..d91ce14cc39b1b6ccd558f53ed605d4c6a5acae5 100644
+index 4e47a1e6d1dcf15a316ff6bed6c03e9c42777853..793db0e9977fe64e7cdbe5b337deb6d8e32f0627 100644
 --- a/net/minecraft/world/entity/monster/breeze/Breeze.java
 +++ b/net/minecraft/world/entity/monster/breeze/Breeze.java
 @@ -12,8 +12,6 @@ import net.minecraft.sounds.SoundEvent;
@@ -4725,12 +4726,13 @@ index c12653070d62c44b97a07676f24caf7ab570cd2a..d91ce14cc39b1b6ccd558f53ed605d4c
  import net.minecraft.world.damagesource.DamageSource;
  import net.minecraft.world.entity.AnimationState;
  import net.minecraft.world.entity.Entity;
-@@ -232,12 +230,8 @@ public class Breeze extends Monster {
+@@ -232,13 +230,9 @@ public class Breeze extends Monster {
  
      @Override
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("breezeBrain");
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.popPush("breezeActivityUpdate");
          BreezeAi.updateActivity(this);
@@ -4763,7 +4765,7 @@ index 1b01d2b37dd221d5832cb68c072af9863aeb6868..775c11f658b81379784f7e5bdfdc8105
      }
  
 diff --git a/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index 994f6e5cb0960d43de00d9ef6d25e81107e0774a..04244779a152a531ba148c450450d11a13d78a6c 100644
+index 6062167a25d9d66c0264624f0761bcb9d47f0c77..952fba6d141576089e563e829cae4a177f19d639 100644
 --- a/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -15,8 +15,6 @@ import net.minecraft.sounds.SoundEvents;
@@ -4781,14 +4783,14 @@ index 994f6e5cb0960d43de00d9ef6d25e81107e0774a..04244779a152a531ba148c450450d11a
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("hoglinBrain");
-         //if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish // Purpur - only use brain if no rider
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
          HoglinAi.updateActivity(this);
          if (this.isConverting()) {
              this.timeInOverworld++;
 diff --git a/net/minecraft/world/entity/monster/piglin/Piglin.java b/net/minecraft/world/entity/monster/piglin/Piglin.java
-index c48044ff1fd5b587935d11747d93598d0bc0c7a3..94c1e65a4d7d59e967f31c2692e9b448faf67a55 100644
+index b5ab1ea7ebf1e1a67f51f53f92fbc2a84506174a..03b6640c95c86ea9f6219d6e39feffa4643dd648 100644
 --- a/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -16,8 +16,6 @@ import net.minecraft.tags.ItemTags;
@@ -4806,7 +4808,7 @@ index c48044ff1fd5b587935d11747d93598d0bc0c7a3..94c1e65a4d7d59e967f31c2692e9b448
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("piglinBrain");
-         //if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish // Purpur - only use brain if no rider
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
          PiglinAi.updateActivity(this);
@@ -4838,7 +4840,7 @@ index 70ee15527fa6f30783d6a58bb767b18124f25c53..c4eb58d0b0c51e930f9cb72e1de01039
          PiglinBruteAi.maybePlayActivitySound(this);
          super.customServerAiStep(level);
 diff --git a/net/minecraft/world/entity/monster/warden/Warden.java b/net/minecraft/world/entity/monster/warden/Warden.java
-index f8a6aba7d6f0f357c72602f4ac6c2537b604eb6c..021aa51da04bea01b0e827390ce1690af7092b8f 100644
+index bc691e17a974a3b4175ceb34f7e40291f1f1f83c..091b9cc338e37efbecdd4187a9824dae7bff2af9 100644
 --- a/net/minecraft/world/entity/monster/warden/Warden.java
 +++ b/net/minecraft/world/entity/monster/warden/Warden.java
 @@ -27,8 +27,6 @@ import net.minecraft.tags.TagKey;
@@ -4850,19 +4852,20 @@ index f8a6aba7d6f0f357c72602f4ac6c2537b604eb6c..021aa51da04bea01b0e827390ce1690a
  import net.minecraft.world.DifficultyInstance;
  import net.minecraft.world.damagesource.DamageSource;
  import net.minecraft.world.effect.MobEffectInstance;
-@@ -303,10 +301,7 @@ public class Warden extends Monster implements VibrationSystem {
+@@ -303,11 +301,8 @@ public class Warden extends Monster implements VibrationSystem {
  
      @Override
      protected void customServerAiStep(ServerLevel level) {
 -        ProfilerFiller profilerFiller = Profiler.get();
 -        profilerFiller.push("wardenBrain");
+         if ((getRider() == null || !this.isControllable())) // Purpur - only use brain if no rider
          this.getBrain().tick(level, this);
 -        profilerFiller.pop();
          super.customServerAiStep(level);
          if ((this.tickCount + this.getId()) % 120 == 0) {
              applyDarknessAround(level, this.position(), this, 20);
 diff --git a/net/minecraft/world/entity/npc/Villager.java b/net/minecraft/world/entity/npc/Villager.java
-index edef9b959200008dda8c5036319e29c5e2d92dae..65f65f712db967ce9b11deb278b9d0aa70368703 100644
+index cab85afb6a460297511b0d391364670124d5a3f3..db5c287161c50bafd672b9cb439b3a06b1ff16d7 100644
 --- a/net/minecraft/world/entity/npc/Villager.java
 +++ b/net/minecraft/world/entity/npc/Villager.java
 @@ -35,8 +35,6 @@ import net.minecraft.stats.Stats;
@@ -4883,10 +4886,10 @@ index edef9b959200008dda8c5036319e29c5e2d92dae..65f65f712db967ce9b11deb278b9d0aa
          // Purpur start - Lobotomize stuck villagers
          if (this.level().purpurConfig.villagerLobotomizeEnabled) {
              // treat as inactive if lobotomized
-@@ -409,7 +405,6 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -407,7 +403,6 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+             this.getBrain().tick(level, this); // Paper - EAR 2
          }
          else if (this.isLobotomized && shouldRestock()) restock(); // Purpur - Lobotomize stuck villagers
-         // Pufferfish end
 -        profilerFiller.pop();
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;

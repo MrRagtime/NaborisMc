@@ -9,7 +9,7 @@ You can find the original code on https://github.com/Bloom-host/Petal
 Makes most pathfinding-related work happen asynchronously
 
 diff --git a/net/minecraft/world/entity/ai/behavior/AcquirePoi.java b/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-index 67cbf9f5760fae5db6f31e64095cd1b6be6ade8e..3e7db8ef9ba48d42e8373296031301308573b154 100644
+index b0ca555cc3b565a8be8d01fe10b139ed27a2a2c3..47169b95032f10bf64ec5af5faf69edf8df19b8c 100644
 --- a/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 +++ b/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 @@ -94,21 +94,18 @@ public class AcquirePoi {
@@ -557,7 +557,7 @@ index 1f96fd5085bacb4c584576c7cb9f51e7898e9b03..d975b89c7bb57562852596751a4ff881
 +    // DivineMC end - async pathfinding
  }
 diff --git a/net/minecraft/world/entity/animal/Bee.java b/net/minecraft/world/entity/animal/Bee.java
-index ca5651f15552f91fba650747d28a75c00fa11442..c5883758d11e91f96b4139b3bd8586a8b3e26b73 100644
+index 7573f1be88ca23096e02efe2fa933429fa4421ba..e5f4520afa2d396ab0e88aa282c408b272279e7d 100644
 --- a/net/minecraft/world/entity/animal/Bee.java
 +++ b/net/minecraft/world/entity/animal/Bee.java
 @@ -937,7 +937,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
@@ -579,10 +579,10 @@ index ca5651f15552f91fba650747d28a75c00fa11442..c5883758d11e91f96b4139b3bd8586a8
          }
      }
 diff --git a/net/minecraft/world/entity/animal/frog/Frog.java b/net/minecraft/world/entity/animal/frog/Frog.java
-index 85963b74a533beb7883ea417ceb3c21d834aebe0..dd2874406ad224393ccf1b45aef88c396597e633 100644
+index f526a426d02f8fb1ce6c1b16e0ed3edae8ab5271..59693b73138ebd64d05d6ea5e94a15c7b1a760c0 100644
 --- a/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/net/minecraft/world/entity/animal/frog/Frog.java
-@@ -488,6 +488,17 @@ public class Frog extends Animal {
+@@ -487,6 +487,17 @@ public class Frog extends Animal {
              super(mob, level);
          }
  
@@ -600,7 +600,7 @@ index 85963b74a533beb7883ea417ceb3c21d834aebe0..dd2874406ad224393ccf1b45aef88c39
          @Override
          public boolean canCutCorner(PathType pathType) {
              return pathType != PathType.WATER_BORDER && super.canCutCorner(pathType);
-@@ -496,6 +507,11 @@ public class Frog extends Animal {
+@@ -495,6 +506,11 @@ public class Frog extends Animal {
          @Override
          protected PathFinder createPathFinder(int maxVisitedNodes) {
              this.nodeEvaluator = new Frog.FrogNodeEvaluator(true);
@@ -656,7 +656,7 @@ index fe31c4a45afd61be8b74efe9d0858ccd0aced075..e2e42bbdba1daf6783d10a62aa4c4b1b
          }
  
 diff --git a/net/minecraft/world/entity/monster/warden/Warden.java b/net/minecraft/world/entity/monster/warden/Warden.java
-index 7bfc597655cc55c46b65c9726a6e9de9f3f5afc8..4944b6d389c65511eed75d580779f912b8ff076d 100644
+index 808661fdefacfffa65ebde1aa3193a82497706b7..1c08e246dc1ae139befbdca1c4ed66dd26fc07a1 100644
 --- a/net/minecraft/world/entity/monster/warden/Warden.java
 +++ b/net/minecraft/world/entity/monster/warden/Warden.java
 @@ -579,6 +579,16 @@ public class Warden extends Monster implements VibrationSystem {

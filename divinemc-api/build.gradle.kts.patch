@@ -103,11 +103,10 @@
  tasks.jar {
      from(generateApiVersioningFile.map { it.outputs.files.singleFile }) {
          into("META-INF/maven/${project.group}/${project.name}")
-@@ -177,15 +_,13 @@
+@@ -177,14 +_,13 @@
  val services = objects.newInstance<Services>()
  
  tasks.withType<Javadoc>().configureEach {
--    //(options as StandardJavadocDocletOptions).addStringOption("-add-modules", "jdk.incubator.vector") // Purpur - our javadocs need this for pufferfish's SIMD patch
 -    (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet") // Purpur - silence Paper's bajillion javadoc warnings
      val options = options as StandardJavadocDocletOptions
      options.overview = "../paper-api/src/main/javadoc/overview.html"
@@ -121,7 +120,7 @@
          "https://javadoc.io/doc/org.jetbrains/annotations/$annotationsVersion/",
          "https://javadoc.io/doc/org.joml/joml/1.10.8/",
          "https://www.javadoc.io/doc/com.google.code.gson/gson/2.11.0",
-@@ -199,7 +_,7 @@
+@@ -198,7 +_,7 @@
          "https://jd.advntr.dev/text-logger-slf4j/$adventureVersion/",
          "https://javadoc.io/doc/org.slf4j/slf4j-api/$slf4jVersion/",
          "https://logging.apache.org/log4j/2.x/javadoc/log4j-api/",
@@ -130,7 +129,7 @@
      )
      options.tags("apiNote:a:API Note:")
  
-@@ -223,6 +_,9 @@
+@@ -222,6 +_,9 @@
              into("build/docs/javadoc")
          }
      }

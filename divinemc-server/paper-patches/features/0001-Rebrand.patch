@@ -5,14 +5,14 @@ Subject: [PATCH] Rebrand
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 212e0df38ae3ed0b06d147fb5e7e93ef556a0bdd..5736b550ad3f1e7dd9fd1a1f985be2974278e7a9 100644
+index dc49ba7b833b0d2edc8959ebe8cbecdad720bf06..5736b550ad3f1e7dd9fd1a1f985be2974278e7a9 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -593,7 +593,7 @@ public class Metrics {
              boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
              // Only start Metrics, if it's enabled in the config
              if (config.getBoolean("enabled", true)) {
--                Metrics metrics = new Metrics("Purpur", serverUUID, logFailedRequests, Bukkit.getLogger()); // Pufferfish // Purpur - Purpur config files
+-                Metrics metrics = new Metrics("Purpur", serverUUID, logFailedRequests, Bukkit.getLogger()); // Purpur - Purpur config files
 +                Metrics metrics = new Metrics("DivineMC", serverUUID, logFailedRequests, Bukkit.getLogger()); // DivineMC - Rebrand
  
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
@@ -141,7 +141,7 @@ index d543b1b107ab8d3eeb1fc3c1cadf489928d2786e..e77078e54efdfe931202ecf8c8550840
      }
  }
 diff --git a/src/main/java/io/papermc/paper/ServerBuildInfoImpl.java b/src/main/java/io/papermc/paper/ServerBuildInfoImpl.java
-index 1b0ee48e28aaa68ddb1f28c23d3c5f5f40505c98..4d3518795a238d87ca4f3df0bee074ab5bcc2734 100644
+index b678ca41f7fb1f4aa10c012fb2b432f5e65b2a91..b0b05383838f2ebb42791a1fca8d3ce0d361e477 100644
 --- a/src/main/java/io/papermc/paper/ServerBuildInfoImpl.java
 +++ b/src/main/java/io/papermc/paper/ServerBuildInfoImpl.java
 @@ -23,15 +23,18 @@ public record ServerBuildInfoImpl(
@@ -210,14 +210,14 @@ index 2e7c3d4befeb6256ce81ecaa9ed4e8fbcb21651e..a839dbbb72f48b8f8736d9f4693c5286
                  // (async tasks must live with race-conditions if they attempt to cancel between these few lines of code)
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 99eb04643fce44c37fd96c99756837ccafe7b559..4aef151bd162c4c99a3eaec1854b54639980a630 100644
+index e34ceaa77c7e538c8d6bc341c4c6f450488ce426..4aef151bd162c4c99a3eaec1854b54639980a630 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
      public static String getBukkitVersion() {
          String result = "Unknown-Version";
  
--        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.purpurmc.purpur/purpur-api/pom.properties"); // Pufferfish // Purpur - Rebrand
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.purpurmc.purpur/purpur-api/pom.properties"); // Purpur - Rebrand
 +        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.bxteam.divinemc/divinemc-api/pom.properties"); // DivineMC - Rebrand
          Properties properties = new Properties();
  
