@@ -379,6 +379,7 @@ public class DivineConfig {
         public static boolean reduceChuckLoadAndLookup = true;
         public static boolean createSnapshotOnRetrievingBlockState = true;
         public static boolean sleepingBlockEntity = false;
+        public static boolean equipmentTracking = false;
         public static boolean hopperThrottleWhenFull = false;
         public static int hopperThrottleSkipTicks = 0;
 
@@ -485,6 +486,8 @@ public class DivineConfig {
                 "If false, plugins get direct BlockState access for better performance but risk data corruption from poor plugin design.");
             sleepingBlockEntity = getBoolean(ConfigCategory.PERFORMANCE.key("optimizations.sleeping-block-entity"), sleepingBlockEntity,
                 "When enabled, block entities will enter a sleep state when they are inactive.");
+            equipmentTracking = getBoolean(ConfigCategory.PERFORMANCE.key("optimizations.equipment-tracking"), equipmentTracking,
+                "When enabled, skips repeated checks whether the equipment of an entity changed.");
 
             hopperThrottleWhenFull = getBoolean(ConfigCategory.PERFORMANCE.key("optimizations.hopper-throttle-when-full.enabled"), hopperThrottleWhenFull,
                 "When enabled, hoppers will throttle if target container is full.");

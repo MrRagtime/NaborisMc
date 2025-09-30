@@ -96,18 +96,9 @@ index b382665cc125b8b5c0938e5e55984e4bf91d37ff..c112b58996494d97fcd226fc490fe271
  
      int getContainerSize();
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 2c7c5dab268625e1328f57ac3ec2a735a82fea42..5d0d94475a6045f256fac0d997c0cb40c2d4a07e 100644
+index d82ed6dcd49b4f0bd040d2bd3a6f0f54cd87758f..bae2cf89e9bc71a360fe471f7d3e703705488f3a 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -308,7 +308,7 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
-     private static final EntityDataAccessor<Boolean> DATA_NO_GRAVITY = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
-     protected static final EntityDataAccessor<Pose> DATA_POSE = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.POSE);
-     public static final EntityDataAccessor<Integer> DATA_TICKS_FROZEN = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.INT);
--    private EntityInLevelCallback levelCallback = EntityInLevelCallback.NULL;
-+    public EntityInLevelCallback levelCallback = EntityInLevelCallback.NULL; // DivineMC - lithium: sleeping_block_entity - private -> public
-     private final VecDeltaCodec packetPositionCodec = new VecDeltaCodec();
-     public boolean hasImpulse;
-     @Nullable
 @@ -5075,6 +5075,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
              this.setBoundingBox(this.makeBoundingBox());
          }
