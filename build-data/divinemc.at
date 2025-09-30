@@ -6,6 +6,7 @@ private-f net.minecraft.world.level.levelgen.NoiseChunk$FlatCache noiseFiller
 private-f net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator noiseFiller
 private-f net.minecraft.world.level.levelgen.RandomState router
 private-f net.minecraft.world.level.levelgen.RandomState sampler
+public net.minecraft.core.NonNullList list
 public net.minecraft.util.Mth SIN
 public net.minecraft.world.entity.ai.Brain sensors
 public net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities lineOfSightTest
@@ -14,6 +15,9 @@ public net.minecraft.world.entity.ai.sensing.Sensor scanRate
 public net.minecraft.world.entity.ai.sensing.Sensor timeToTick
 public net.minecraft.world.entity.animal.armadillo.Armadillo scuteTime
 public net.minecraft.world.entity.animal.frog.Tadpole getTicksLeftUntilAdult()I
+public net.minecraft.world.level.chunk.LevelChunk$RebindableTickingBlockEntityWrapper
+public net.minecraft.world.level.chunk.LevelChunk$RebindableTickingBlockEntityWrapper rebind(Lnet/minecraft/world/level/block/entity/TickingBlockEntity;)V
+public net.minecraft.world.level.chunk.LevelChunk$RebindableTickingBlockEntityWrapper ticker
 public net.minecraft.world.level.chunk.PaletteResize
 public net.minecraft.world.level.chunk.storage.RegionFile getOversizedData(II)Lnet/minecraft/nbt/CompoundTag;
 public net.minecraft.world.level.chunk.storage.RegionFile isOversized(II)Z
