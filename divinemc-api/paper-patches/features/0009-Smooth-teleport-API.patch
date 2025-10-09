@@ -5,10 +5,10 @@ Subject: [PATCH] Smooth teleport API
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 078cb0b4ff04bdae006af913d8b4ecd68fe30637..3b0998aefa32244bd03abdd668cc614f930802f1 100644
+index b221735602f669ef984b44d73605095460316753..8f627547e05242314f34b876fda0b4121ef3e32f 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -4051,4 +4051,18 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -4122,4 +4122,18 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          sendDeathScreen(message);
      }
      // Purpur end

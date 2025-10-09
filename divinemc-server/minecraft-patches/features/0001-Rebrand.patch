@@ -31,10 +31,10 @@ index 97844ec1ccc986eb3d3a185d78a03ceeca49fc1a..5e40ec3fbe6e6d5f98ad98df7d4c27d6
  
      @Override
 diff --git a/net/minecraft/server/Main.java b/net/minecraft/server/Main.java
-index b06c2c4aa77edafb374f7cf0406cf4d29c6e7f9f..0e07db9311d480c97251be6277f9d5d103ee9f22 100644
+index 2c85607bcc62b227485972707c3541247a626524..9e25b6412fadbbecda0430f8554eaa48dbe8c151 100644
 --- a/net/minecraft/server/Main.java
 +++ b/net/minecraft/server/Main.java
-@@ -69,36 +69,29 @@ public class Main {
+@@ -67,36 +67,29 @@ public class Main {
      )
      @DontObfuscate
      public static void main(final OptionSet optionSet) { // CraftBukkit - replaces main(String[] args)
@@ -90,7 +90,7 @@ index b06c2c4aa77edafb374f7cf0406cf4d29c6e7f9f..0e07db9311d480c97251be6277f9d5d1
              Path path = (Path) optionSet.valueOf("pidFile"); // CraftBukkit
              if (path != null) {
                  writePidFile(path);
-@@ -124,8 +117,6 @@ public class Main {
+@@ -122,8 +115,6 @@ public class Main {
              DedicatedServerSettings dedicatedServerSettings = new DedicatedServerSettings(optionSet); // CraftBukkit - CLI argument support
              dedicatedServerSettings.forceSave();
              RegionFileVersion.configure(dedicatedServerSettings.getProperties().regionFileComression);
@@ -99,7 +99,7 @@ index b06c2c4aa77edafb374f7cf0406cf4d29c6e7f9f..0e07db9311d480c97251be6277f9d5d1
              // Paper start - load config files early for access below if needed
              org.bukkit.configuration.file.YamlConfiguration bukkitConfiguration = io.papermc.paper.configuration.PaperConfigurations.loadLegacyConfigFile((File) optionSet.valueOf("bukkit-settings"));
              org.bukkit.configuration.file.YamlConfiguration spigotConfiguration = io.papermc.paper.configuration.PaperConfigurations.loadLegacyConfigFile((File) optionSet.valueOf("spigot-settings"));
-@@ -148,19 +139,6 @@ public class Main {
+@@ -146,19 +137,6 @@ public class Main {
                  return;
              }
  
@@ -120,10 +120,10 @@ index b06c2c4aa77edafb374f7cf0406cf4d29c6e7f9f..0e07db9311d480c97251be6277f9d5d1
              String awtException = io.papermc.paper.util.ServerEnvironment.awtDependencyCheck();
              if (awtException != null) {
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index b68749354f2a55e41f2b39f96ac9d1190092d672..e04be8b21514db5b7ecb2419b4b37caf29960c5a 100644
+index c3366c13f2227c25126ae1458621e4579be51435..42a8e32dbba4a369406b3cfe4bd64696c875693d 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1184,6 +1184,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1250,6 +1250,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      protected void runServer() {
          try {
@@ -163,10 +163,10 @@ index 614c7d9f673c926562acc8fa3b3788623900db41..937469a134e721c47e235a34acc565f1
                      minecraftServerGui.runFinalizers();
                  }
 diff --git a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
-index 77db68349aa73d33b86a867099c9395c96d5a02d..8d1174f25e0e90d0533970f4ddd8448442024936 100644
+index 0e6222214f4b5407705dcbdf4dcf574111bcf366..8215edb0dbb5a9de66d5107786c338d2fd02d5ea 100644
 --- a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 +++ b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
-@@ -308,7 +308,7 @@ public class RegionFileStorage implements AutoCloseable, ca.spottedleaf.moonrise
+@@ -309,7 +309,7 @@ public class RegionFileStorage implements AutoCloseable, ca.spottedleaf.moonrise
  
      // Paper start
      private static void printOversizedLog(String msg, Path file, int x, int z) {

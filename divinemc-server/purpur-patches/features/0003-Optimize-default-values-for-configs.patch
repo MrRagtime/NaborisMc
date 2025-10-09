@@ -5,7 +5,7 @@ Subject: [PATCH] Optimize default values for configs
 
 
 diff --git a/src/main/java/org/purpurmc/purpur/PurpurConfig.java b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
-index 657776f124e761fd2017cd43c73cd94a4abb20e6..6e0174abe76c43a2114cc36e2a3b865b5dbf8cce 100644
+index f84cffd066c3ba13f0fc729b6bea0a51c65b41e7..b08887e45e2818e5687712ea4e0939ea77ef036e 100644
 --- a/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 +++ b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 @@ -246,7 +246,7 @@ public class PurpurConfig {
@@ -18,10 +18,10 @@ index 657776f124e761fd2017cd43c73cd94a4abb20e6..6e0174abe76c43a2114cc36e2a3b865b
          useAlternateKeepAlive = getBoolean("settings.use-alternate-keepalive", useAlternateKeepAlive);
      }
 diff --git a/src/main/java/org/purpurmc/purpur/PurpurWorldConfig.java b/src/main/java/org/purpurmc/purpur/PurpurWorldConfig.java
-index 1b17643fffecd7af6ec60ef8a24eac85ddd7b80d..225d3fab20ef461c87b260b2674229806649bc56 100644
+index c7acfd74ac66a3a15e001ce49d7de26ecc6a04fa..bafe8dee4872aa8c32063146e10713c2c07266e4 100644
 --- a/src/main/java/org/purpurmc/purpur/PurpurWorldConfig.java
 +++ b/src/main/java/org/purpurmc/purpur/PurpurWorldConfig.java
-@@ -3208,8 +3208,8 @@ public class PurpurWorldConfig {
+@@ -3278,8 +3278,8 @@ public class PurpurWorldConfig {
      public boolean villagerDisplayTradeItem = true;
      public int villagerSpawnIronGolemRadius = 0;
      public int villagerSpawnIronGolemLimit = 0;

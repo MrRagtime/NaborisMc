@@ -1,9 +1,10 @@
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -195,6 +_,26 @@
+@@ -287,6 +_,26 @@
+         org.purpurmc.purpur.PurpurConfig.registerCommands();
          // Purpur end - Purpur config files
          com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // Paper - load version history now
- 
++ 
 +        // DivineMC start - Pufferfish: SIMD Support
 +        try {
 +            gg.pufferfish.pufferfish.simd.SIMDDetection.isEnabled = gg.pufferfish.pufferfish.simd.SIMDDetection.canEnable(LOGGER);
@@ -23,11 +24,10 @@
 +            LOGGER.warn("Debug: Java: {}, test run: {}", System.getProperty("java.version"), gg.pufferfish.pufferfish.simd.SIMDDetection.testRun);
 +        }
 +        // DivineMC end - Pufferfish: SIMD Support
-+
-         this.setPvpAllowed(properties.pvp);
-         this.setFlightAllowed(properties.allowFlight);
-         this.setMotd(properties.motd);
-@@ -275,7 +_,7 @@
+ 
+         // this.worldData.setGameType(properties.gameMode.get()); // CraftBukkit - moved to world loading
+         LOGGER.info("Default game type: {}", properties.gameMode.get());
+@@ -363,7 +_,7 @@
          String proxyFlavor = (io.papermc.paper.configuration.GlobalConfiguration.get().proxies.velocity.enabled) ? "Velocity" : "BungeeCord";
          String proxyLink = (io.papermc.paper.configuration.GlobalConfiguration.get().proxies.velocity.enabled) ? "https://docs.papermc.io/velocity/security" : "http://www.spigotmc.org/wiki/firewall-guide/";
          // Paper end - Add Velocity IP Forwarding Support
