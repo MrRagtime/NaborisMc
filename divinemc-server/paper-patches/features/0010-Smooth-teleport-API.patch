@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
+Date: Sun, 29 Jun 2025 15:09:57 +0300
+Subject: [PATCH] Smooth teleport API
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 4eb7d90f38e744b51c11d334a44dacb0a9ac6956..f0065fd83dbe3bd0552251b6e01f2a051a9e4ab9 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -1371,6 +1371,17 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+         // Paper end - Teleportation API
+     }
+ 
++    // DivineMC start - Smooth teleport API
++    @Override
++    public boolean teleportWithoutRespawn(Location location) {
++        ServerPlayer serverPlayer = getHandle();
++        serverPlayer.smoothWorldTeleport = true;
++        boolean teleportResult = teleport(location);
++        serverPlayer.smoothWorldTeleport = false;
++        return teleportResult;
++    }
++    // DivineMC end - Smooth teleport API
++
+     @Override
+     public boolean teleport(Location location, PlayerTeleportEvent.TeleportCause cause) {
+         // Paper start - Teleport API

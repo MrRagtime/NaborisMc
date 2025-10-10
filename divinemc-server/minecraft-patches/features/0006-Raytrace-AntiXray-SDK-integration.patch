@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
+Date: Sun, 27 Apr 2025 14:24:19 +0300
+Subject: [PATCH] Raytrace AntiXray SDK integration
+
+Integration with Imanity Software's Raytrace AntiXray for better use of this plugin
+
+Original project: https://github.com/Imanity-Software/raytrace-antixray-spigot-sdk
+
+diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
+index 599d6a4f31e05369caf3ef9f5e54e83396743ec0..07dd9b8088e363110ecab24026a20485484710c4 100644
+--- a/net/minecraft/server/level/ServerPlayerGameMode.java
++++ b/net/minecraft/server/level/ServerPlayerGameMode.java
+@@ -316,6 +316,12 @@ public class ServerPlayerGameMode {
+                 org.bukkit.craftbukkit.event.CraftEventFactory.callBlockDamageAbortEvent(this.player, pos, this.player.getInventory().getSelectedItem()); // CraftBukkit
+             }
+         }
++        // Imanity start - AntiXraySDK integration
++        dev.imanity.antixray.sdk.AntiXrayAdapter adapter = dev.imanity.antixray.sdk.AntiXraySDK.getAdapter();
++        if (adapter != null) {
++            adapter.callPlayerLeftClickBlock(this.level.getWorld(), this.player.getBukkitEntity(), pos.getX(), pos.getY(), pos.getZ());
++        }
++        // Imanity end - AntiXraySDK integration
+         this.level.chunkPacketBlockController.onPlayerLeftClickBlock(this, pos, action, face, maxBuildHeight, sequence); // Paper - Anti-Xray
+     }
+ 
+diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
+index 5b50b86c735fa2ba1b5452aacda7db5e64012076..b94b946986258fed3c6d68d9972a657e176d08a4 100644
+--- a/net/minecraft/world/level/Level.java
++++ b/net/minecraft/world/level/Level.java
+@@ -1125,6 +1125,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+                 snapshot.setFlags(flags); // Paper - always set the flag of the most recent call to mitigate issues with multiple update at the same pos with different flags
+             }
+             BlockState blockState = chunkAt.setBlockState(pos, state, flags);
++            // Imanity start - AntiXraySDK integration
++            dev.imanity.antixray.sdk.AntiXrayAdapter adapter = dev.imanity.antixray.sdk.AntiXraySDK.getAdapter();
++            if (adapter != null) {
++                adapter.callBlockChange(world, pos.getX(), pos.getY(), pos.getZ(), state.getBukkitMaterial());
++            }
++            // Imanity end - AntiXraySDK integration
+             this.chunkPacketBlockController.onBlockChange(this, pos, state, blockState, flags, recursionLeft); // Paper - Anti-Xray
+             // CraftBukkit end
+             if (blockState == null) {

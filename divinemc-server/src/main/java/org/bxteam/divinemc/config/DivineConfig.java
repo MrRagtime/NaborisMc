@@ -216,11 +216,6 @@ public class DivineConfig {
         public static int asyncEntityTrackerKeepalive = 60;
         public static int asyncEntityTrackerQueueSize = 0;
 
-        // Async Join Thread settings
-        public static boolean asyncJoinEnabled = false;
-        public static int asyncJoinThreadCount = 1;
-        public static boolean asyncJoinUseVirtualThreads = false;
-
         // Async chunk sending settings
         public static boolean asyncChunkSendingEnabled = true;
         public static int asyncChunkSendingMaxThreads = 1;
@@ -233,7 +228,6 @@ public class DivineConfig {
             regionizedChunkTicking();
             asyncPathfinding();
             multithreadedTracker();
-            asyncJoinSettings();
             asyncChunkSending();
             asyncMobSpawning();
         }
@@ -327,18 +321,6 @@ public class DivineConfig {
             if (asyncEntityTrackerQueueSize <= 0) asyncEntityTrackerQueueSize = asyncEntityTrackerMaxThreads * 384;
         }
 
-        private static void asyncJoinSettings() {
-            asyncJoinEnabled = getBoolean(ConfigCategory.ASYNC.key("join-thread.enabled"), asyncJoinEnabled,
-                "Enables async join thread, which offloads player setup and connection tasks to a separate thread",
-                "This can significantly improve MSPT when multiple players are joining simultaneously");
-            asyncJoinThreadCount = getInt(ConfigCategory.ASYNC.key("join-thread.thread-count"), asyncJoinThreadCount,
-                "Number of threads to use for async join operations");
-            asyncJoinUseVirtualThreads = getBoolean(ConfigCategory.ASYNC.key("join-thread.use-virtual-threads"), asyncJoinUseVirtualThreads,
-                "Whether to use virtual threads for async join operations (requires Java 21+)");
-
-            AsyncJoinHandler.init(asyncJoinEnabled, asyncJoinThreadCount);
-        }
-
         private static void asyncChunkSending() {
             asyncChunkSendingEnabled = getBoolean(ConfigCategory.ASYNC.key("chunk-sending.enable"), asyncChunkSendingEnabled,
                 "Makes chunk sending asynchronous, which can significantly reduce main thread load when many players are loading chunks.");
@@ -408,7 +390,6 @@ public class DivineConfig {
         public static boolean virtualTabCompleteScheduler = false;
         public static boolean virtualAsyncExecutor = false;
         public static boolean virtualCommandBuilderScheduler = false;
-        public static boolean virtualProfileLookupPool = false;
         public static boolean virtualServerTextFilterPool = false;
 
         public static void load() {
@@ -548,8 +529,6 @@ public class DivineConfig {
                 "Uses virtual threads for the MCUtil async executor.");
             virtualCommandBuilderScheduler = getBoolean(ConfigCategory.PERFORMANCE.key("virtual-threads.command-builder-scheduler"), virtualCommandBuilderScheduler,
                 "Uses virtual threads for the Async Command Builder Thread Pool.");
-            virtualProfileLookupPool = getBoolean(ConfigCategory.PERFORMANCE.key("virtual-threads.profile-lookup-pool"), virtualProfileLookupPool,
-                "Uses virtual threads for the Profile Lookup Pool, that is used for fetching player profiles.");
             virtualServerTextFilterPool = getBoolean(ConfigCategory.PERFORMANCE.key("virtual-threads.server-text-filter-pool"), virtualServerTextFilterPool,
                 "Uses virtual threads for the server text filter pool.");
         }
