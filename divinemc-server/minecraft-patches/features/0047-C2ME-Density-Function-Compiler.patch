@@ -1150,7 +1150,7 @@ index ff0c2aa0cdf7a88f67e6438dbd17d9c2bc39107a..3c3615043ab87da45b7ea47bf2f632a9
  
          @Override
 diff --git a/net/minecraft/world/level/levelgen/RandomState.java b/net/minecraft/world/level/levelgen/RandomState.java
-index f1e089ecfffa40cd794c49db30fcedf138d3fee9..3d8bdd7e40c7457c0ad7729162b43cba2043b8b5 100644
+index f1e089ecfffa40cd794c49db30fcedf138d3fee9..f0f28f433523e0ee9379af5b70cffe8f8c87da5d 100644
 --- a/net/minecraft/world/level/levelgen/RandomState.java
 +++ b/net/minecraft/world/level/levelgen/RandomState.java
 @@ -122,6 +122,41 @@ public final class RandomState {
@@ -1173,7 +1173,7 @@ index f1e089ecfffa40cd794c49db30fcedf138d3fee9..3d8bdd7e40c7457c0ad7729162b43cba
 +                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.erosion(), tempCache),
 +                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.depth(), tempCache),
 +                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.ridges(), tempCache),
-+                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.initialDensityWithoutJaggedness(), tempCache),
++                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.preliminarySurfaceLevel(), tempCache),
 +                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.finalDensity(), tempCache),
 +                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.veinToggle(), tempCache),
 +                com.ishland.c2me.opts.dfc.common.gen.BytecodeGen.compile(this.router.veinRidged(), tempCache),

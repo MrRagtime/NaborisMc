@@ -60,10 +60,10 @@ index 51c126735ace8fdde89ad97b5cab62f244212db0..23f6ed26b531ea570fdf2ae48c1e2710
 +    public void moonrise$write(final org.bxteam.divinemc.region.IRegionFile regionFile) throws IOException; // DivineMC - Buffered Linear region format
  }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 3ea69f961797e390aabb697ad9a7f007e549d04d..30fb5b93ebb4b5f21c64f6589c33496df5242b1d 100644
+index db392b8596f1f0438894a9fa8246beeb69ce0fd6..83ccf00e3cff9dced3cc97abffd7881b0be5420e 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -933,10 +933,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -934,10 +934,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          // CraftBukkit end
          if (flush) {
              for (ServerLevel serverLevel : this.getAllLevels()) {
@@ -148,7 +148,7 @@ index ae0a893498d0bfe90c14508f15b431d4885e06ff..00656cf8634e06f7ce1067ef7ba44edf
          }
          // Paper end - rewrite chunk system
 diff --git a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
-index 8215edb0dbb5a9de66d5107786c338d2fd02d5ea..954f1866176f28eb1bdee395130a60cfc7585c39 100644
+index 8215edb0dbb5a9de66d5107786c338d2fd02d5ea..e92415ac17952831a14d048b12ee7b3e36c941d6 100644
 --- a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 +++ b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 @@ -19,7 +19,7 @@ public class RegionFileStorage implements AutoCloseable, ca.spottedleaf.moonrise
@@ -323,7 +323,7 @@ index 8215edb0dbb5a9de66d5107786c338d2fd02d5ea..954f1866176f28eb1bdee395130a60cf
      public void write(ChunkPos chunkPos, @Nullable CompoundTag chunkData) throws IOException { // Paper - rewrite chunk system - public
          if (!SharedConstants.DEBUG_DONT_SAVE_WORLD) {
 -            RegionFile regionFile = this.getRegionFile(chunkPos, chunkData == null); // CraftBukkit // Paper - rewrite chunk system
-+            org.bxteam.divinemc.region.IRegionFile = this.getRegionFile(chunkPos, chunkData == null); // CraftBukkit // Paper - rewrite chunk system // DivineMC - Buffered Linear region format
++            org.bxteam.divinemc.region.IRegionFile regionFile = this.getRegionFile(chunkPos, chunkData == null); // CraftBukkit // Paper - rewrite chunk system // DivineMC - Buffered Linear region format
              // Paper start - rewrite chunk system
              if (regionFile == null) {
                  // if the RegionFile doesn't exist, no point in deleting from it

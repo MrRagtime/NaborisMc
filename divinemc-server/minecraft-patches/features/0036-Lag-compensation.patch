@@ -5,10 +5,10 @@ Subject: [PATCH] Lag compensation
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index ac0122e9a54c4f6e41638c79a75542fe2db3c9a4..558445fbaeddf33506dea7080b3a76e6aa87f21f 100644
+index 18c3599ceb7a1c9dc769af0ad4c3eff9e37e2a76..89aa020832fb9894e057b0f2b1226eb48c8accd1 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -286,6 +286,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -287,6 +287,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      public static final long SERVER_INIT = System.nanoTime(); // Paper - Lag compensation
      public boolean lagging = false; // Purpur - Lagging threshold
      protected boolean upnp = false; // Purpur - UPnP Port Forwarding
@@ -16,7 +16,7 @@ index ac0122e9a54c4f6e41638c79a75542fe2db3c9a4..558445fbaeddf33506dea7080b3a76e6
      // Paper start - improve tick loop
      public final ca.spottedleaf.moonrise.common.time.TickData tickTimes1s  = new ca.spottedleaf.moonrise.common.time.TickData(java.util.concurrent.TimeUnit.SECONDS.toNanos(1L));
      public final ca.spottedleaf.moonrise.common.time.TickData tickTimes5s  = new ca.spottedleaf.moonrise.common.time.TickData(java.util.concurrent.TimeUnit.SECONDS.toNanos(5L));
-@@ -1576,6 +1577,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1574,6 +1575,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
  
          this.server.spark.tickStart(); // Paper - spark
@@ -183,7 +183,7 @@ index 6702b7199e159b16ecd06c57d87c692d04dbf7dc..1cced6128ad4ea0a00e0c772c34431a8
              BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
              return blocksAttacks != null ? 72000 : 0;
 diff --git a/net/minecraft/world/level/GameRules.java b/net/minecraft/world/level/GameRules.java
-index 45132e6608b57a30b1b1228ef89879b58d4600ef..6b86e9606073f1666d06237185af81f09f8c73d2 100644
+index 45132e6608b57a30b1b1228ef89879b58d4600ef..a3daac69a79551a4a6a6d215cab3ce6838b2b09e 100644
 --- a/net/minecraft/world/level/GameRules.java
 +++ b/net/minecraft/world/level/GameRules.java
 @@ -379,8 +379,31 @@ public class GameRules {
@@ -198,15 +198,15 @@ index 45132e6608b57a30b1b1228ef89879b58d4600ef..6b86e9606073f1666d06237185af81f0
 +    private final java.util.concurrent.atomic.AtomicReference<net.minecraft.server.level.ServerLevel> level = new java.util.concurrent.atomic.AtomicReference<>();
 +
 +    private int lagCompensation(int original, GameRules.Key<GameRules.IntegerValue> rule) {
-+        ServerLevel level = getOrCacheLevel();
++        net.minecraft.server.level.ServerLevel level = getOrCacheLevel();
 +        if (!org.bxteam.divinemc.config.DivineConfig.MiscCategory.lagCompensationEnabled || !org.bxteam.divinemc.config.DivineConfig.MiscCategory.randomTickSpeedAcceleration) return original;
 +        if (!(rule == GameRules.RULE_RANDOMTICKING)) return original;
 +        return (int) (original * org.bxteam.divinemc.util.tps.TPSCalculator.MAX_TPS / (float) level.tpsCalculator.getMostAccurateTPS());
 +    }
 +
-+    private ServerLevel getOrCacheLevel() {
++    private net.minecraft.server.level.ServerLevel getOrCacheLevel() {
 +        if (level.get() == null) {
-+            for (final ServerLevel level : MinecraftServer.getServer().getAllLevels()) {
++            for (final net.minecraft.server.level.ServerLevel level : MinecraftServer.getServer().getAllLevels()) {
 +                if (level.getGameRules() == this) {
 +                    this.level.set(level);
 +                    break;

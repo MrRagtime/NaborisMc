@@ -36,9 +36,8 @@ public enum CampfireProvider implements IServerExtensionProvider<ItemStack> {
                 }
                 stack = stack.copy();
 
-                CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-                    .update(NbtOps.INSTANCE, COOKING_TIME_CODEC, campfire.cookingTime[i] - campfire.cookingProgress[i])
-                    .getOrThrow();
+                int time = campfire.cookingTime[i] - campfire.cookingProgress[i];
+                CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).update(tag -> tag.putInt("jade:cooking", time));
                 stack.set(DataComponents.CUSTOM_DATA, customData);
 
                 list.add(stack);

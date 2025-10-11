@@ -1,5 +1,6 @@
 package org.bxteam.divinemc.command.subcommands;
 
+import ca.spottedleaf.moonrise.common.time.TickData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minecraft.server.MinecraftServer;
@@ -59,7 +60,7 @@ public final class MSPTCommand extends DivineSubCommandPermission {
     }
 
     private void displayCompactStats(CommandSender sender, MinecraftServer server) {
-        List<Component> serverTimes = eval(server.tickTimes5s.getTimes());
+        List<Component> serverTimes = evalFromTickData(server.tickTimes5s, server.tickRateManager().nanosecondsPerTick());
         sender.sendMessage(Component.text("Server: ", GOLD)
             .append(joinComponents(serverTimes, SLASH)));
 
@@ -68,7 +69,7 @@ public final class MSPTCommand extends DivineSubCommandPermission {
 
         for (int i = 0; i < worlds.size(); i++) {
             ServerLevel level = worlds.get(i);
-            List<Component> worldTimes = eval(level.tickTimes5s.getTimes());
+            List<Component> worldTimes = evalFromTickData(level.getServer().tickTimes5s, server.tickRateManager().nanosecondsPerTick());
             sender.sendMessage(Component.text(level.getWorld().getName() + ": ", GOLD)
                 .append(joinComponents(worldTimes, SLASH)));
             if (i < worlds.size() - 1) {
@@ -81,9 +82,10 @@ public final class MSPTCommand extends DivineSubCommandPermission {
         sender.sendMessage(Component.text("Server tick times ", GOLD)
             .append(Component.text("(avg/min/max)", YELLOW)));
 
-        sendTickLine(sender, "  5s: ", eval(server.tickTimes5s.getTimes()), GOLD, SLASH);
-        sendTickLine(sender, " 10s: ", eval(server.tickTimes10s.getTimes()), GOLD, SLASH);
-        sendTickLine(sender, " 60s: ", eval(server.tickTimes60s.getTimes()), GOLD, SLASH);
+        long tickInterval = server.tickRateManager().nanosecondsPerTick();
+        sendTickLine(sender, "  5s: ", evalFromTickData(server.tickTimes5s, tickInterval), GOLD, SLASH);
+        sendTickLine(sender, " 10s: ", evalFromTickData(server.tickTimes10s, tickInterval), GOLD, SLASH);
+        sendTickLine(sender, " 60s: ", evalFromTickData(server.tickTimes1m, tickInterval), GOLD, SLASH);
     }
 
     private void displayWorldMSPT(CommandSender sender, MinecraftServer server) {
@@ -129,6 +131,26 @@ public final class MSPTCommand extends DivineSubCommandPermission {
         double avg = stats.getAverage() * 1.0E-6;
         double min = stats.getMin() * 1.0E-6;
         double max = stats.getMax() * 1.0E-6;
+
+        return Arrays.asList(getColoredValue(avg), getColoredValue(min), getColoredValue(max));
+    }
+
+    private static List<Component> evalFromTickData(ca.spottedleaf.moonrise.common.time.TickData tickData, long tickInterval) {
+        TickData.TickReportData report = tickData.generateTickReport(null, System.nanoTime(), tickInterval);
+
+        if (report == null) {
+            return Arrays.asList(
+                Component.text("N/A", GRAY),
+                Component.text("N/A", GRAY),
+                Component.text("N/A", GRAY)
+            );
+        }
+
+        TickData.SegmentData segmentAll = report.timePerTickData().segmentAll();
+
+        double avg = segmentAll.average() * 1.0E-6;
+        double min = segmentAll.least() * 1.0E-6;
+        double max = segmentAll.greatest() * 1.0E-6;
 
         return Arrays.asList(getColoredValue(avg), getColoredValue(min), getColoredValue(max));
     }

@@ -1,6 +1,7 @@
 package com.ishland.c2me.opts.dfc.common.ast;
 
 import com.ishland.c2me.opts.dfc.common.ast.binary.AddNode;
+import com.ishland.c2me.opts.dfc.common.ast.binary.DivNode;
 import com.ishland.c2me.opts.dfc.common.ast.binary.MaxNode;
 import com.ishland.c2me.opts.dfc.common.ast.binary.MaxShortNode;
 import com.ishland.c2me.opts.dfc.common.ast.binary.MinNode;
@@ -75,6 +76,7 @@ public class McToAst {
                 case CUBE -> new CubeNode(toAst(f.input()));
                 case HALF_NEGATIVE -> new NegMulNode(toAst(f.input()), 0.5);
                 case QUARTER_NEGATIVE -> new NegMulNode(toAst(f.input()), 0.25);
+                case INVERT -> new DivNode(new ConstantNode(1.0), toAst(f.input()));
                 case SQUEEZE -> new SqueezeNode(toAst(f.input()));
             };
             case DensityFunctions.RangeChoice f -> new RangeChoiceNode(toAst(f.input()), f.minInclusive(), f.maxExclusive(), toAst(f.whenInRange()), toAst(f.whenOutOfRange()));

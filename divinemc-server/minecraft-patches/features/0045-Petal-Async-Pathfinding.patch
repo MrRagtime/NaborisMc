@@ -677,9 +677,18 @@ index e3478244e430faa614f23c288019303bd6bb0e04..862a7d464e1045e543049523d771bf79
                      @Override
                      protected float distance(Node first, Node second) {
 diff --git a/net/minecraft/world/level/pathfinder/Path.java b/net/minecraft/world/level/pathfinder/Path.java
-index d8d086b54f07a855cf312b6f742802e267dfd034..42bf9d4d4a66c1de99ac1ad5b24210f17ec6c0ad 100644
+index d8d086b54f07a855cf312b6f742802e267dfd034..bd02babf2a9bb4bd5585f408deeba0c70b721dd0 100644
 --- a/net/minecraft/world/level/pathfinder/Path.java
 +++ b/net/minecraft/world/level/pathfinder/Path.java
+@@ -11,7 +11,7 @@ import net.minecraft.util.VisibleForDebug;
+ import net.minecraft.world.entity.Entity;
+ import net.minecraft.world.phys.Vec3;
+ 
+-public final class Path {
++public class Path {
+     public static final StreamCodec<FriendlyByteBuf, Path> STREAM_CODEC = StreamCodec.of((buffer, value) -> value.writeToStream(buffer), Path::createFromStream);
+     public final List<Node> nodes;
+     @Nullable
 @@ -28,6 +28,17 @@ public final class Path {
          this.reached = reached;
      }

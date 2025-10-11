@@ -11,7 +11,6 @@ import org.bxteam.divinemc.config.annotations.Experimental;
 import org.bxteam.divinemc.async.pathfinding.PathfindTaskRejectPolicy;
 import org.bxteam.divinemc.region.EnumRegionFileExtension;
 import org.bxteam.divinemc.region.type.LinearRegionFile;
-import org.bxteam.divinemc.async.AsyncJoinHandler;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.comments.CommentType;
 import org.simpleyaml.configuration.file.YamlFile;

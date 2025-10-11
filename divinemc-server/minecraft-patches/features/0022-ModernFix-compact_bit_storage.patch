@@ -10,7 +10,7 @@ As part of: ModernFix (https://github.com/embeddedt/ModernFix)
 Licensed under: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 
 diff --git a/net/minecraft/world/level/chunk/PalettedContainer.java b/net/minecraft/world/level/chunk/PalettedContainer.java
-index f1cae4cab36546d5798d2b59ac59774d1c9838c0..731da3f35013d9916577a7f475d6a796dd201742 100644
+index f1cae4cab36546d5798d2b59ac59774d1c9838c0..3baf84b3f636a3ea04945cb4c0f17acd7109bedb 100644
 --- a/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/net/minecraft/world/level/chunk/PalettedContainer.java
 @@ -283,6 +283,28 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
@@ -35,7 +35,7 @@ index f1cae4cab36546d5798d2b59ac59774d1c9838c0..731da3f35013d9916577a7f475d6a796
 +                        return;
 +                    }
 +                    this.data = this.createOrReuseData(null, 0);
-+                    this.data.palette.idFor(value);
++                    this.data.palette.idFor(value, this);
 +                }
 +            }
 +            // DivineMC end - ModernFix: compact_bit_storage

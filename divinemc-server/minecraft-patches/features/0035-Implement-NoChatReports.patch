@@ -99,7 +99,7 @@ index b5afc05924ae899e020c303c8b86398e1d4ab8a0..2a6fdec4faae3512060cbb21a2043129
 +    // DivineMC end - Implement NoChatReports
  }
 diff --git a/net/minecraft/network/protocol/game/ServerboundChatSessionUpdatePacket.java b/net/minecraft/network/protocol/game/ServerboundChatSessionUpdatePacket.java
-index 1df628ac0b414511aaed6e09d78f884c4170f730..1543f730843c1736c4db9a6ebe30be9cc9fbe36a 100644
+index 1df628ac0b414511aaed6e09d78f884c4170f730..aba42c2ea4f2dde395edbded3bc96e58d213908f 100644
 --- a/net/minecraft/network/protocol/game/ServerboundChatSessionUpdatePacket.java
 +++ b/net/minecraft/network/protocol/game/ServerboundChatSessionUpdatePacket.java
 @@ -26,6 +26,19 @@ public record ServerboundChatSessionUpdatePacket(RemoteChatSession.Data chatSess
@@ -110,7 +110,7 @@ index 1df628ac0b414511aaed6e09d78f884c4170f730..1543f730843c1736c4db9a6ebe30be9c
 +        if (org.bxteam.divinemc.config.DivineConfig.NetworkCategory.noChatReportsEnabled) {
 +            var impl = (net.minecraft.server.network.ServerGamePacketListenerImpl) handler;
 +
-+            if (!impl.getPlayer().getServer().isSingleplayerOwner(impl.getPlayer().getGameProfile())) {
++            if (!impl.getPlayer().level().getServer().isSingleplayerOwner(impl.getPlayer().nameAndId())) {
 +                if (org.bxteam.divinemc.config.DivineConfig.NetworkCategory.noChatReportsDemandOnClient) {
 +                    impl.disconnect(net.minecraft.network.chat.Component.literal(org.bxteam.divinemc.config.DivineConfig.NetworkCategory.noChatReportsDisconnectDemandOnClientMessage));
 +                }

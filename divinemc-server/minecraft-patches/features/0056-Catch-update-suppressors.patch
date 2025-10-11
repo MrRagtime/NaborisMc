@@ -20,10 +20,10 @@ index ae0eb872f59be23126a7d44056607058c81a0e81..e76530da9641acc482aa0f030c4dc267
                      if (var3 instanceof ReportedException reportedException && reportedException.getCause() instanceof OutOfMemoryError) {
                          throw PacketUtils.makeReportedException(var3, this.packet, this.listener);
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 88296555274b67dc504c4765bc9bf049545ca19a..3ea69f961797e390aabb697ad9a7f007e549d04d 100644
+index e3fb85c466aca52bd4431aabbc13a4de58c2f474..db392b8596f1f0438894a9fa8246beeb69ce0fd6 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1723,6 +1723,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1720,6 +1720,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              serverLevel.tickTimes10s.add(this.tickCount, j);
              serverLevel.tickTimes60s.add(this.tickCount, j);
              // DivineMC end - MSPT Tracking for each world

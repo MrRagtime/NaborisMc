@@ -6,7 +6,7 @@ Subject: [PATCH] SparklyPaper: Parallel world ticking
 Original project: https://github.com/SparklyPower/SparklyPaper
 
 diff --git a/src/main/java/ca/spottedleaf/moonrise/common/util/TickThread.java b/src/main/java/ca/spottedleaf/moonrise/common/util/TickThread.java
-index 69cdd304d255d52c9b7dc9b6a33ffdb630b79abe..a4adaba06c1bc4bb8029ccb128fde90ec2564525 100644
+index 69cdd304d255d52c9b7dc9b6a33ffdb630b79abe..73475f21a65395ab3f888d04d4860acde8aeb09c 100644
 --- a/src/main/java/ca/spottedleaf/moonrise/common/util/TickThread.java
 +++ b/src/main/java/ca/spottedleaf/moonrise/common/util/TickThread.java
 @@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
@@ -57,7 +57,7 @@ index 69cdd304d255d52c9b7dc9b6a33ffdb630b79abe..a4adaba06c1bc4bb8029ccb128fde90e
          if (!isTickThreadFor(entity)) {
              final String ex = "Thread failed main thread check: " +
 -                reason + ", context=" + getThreadContext() + ", entity=" + EntityUtil.dumpEntity(entity);
-+                reason + ", context=" + getThreadContext() + ", entity=" + EntityUtil.dumpEntity(entity) + " - " + getTickThreadInformation(entity.getServer()); // DivineMC - Parallel world ticking
++                reason + ", context=" + getThreadContext() + ", entity=" + EntityUtil.dumpEntity(entity) + " - " + getTickThreadInformation(entity.level().getServer()); // DivineMC - Parallel world ticking
              LOGGER.error(ex, new Throwable());
              throw new IllegalStateException(ex);
          }

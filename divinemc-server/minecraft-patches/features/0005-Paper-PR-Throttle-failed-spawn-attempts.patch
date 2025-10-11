@@ -178,7 +178,7 @@ index 9889485b15501c1adf1a73bb4603d3477860482d..2457247d2bc1c3e3b042a091c3a8290d
      // Paper start - rewrite chunk system
      private volatile ca.spottedleaf.moonrise.patches.starlight.light.SWMRNibbleArray[] blockNibbles;
 diff --git a/net/minecraft/world/level/chunk/storage/SerializableChunkData.java b/net/minecraft/world/level/chunk/storage/SerializableChunkData.java
-index 84840f50d1bcebc7b0bdb1d2f79b53fd6fc98abb..38cdc0f8ce03cfd99658177f609ba3a6590cf000 100644
+index 84840f50d1bcebc7b0bdb1d2f79b53fd6fc98abb..0e320673fb1cb9d4e4b5537850c2ad317624075f 100644
 --- a/net/minecraft/world/level/chunk/storage/SerializableChunkData.java
 +++ b/net/minecraft/world/level/chunk/storage/SerializableChunkData.java
 @@ -93,6 +93,7 @@ public record SerializableChunkData(
@@ -278,7 +278,7 @@ index 84840f50d1bcebc7b0bdb1d2f79b53fd6fc98abb..38cdc0f8ce03cfd99658177f609ba3a6
 +
 +    // Paper start - throttle failed spawn attempts - for plugin compatibility
 +    public SerializableChunkData(
-+        Registry<Biome> biomeRegistry,
++        PalettedContainerFactory containerFactory,
 +        ChunkPos chunkPos,
 +        int minSectionY,
 +        long lastUpdateTime,
@@ -298,7 +298,7 @@ index 84840f50d1bcebc7b0bdb1d2f79b53fd6fc98abb..38cdc0f8ce03cfd99658177f609ba3a6
 +        CompoundTag structureData,
 +        @Nullable net.minecraft.nbt.Tag persistentDataContainer // CraftBukkit - persistentDataContainer
 +    ) {
-+        this(biomeRegistry,
++        this(containerFactory,
 +            chunkPos,
 +            minSectionY,
 +            lastUpdateTime,
