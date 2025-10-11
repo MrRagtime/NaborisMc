@@ -32,10 +32,10 @@ index d7398b1ecf2660c29fb7d106b48fe02d3736603e..ab499a7eaccdc1578ec64f90f54f79b0
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 8d967f179e7b36517ecc6f29381bf69e57eb7a85..8e376ae6d3a8cadd3e7ac15f8d2c5666694461a0 100644
+index 6b8841a1a84f6316b89b052328bbb549b4acbe21..56aac091b6c126132d75835af340fae40e3a03f0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2904,7 +2904,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -2825,7 +2825,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
          Iterator<AttributeInstance> iterator = collection.iterator();
          while (iterator.hasNext()) {
              AttributeInstance genericInstance = iterator.next();
@@ -45,10 +45,10 @@ index 8d967f179e7b36517ecc6f29381bf69e57eb7a85..8e376ae6d3a8cadd3e7ac15f8d2c5666
                  break;
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 7725870545b4c87dc5e7536d04c710999ea6932b..afbcad33bd8feb5246f320fafff5c4a2c2e366e4 100644
+index 782cfca296cd0f5cced549d29ce6eb94ec74319c..36be4be04cc63b387680be6233fed00123fe6c9f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1805,6 +1805,26 @@ public class CraftEventFactory {
+@@ -1804,6 +1804,26 @@ public class CraftEventFactory {
      }
  
      public static boolean handleBlockFormEvent(Level world, BlockPos pos, net.minecraft.world.level.block.state.BlockState state, int flags, @Nullable Entity entity, boolean checkSetResult) {

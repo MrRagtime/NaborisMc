@@ -58,14 +58,5 @@ public class ExecutorShutdown {
                 AsyncPathProcessor.PATH_PROCESSING_EXECUTOR.awaitTermination(10L, TimeUnit.SECONDS);
             } catch (InterruptedException ignored) { }
         }
-
-        if (AsyncJoinHandler.JOIN_EXECUTOR != null) {
-            LOGGER.info("Shutting down async join executor...");
-            AsyncJoinHandler.JOIN_EXECUTOR.shutdown();
-
-            try {
-                AsyncJoinHandler.JOIN_EXECUTOR.awaitTermination(10L, TimeUnit.SECONDS);
-            } catch (InterruptedException ignored) { }
-        }
     }
 }

@@ -24,7 +24,7 @@ up on this optimisation before he came along.
 Locally this patch drops the entity tracker tick by a full 1.5x.
 
 diff --git a/net/minecraft/network/Connection.java b/net/minecraft/network/Connection.java
-index 3f60d1b0ac91cfd3418e791222cd7267774b367a..882a912ba3f23ee8239c24068704d9ec9a7f7c40 100644
+index f6e5fb11b471c34cbc7f3082b23c0a2a14331363..b63e976bfa89c0be75910954788500901c322ba1 100644
 --- a/net/minecraft/network/Connection.java
 +++ b/net/minecraft/network/Connection.java
 @@ -150,6 +150,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
@@ -45,14 +45,14 @@ index 3f60d1b0ac91cfd3418e791222cd7267774b367a..882a912ba3f23ee8239c24068704d9ec
          if (this.delayedDisconnect != null) {
 @@ -474,7 +476,13 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
          if (this.channel.eventLoop().inEventLoop()) {
-             this.doSendPacket(packet, channelFutureListener, flag);
+             this.doSendPacket(packet, sendListener, flush);
          } else {
--            this.channel.eventLoop().execute(() -> this.doSendPacket(packet, channelFutureListener, flag));
+-            this.channel.eventLoop().execute(() -> this.doSendPacket(packet, sendListener, flush));
 +            // Paper start - Optimise non-flush packet sending
-+            if (!flag && org.bxteam.divinemc.config.DivineConfig.NetworkCategory.optimizeNonFlushPacketSending) {
-+                this.eventLoop.lazyExecute(() -> this.doSendPacket(packet, channelFutureListener, flag));
++            if (!flush && org.bxteam.divinemc.config.DivineConfig.NetworkCategory.optimizeNonFlushPacketSending) {
++                this.eventLoop.lazyExecute(() -> this.doSendPacket(packet, sendListener, flush));
 +            } else {
-+                this.channel.eventLoop().execute(() -> this.doSendPacket(packet, channelFutureListener, flag));
++                this.channel.eventLoop().execute(() -> this.doSendPacket(packet, sendListener, flush));
 +            }
 +            // Paper end - Optimise non-flush packet sending
          }

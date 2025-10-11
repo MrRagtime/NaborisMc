@@ -8,10 +8,10 @@ Original project: https://github.com/PaperMC/Paper
 Paper pull request: https://github.com/PaperMC/Paper/pull/8074
 
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 1a280122b4ff661c2d2fad359ddfb671a1d8f324..c8ce9e591475df1485227d34316fc02c3ec33f3e 100644
+index 34b2cee473713d7830537c37100f37b0b38bc067..5106bfb8b48d963dca4784db1787123e9475ada0 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -208,10 +208,15 @@ public abstract class PlayerList {
+@@ -209,10 +209,15 @@ public abstract class PlayerList {
          mutableComponent.withStyle(ChatFormatting.YELLOW);
          Component joinMessage = mutableComponent; // Paper - Adventure
          serverGamePacketListenerImpl.teleport(player.getX(), player.getY(), player.getZ(), player.getYRot(), player.getXRot());

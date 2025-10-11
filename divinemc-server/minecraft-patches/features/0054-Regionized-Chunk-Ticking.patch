@@ -8,7 +8,7 @@ This patch adds regionized chunk ticking feature, by grouping adjacent chunks in
 Original idea by Dueris, modified by NONPLAYT and heavily optimized by dan28000
 
 diff --git a/net/minecraft/network/Connection.java b/net/minecraft/network/Connection.java
-index 411e1284a208ca1a097cf6eaa92e1e0d2203d83d..3f60d1b0ac91cfd3418e791222cd7267774b367a 100644
+index 78650957bacc0e26d3299a8de7f8bfc57c86627c..f6e5fb11b471c34cbc7f3082b23c0a2a14331363 100644
 --- a/net/minecraft/network/Connection.java
 +++ b/net/minecraft/network/Connection.java
 @@ -327,7 +327,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
@@ -21,10 +21,10 @@ index 411e1284a208ca1a097cf6eaa92e1e0d2203d83d..3f60d1b0ac91cfd3418e791222cd7267
              if (var2 instanceof ClosedChannelException) {
                  LOGGER.info("Connection closed during protocol change");
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0e3754963 100644
+index bfc200f39a22664204b5aa66d3911abdb368e563..50daa39747a0f07c4d31a13c4410819a82d5f076 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
-@@ -57,6 +57,7 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -58,6 +58,7 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
      private static final Logger LOGGER = LogUtils.getLogger();
      private final DistanceManager distanceManager;
      private final ServerLevel level;
@@ -32,7 +32,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0
      public final Thread mainThread;
      final ThreadedLevelLightEngine lightEngine;
      public final ServerChunkCache.MainThreadExecutor mainThreadProcessor;
-@@ -70,8 +71,10 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -71,8 +72,10 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
      private final long[] lastChunkPos = new long[4];
      private final ChunkStatus[] lastChunkStatus = new ChunkStatus[4];
      private final ChunkAccess[] lastChunk = new ChunkAccess[4];
@@ -45,7 +45,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0
      @Nullable
      @VisibleForDebug
      private NaturalSpawner.SpawnState lastSpawnState;
-@@ -153,36 +156,253 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -154,36 +157,253 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          return load ? this.syncLoad(chunkX, chunkZ, toStatus) : null;
      }
      // Paper end - rewrite chunk system
@@ -312,7 +312,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0
      }
      // Paper end - chunk tick iteration optimisations
  
-@@ -507,14 +727,21 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -502,14 +722,21 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          long gameTime = this.level.getGameTime();
          long l = gameTime - this.lastInhabitedUpdate;
          this.lastInhabitedUpdate = gameTime;
@@ -338,7 +338,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0
          // DivineMC start - Pufferfish: Optimize mob spawning
          if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableAsyncSpawning) {
              for (ServerPlayer player : this.level.players) {
-@@ -558,14 +785,18 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -553,14 +780,18 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
      }
  
      private void broadcastChangedChunks() {
@@ -363,7 +363,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0
      }
  
      private void tickChunks(long timeInhabited) {
-@@ -615,23 +846,28 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -610,23 +841,28 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
              filteredSpawningCategories = List.of();
          }
  
@@ -404,13 +404,13 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..45bf13dc23b886ea2d660c38c74becf0
 -        this.iterateTickingChunksFaster(); // Paper - chunk tick iteration optimisations
 +        this.iterateTickingChunksFaster(spawns); // Paper - chunk tick iteration optimisations // DivineMC - Regionized Chunk Ticking
          if (_boolean) {
-             this.level.tickCustomSpawners(this.spawnEnemies, this.spawnFriendlies);
+             this.level.tickCustomSpawners(this.spawnEnemies);
          }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index f9091b2daf735fd0788f8d6d60e3c812fd6dd4f2..0ad18866c323308ad9b87322932e03a283f740b1 100644
+index 33f9e1306c6e0315f256ab65aa594624b47593ae..668e20075c875775ac0bf355d7318c3ff1426fc0 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -191,7 +191,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -197,7 +197,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      private final LevelTicks<Block> blockTicks = new LevelTicks<>(this::isPositionTickingWithEntitiesLoaded);
      private final LevelTicks<Fluid> fluidTicks = new LevelTicks<>(this::isPositionTickingWithEntitiesLoaded);
      private final PathTypeCache pathTypesByPosCache = new PathTypeCache();
@@ -419,7 +419,7 @@ index f9091b2daf735fd0788f8d6d60e3c812fd6dd4f2..0ad18866c323308ad9b87322932e03a2
      volatile boolean isUpdatingNavigations;
      protected final Raids raids;
      private final ObjectLinkedOpenHashSet<BlockEventData> blockEvents = new ObjectLinkedOpenHashSet<>();
-@@ -806,6 +806,13 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -834,6 +834,13 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
                  this.dragonFight.tick();
              }
  
@@ -433,7 +433,7 @@ index f9091b2daf735fd0788f8d6d60e3c812fd6dd4f2..0ad18866c323308ad9b87322932e03a2
              io.papermc.paper.entity.activation.ActivationRange.activateEntities(this); // Paper - EAR
              this.entityTickList
                  .forEach(
-@@ -1828,22 +1835,16 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1849,22 +1856,16 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          if (Shapes.joinIsNotEmpty(collisionShape, collisionShape1, BooleanOp.NOT_SAME)) {
              List<PathNavigation> list = new ObjectArrayList<>();
  
@@ -465,19 +465,19 @@ index f9091b2daf735fd0788f8d6d60e3c812fd6dd4f2..0ad18866c323308ad9b87322932e03a2
              try {
                  this.isUpdatingNavigations = true;
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 22a2b6b31f6f9b9b613586f7d674302304be3232..66ba223dacefb3531c46b144c4499b2b2285eafe 100644
+index 250978ef6e09c8744065d143af38b99914bd25ec..e6d0977091042bb1b91c70190f6366cb4bd4d3c4 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -106,7 +106,7 @@ public abstract class Level implements LevelAccessor, UUIDLookup<Entity>, AutoCl
-     public static final int MIN_ENTITY_SPAWN_Y = -20000000;
-     public final org.bxteam.divinemc.util.BlockEntityTickersList blockEntityTickers = new org.bxteam.divinemc.util.BlockEntityTickersList(); // Paper - public // DivineMC - optimize block entity removals - Fix MC-117075
-     protected final NeighborUpdater neighborUpdater;
+@@ -112,7 +112,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+         .build();
+     public final org.bxteam.divinemc.util.BlockEntityTickersList blockEntityTickers = new org.bxteam.divinemc.util.BlockEntityTickersList(); // DivineMC - optimize block entity removals - Fix MC-117075
+     protected final CollectingNeighborUpdater neighborUpdater;
 -    private final List<TickingBlockEntity> pendingBlockEntityTickers = Lists.newArrayList();
 +    private final List<TickingBlockEntity> pendingBlockEntityTickers = java.util.Collections.synchronizedList(Lists.newArrayList()); // DivineMC - Regionized Chunk Ticking
      private boolean tickingBlockEntities;
      public final Thread thread;
      private final boolean isDebug;
-@@ -138,7 +138,7 @@ public abstract class Level implements LevelAccessor, UUIDLookup<Entity>, AutoCl
+@@ -144,7 +144,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
  
      public boolean captureBlockStates = false;
      public boolean captureTreeGeneration = false;
@@ -486,9 +486,9 @@ index 22a2b6b31f6f9b9b613586f7d674302304be3232..66ba223dacefb3531c46b144c4499b2b
      public Map<BlockPos, BlockEntity> capturedTileEntities = new java.util.LinkedHashMap<>(); // Paper - Retain block place order when capturing blockstates
      @Nullable
      public List<net.minecraft.world.entity.item.ItemEntity> captureDrops;
-@@ -1503,10 +1503,14 @@ public abstract class Level implements LevelAccessor, UUIDLookup<Entity>, AutoCl
+@@ -1457,10 +1457,14 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
  
-     protected void tickBlockEntities() {
+     public void tickBlockEntities() {
          this.tickingBlockEntities = true;
 -        if (!this.pendingBlockEntityTickers.isEmpty()) {
 -            this.blockEntityTickers.addAll(this.pendingBlockEntityTickers);
@@ -505,10 +505,10 @@ index 22a2b6b31f6f9b9b613586f7d674302304be3232..66ba223dacefb3531c46b144c4499b2b
          // Spigot start
          boolean runsNormally = this.tickRateManager().runsNormally();
 diff --git a/net/minecraft/world/level/redstone/CollectingNeighborUpdater.java b/net/minecraft/world/level/redstone/CollectingNeighborUpdater.java
-index 028eae2f9a459b60e92f3344091083aa93b54485..51e5a54aff069cac14deef6c04899d3a469842ce 100644
+index 879be2d05ef0fcfb8fab0c9f4e5bf66d7fce730b..ff8fde0d294c96755cdcdcef0cbf57dd259e06a7 100644
 --- a/net/minecraft/world/level/redstone/CollectingNeighborUpdater.java
 +++ b/net/minecraft/world/level/redstone/CollectingNeighborUpdater.java
-@@ -46,7 +46,7 @@ public class CollectingNeighborUpdater implements NeighborUpdater {
+@@ -53,7 +53,7 @@ public class CollectingNeighborUpdater implements NeighborUpdater {
          this.addAndRun(pos, new CollectingNeighborUpdater.MultiNeighborUpdate(pos.immutable(), block, orientation, facing));
      }
  
@@ -517,7 +517,7 @@ index 028eae2f9a459b60e92f3344091083aa93b54485..51e5a54aff069cac14deef6c04899d3a
          boolean flag = this.count > 0;
          boolean flag1 = this.maxChainedNeighborUpdates >= 0 && this.count >= this.maxChainedNeighborUpdates;
          this.count++;
-@@ -65,7 +65,7 @@ public class CollectingNeighborUpdater implements NeighborUpdater {
+@@ -72,7 +72,7 @@ public class CollectingNeighborUpdater implements NeighborUpdater {
          }
      }
  

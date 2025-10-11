@@ -23,11 +23,57 @@ index 3f85f9e9551b2eed6e66ab8036dbb1f40fb8bbac..78650957bacc0e26d3299a8de7f8bfc5
              } // Paper end - Buffer joins to world
          }
  
+diff --git a/net/minecraft/network/PacketProcessor.java b/net/minecraft/network/PacketProcessor.java
+index 3e4241976fdfe65bc0aae90a9097770745c0ddf1..ae0eb872f59be23126a7d44056607058c81a0e81 100644
+--- a/net/minecraft/network/PacketProcessor.java
++++ b/net/minecraft/network/PacketProcessor.java
+@@ -71,28 +71,8 @@ public class PacketProcessor implements AutoCloseable {
+         this.closed = true;
+     }
+ 
+-    // Paper start - detailed watchdog information
+-    public static final java.util.concurrent.ConcurrentLinkedDeque<PacketListener> packetProcessing = new java.util.concurrent.ConcurrentLinkedDeque<>();
+-    static final java.util.concurrent.atomic.AtomicLong totalMainThreadPacketsProcessed = new java.util.concurrent.atomic.AtomicLong();
+-
+-    public static long getTotalProcessedPackets() {
+-        return totalMainThreadPacketsProcessed.get();
+-    }
+-
+-    public static java.util.List<PacketListener> getCurrentPacketProcessors() {
+-        java.util.List<PacketListener> listeners = new java.util.ArrayList<>(4);
+-        for (PacketListener listener : packetProcessing) {
+-            listeners.add(listener);
+-        }
+-
+-        return listeners;
+-    }
+-    // Paper end - detailed watchdog information
+-
+     record ListenerAndPacket<T extends PacketListener>(T listener, Packet<T> packet) {
+         public void handle() {
+-            packetProcessing.push(this.listener); // Paper - detailed watchdog information
+-            try { // Paper - detailed watchdog information
+             if (this.listener instanceof net.minecraft.server.network.ServerCommonPacketListenerImpl serverCommonPacketListener && serverCommonPacketListener.processedDisconnect) return; // Paper - Don't handle sync packets for kicked players
+             if (this.listener.shouldHandleMessage(this.packet)) {
+                 try {
+@@ -107,12 +87,6 @@ public class PacketProcessor implements AutoCloseable {
+             } else {
+                 PacketProcessor.LOGGER.debug("Ignoring packet due to disconnection: {}", this.packet);
+             }
+-            // Paper start - detailed watchdog information
+-            } finally {
+-                totalMainThreadPacketsProcessed.getAndIncrement();
+-                packetProcessing.pop();
+-            }
+-            // Paper end - detailed watchdog information
+         }
+     }
+ }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 01ad6566c236bac2141f75fa9cf37844e3d97637..a4a2231f5850269a6003afca8db78fa486cf3a71 100644
+index f22762d2e0c97246415669baa7b3d713bb6e929a..8e1705b301c8e880d0a8dbce1025890b3265b77b 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -1370,13 +1370,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1372,13 +1372,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      // Paper end - log detailed entity tick information
  
      public void tickNonPassenger(Entity entity) {
@@ -41,7 +87,7 @@ index 01ad6566c236bac2141f75fa9cf37844e3d97637..a4a2231f5850269a6003afca8db78fa4
          entity.setOldPosAndRot();
          entity.tickCount++;
          entity.totalEntityAge++; // Paper - age-like counter for all entities
-@@ -1389,13 +1383,6 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1391,13 +1385,6 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          for (Entity entity1 : entity.getPassengers()) {
              this.tickPassenger(entity, entity1, isActive); // Paper - EAR 2
          }
@@ -56,7 +102,7 @@ index 01ad6566c236bac2141f75fa9cf37844e3d97637..a4a2231f5850269a6003afca8db78fa4
  
      private void tickPassenger(Entity ridingEntity, Entity passengerEntity, final boolean isActive) { // Paper - EAR 2
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 6724ef32e4d0de6ca0965b8b96430b68179b4bd7..72628fab95b76b67630594611f894a5ecdad5fc3 100644
+index 167c244433fd77b5d0cc0975965f04c5d88001fa..2bf4f7c612318c6cb3f21f111811cc28766298e0 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1117,29 +1117,10 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
@@ -103,3 +149,23 @@ index 6724ef32e4d0de6ca0965b8b96430b68179b4bd7..72628fab95b76b67630594611f894a5e
      }
  
      private void applyMovementEmissionAndPlaySound(Entity.MovementEmission movementEmission, Vec3 movement, BlockPos pos, BlockState state) {
+@@ -5027,9 +5001,7 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+     }
+ 
+     public void setDeltaMovement(Vec3 deltaMovement) {
+-        synchronized (this.posLock) { // Paper - detailed watchdog information
+         this.deltaMovement = deltaMovement;
+-        } // Paper - detailed watchdog information
+     }
+ 
+     public void addDeltaMovement(Vec3 addend) {
+@@ -5127,9 +5099,7 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+         }
+         // Paper end - Block invalid positions and bounding box
+         if (this.position.x != x || this.position.y != y || this.position.z != z) {
+-            synchronized (this.posLock) { // Paper - detailed watchdog information
+             this.position = new Vec3(x, y, z);
+-            } // Paper - detailed watchdog information
+             int floor = Mth.floor(x);
+             int floor1 = Mth.floor(y);
+             int floor2 = Mth.floor(z);
