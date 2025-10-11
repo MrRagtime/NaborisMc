@@ -10,7 +10,7 @@ Original project: https://github.com/LogisticsCraft/OcclusionCulling
 Original license: MIT
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 2bf4f7c612318c6cb3f21f111811cc28766298e0..ee33af29c7f98df04f687dde627413e186c42221 100644
+index 167c244433fd77b5d0cc0975965f04c5d88001fa..b26226f6479f7b9c58a1355639c6f264e161ab50 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -147,7 +147,7 @@ import net.minecraft.world.waypoints.WaypointTransmitter;
@@ -22,7 +22,7 @@ index 2bf4f7c612318c6cb3f21f111811cc28766298e0..ee33af29c7f98df04f687dde627413e1
      public static javax.script.ScriptEngine scriptEngine = new javax.script.ScriptEngineManager().getEngineByName("rhino"); // Purpur - Configurable entity base attributes
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
-@@ -5535,4 +5535,47 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -5565,4 +5565,47 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
          return false;
      }
      // Purpur end - Ridables

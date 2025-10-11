@@ -5,10 +5,10 @@ Subject: [PATCH] Cleanup dead code from Paper
 
 
 diff --git a/net/minecraft/network/Connection.java b/net/minecraft/network/Connection.java
-index 3f85f9e9551b2eed6e66ab8036dbb1f40fb8bbac..78650957bacc0e26d3299a8de7f8bfc57c86627c 100644
+index 987edb0a89c00695c6620a8996c063d3f88fc549..b63e976bfa89c0be75910954788500901c322ba1 100644
 --- a/net/minecraft/network/Connection.java
 +++ b/net/minecraft/network/Connection.java
-@@ -602,13 +602,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -610,13 +610,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
              if (!(this.packetListener instanceof net.minecraft.server.network.ServerLoginPacketListenerImpl loginPacketListener)
                  || loginPacketListener.state != net.minecraft.server.network.ServerLoginPacketListenerImpl.State.VERIFYING
                  || Connection.joinAttemptsThisTick++ < MAX_PER_TICK) {
@@ -24,7 +24,7 @@ index 3f85f9e9551b2eed6e66ab8036dbb1f40fb8bbac..78650957bacc0e26d3299a8de7f8bfc5
          }
  
 diff --git a/net/minecraft/network/PacketProcessor.java b/net/minecraft/network/PacketProcessor.java
-index 3e4241976fdfe65bc0aae90a9097770745c0ddf1..ae0eb872f59be23126a7d44056607058c81a0e81 100644
+index 98b101fde04fbf5507f021bb8d8e6bed334de5b6..e76530da9641acc482aa0f030c4dc2670b1f7b14 100644
 --- a/net/minecraft/network/PacketProcessor.java
 +++ b/net/minecraft/network/PacketProcessor.java
 @@ -71,28 +71,8 @@ public class PacketProcessor implements AutoCloseable {
@@ -56,7 +56,7 @@ index 3e4241976fdfe65bc0aae90a9097770745c0ddf1..ae0eb872f59be23126a7d44056607058
              if (this.listener instanceof net.minecraft.server.network.ServerCommonPacketListenerImpl serverCommonPacketListener && serverCommonPacketListener.processedDisconnect) return; // Paper - Don't handle sync packets for kicked players
              if (this.listener.shouldHandleMessage(this.packet)) {
                  try {
-@@ -107,12 +87,6 @@ public class PacketProcessor implements AutoCloseable {
+@@ -111,12 +91,6 @@ public class PacketProcessor implements AutoCloseable {
              } else {
                  PacketProcessor.LOGGER.debug("Ignoring packet due to disconnection: {}", this.packet);
              }
@@ -70,10 +70,10 @@ index 3e4241976fdfe65bc0aae90a9097770745c0ddf1..ae0eb872f59be23126a7d44056607058
      }
  }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index f22762d2e0c97246415669baa7b3d713bb6e929a..8e1705b301c8e880d0a8dbce1025890b3265b77b 100644
+index f4399659d084ed9703052b3ce2c82a9e198cd514..668e20075c875775ac0bf355d7318c3ff1426fc0 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -1372,13 +1372,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1385,13 +1385,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      // Paper end - log detailed entity tick information
  
      public void tickNonPassenger(Entity entity) {
@@ -87,7 +87,7 @@ index f22762d2e0c97246415669baa7b3d713bb6e929a..8e1705b301c8e880d0a8dbce1025890b
          entity.setOldPosAndRot();
          entity.tickCount++;
          entity.totalEntityAge++; // Paper - age-like counter for all entities
-@@ -1391,13 +1385,6 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1404,13 +1398,6 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          for (Entity entity1 : entity.getPassengers()) {
              this.tickPassenger(entity, entity1, isActive); // Paper - EAR 2
          }
@@ -102,7 +102,7 @@ index f22762d2e0c97246415669baa7b3d713bb6e929a..8e1705b301c8e880d0a8dbce1025890b
  
      private void tickPassenger(Entity ridingEntity, Entity passengerEntity, final boolean isActive) { // Paper - EAR 2
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 167c244433fd77b5d0cc0975965f04c5d88001fa..2bf4f7c612318c6cb3f21f111811cc28766298e0 100644
+index b26226f6479f7b9c58a1355639c6f264e161ab50..ee33af29c7f98df04f687dde627413e186c42221 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1117,29 +1117,10 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name

@@ -54,7 +54,7 @@ index 5fb9a4cebf7407b8166ea5716c48a68e658d68d3..304ff53e2c21c6153ff8f04436eae66b
      public int serverViewDistance;
      public final WorldGenContext worldGenContext; // Paper - public
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index e6d0977091042bb1b91c70190f6366cb4bd4d3c4..ccf9e2d5ef57ecdf1c7471620c5baa33575738e2 100644
+index 9f559be50c990d15d7765827b7c4c4092f5e184a..9235c1e9dc6f050ae9e62ad423572ddef278a240 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -259,7 +259,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl

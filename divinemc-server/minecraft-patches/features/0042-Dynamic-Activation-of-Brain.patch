@@ -31,10 +31,10 @@ index ca21597263cb430e2a5ae07e8cecfb0d53a270d2..226088405c019922085285ba5d04d7c1
          }
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 2f09f9c02e63563828dd7000352baf2723a0ac59..e1497f28b870e014e89ec6b189ee7989b07bb933 100644
+index 4f4ede83b6ca5e1884607410b526a675fed4d42d..b240c7f2579e25d520fbc0ab08e801028bc15192 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -829,6 +829,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -830,6 +830,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
              this.entityTickList
                  .forEach(
                      entity -> {

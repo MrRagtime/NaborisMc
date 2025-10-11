@@ -5,10 +5,10 @@ Subject: [PATCH] Catch update suppressors
 
 
 diff --git a/net/minecraft/network/PacketProcessor.java b/net/minecraft/network/PacketProcessor.java
-index ae0eb872f59be23126a7d44056607058c81a0e81..e76530da9641acc482aa0f030c4dc2670b1f7b14 100644
+index 3e4241976fdfe65bc0aae90a9097770745c0ddf1..98b101fde04fbf5507f021bb8d8e6bed334de5b6 100644
 --- a/net/minecraft/network/PacketProcessor.java
 +++ b/net/minecraft/network/PacketProcessor.java
-@@ -77,6 +77,10 @@ public class PacketProcessor implements AutoCloseable {
+@@ -97,6 +97,10 @@ public class PacketProcessor implements AutoCloseable {
              if (this.listener.shouldHandleMessage(this.packet)) {
                  try {
                      this.packet.handle(this.listener);

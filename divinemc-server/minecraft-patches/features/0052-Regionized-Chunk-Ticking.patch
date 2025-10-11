@@ -8,7 +8,7 @@ This patch adds regionized chunk ticking feature, by grouping adjacent chunks in
 Original idea by Dueris, modified by NONPLAYT and heavily optimized by dan28000
 
 diff --git a/net/minecraft/network/Connection.java b/net/minecraft/network/Connection.java
-index 78650957bacc0e26d3299a8de7f8bfc57c86627c..f6e5fb11b471c34cbc7f3082b23c0a2a14331363 100644
+index 3f85f9e9551b2eed6e66ab8036dbb1f40fb8bbac..2da4ba00963c9ff6715fe60aa2f6af724fa8ed61 100644
 --- a/net/minecraft/network/Connection.java
 +++ b/net/minecraft/network/Connection.java
 @@ -327,7 +327,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
@@ -407,7 +407,7 @@ index bfc200f39a22664204b5aa66d3911abdb368e563..50daa39747a0f07c4d31a13c4410819a
              this.level.tickCustomSpawners(this.spawnEnemies);
          }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 33f9e1306c6e0315f256ab65aa594624b47593ae..668e20075c875775ac0bf355d7318c3ff1426fc0 100644
+index d27a130f80cb8225a30b289b9d06c5c508a55ea7..f4399659d084ed9703052b3ce2c82a9e198cd514 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -197,7 +197,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -433,7 +433,7 @@ index 33f9e1306c6e0315f256ab65aa594624b47593ae..668e20075c875775ac0bf355d7318c3f
              io.papermc.paper.entity.activation.ActivationRange.activateEntities(this); // Paper - EAR
              this.entityTickList
                  .forEach(
-@@ -1849,22 +1856,16 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1862,22 +1869,16 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          if (Shapes.joinIsNotEmpty(collisionShape, collisionShape1, BooleanOp.NOT_SAME)) {
              List<PathNavigation> list = new ObjectArrayList<>();
  
@@ -465,7 +465,7 @@ index 33f9e1306c6e0315f256ab65aa594624b47593ae..668e20075c875775ac0bf355d7318c3f
              try {
                  this.isUpdatingNavigations = true;
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 250978ef6e09c8744065d143af38b99914bd25ec..e6d0977091042bb1b91c70190f6366cb4bd4d3c4 100644
+index 49c4d40e802f8adaba52d929ba013d3953704989..9f559be50c990d15d7765827b7c4c4092f5e184a 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -112,7 +112,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
