@@ -1,9 +1,9 @@
-name: Build DivineMC 1.21.8
+name: Build DivineMC 1.21.10
 
 on:
   push:
     branches:
-      - "ver/1.21.8"
+      - "ver/1.21.10"
   workflow_dispatch:
 
 jobs:
