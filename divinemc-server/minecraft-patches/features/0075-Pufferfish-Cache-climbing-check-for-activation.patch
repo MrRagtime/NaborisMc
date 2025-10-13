@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
+Date: Tue, 14 Oct 2025 01:35:26 +0300
+Subject: [PATCH] Pufferfish: Cache climbing check for activation
+
+This patch is based on the following patch:
+"Cache climbing check for activation"
+By: Paul Sauve <paul@technove.co>
+As part of: Pufferfish (https://github.com/pufferfish-gg/Pufferfish)
+Licensed under: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+
+diff --git a/io/papermc/paper/entity/activation/ActivationRange.java b/io/papermc/paper/entity/activation/ActivationRange.java
+index 226088405c019922085285ba5d04d7c131470c69..61bf86a1380060ff118c31b5070b28705a897529 100644
+--- a/io/papermc/paper/entity/activation/ActivationRange.java
++++ b/io/papermc/paper/entity/activation/ActivationRange.java
+@@ -238,7 +238,7 @@ public final class ActivationRange {
+         }
+         // special cases.
+         if (entity instanceof final LivingEntity living) {
+-            if (living.onClimbable() || living.jumping || living.hurtTime > 0 || !living.activeEffects.isEmpty() || living.isFreezing()) {
++            if (living.onClimbableCached() || living.jumping || living.hurtTime > 0 || !living.activeEffects.isEmpty() || living.isFreezing()) { // DivineMC - Pufferfish: Cache climbing check for activation
+                 return 1;
+             }
+             if (entity instanceof final Mob mob && mob.getTarget() != null) {
+diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
+index 85e287bc66c4e2be6f703c3206fe53bba3d15a6d..fe7232b25458f363dfc43dd1eccab5b95212fc10 100644
+--- a/net/minecraft/world/entity/LivingEntity.java
++++ b/net/minecraft/world/entity/LivingEntity.java
+@@ -2236,6 +2236,20 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+         return this.lastClimbablePos;
+     }
+ 
++    // DivineMC start - Pufferfish: Cache climbing check for activation
++    private boolean cachedOnClimbable = false;
++    private BlockPos lastClimbingPosition = null;
++
++    public boolean onClimbableCached() {
++        if (!this.blockPosition().equals(this.lastClimbingPosition)) {
++            this.cachedOnClimbable = this.onClimbable();
++            this.lastClimbingPosition = this.blockPosition();
++        }
++
++        return this.cachedOnClimbable;
++    }
++    // DivineMC end - Pufferfish: Cache climbing check for activation
++
+     public boolean onClimbable() {
+         if (this.isSpectator()) {
+             return false;

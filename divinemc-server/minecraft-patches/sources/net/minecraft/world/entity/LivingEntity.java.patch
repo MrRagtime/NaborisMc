@@ -1,5 +1,13 @@
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
+@@ -756,6 +_,7 @@
+ 
+         super.remove(reason, eventCause); // CraftBukkit
+         this.brain.clearMemories();
++        this.combatTracker.resetCombatState(); // DivineMC - Fix MC-298464 (by HaHaWTH)
+     }
+ 
+     @Override
 @@ -1431,7 +_,7 @@
                  player.setRealHealth(health);
              }
