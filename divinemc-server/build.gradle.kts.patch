@@ -150,7 +150,7 @@
      implementation("net.neoforged:srgutils:1.0.9") // Mappings handling
      implementation("net.neoforged:AutoRenamingTool:2.0.3") // Remap plugins
 @@ -219,30 +_,42 @@
-     implementation("me.lucko:spark-paper:1.10.133-20250413.112336-1")
+     implementation("me.lucko:spark-paper:1.10.152")
  }
  
 +// DivineMC start - Hide irrelevant compilation warnings
@@ -168,7 +168,7 @@
          val git = Git(rootProject.layout.projectDirectory.path)
          val mcVersion = rootProject.providers.gradleProperty("mcVersion").get()
          val build = System.getenv("BUILD_NUMBER") ?: null
--        val buildTime = if (build != null) Instant.now() else Instant.EPOCH
+-        val buildTime = providers.environmentVariable("BUILD_STARTED_AT").map(Instant::parse).orElse(Instant.EPOCH).get()
 +        val buildTime = Instant.now() // DivineMC - Set build time to current
          val gitHash = git.exec(providers, "rev-parse", "--short=7", "HEAD").get().trim()
          val implementationVersion = "$mcVersion-${build ?: "DEV"}-$gitHash"
