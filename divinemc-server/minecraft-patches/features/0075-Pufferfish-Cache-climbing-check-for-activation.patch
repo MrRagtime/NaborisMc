@@ -23,10 +23,10 @@ index 226088405c019922085285ba5d04d7c131470c69..61bf86a1380060ff118c31b5070b2870
              }
              if (entity instanceof final Mob mob && mob.getTarget() != null) {
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 85e287bc66c4e2be6f703c3206fe53bba3d15a6d..fe7232b25458f363dfc43dd1eccab5b95212fc10 100644
+index c08fb102fb9d325cf7c41e32b32833e70474fecb..3533a8fe46f255025db70242b214fcd51916a6d0 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -2236,6 +2236,20 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -2243,6 +2243,20 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          return this.lastClimbablePos;
      }
  

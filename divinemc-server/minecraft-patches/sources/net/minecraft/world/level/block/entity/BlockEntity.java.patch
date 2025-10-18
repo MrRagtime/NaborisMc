@@ -3,9 +3,9 @@
 @@ -392,7 +_,7 @@
  
      // CraftBukkit start - add method
-     public org.bukkit.inventory.InventoryHolder getOwner() {
+     public @Nullable org.bukkit.inventory.InventoryHolder getOwner() {
 -        return getOwner(true);
-+        return getOwner(org.bxteam.divinemc.config.DivineConfig.PerformanceCategory.createSnapshotOnRetrievingBlockState); // DivineMC - EMC: Don't use snapshots for acquiring blockstate
++        return getOwner(org.bxteam.divinemc.config.DivineConfig.PerformanceCategory.createSnapshotOnRetrievingBlockState); // DivineMC - EMC: Don't use snapshots for acquiring blockstate;
      }
  
-     public org.bukkit.inventory.InventoryHolder getOwner(boolean useSnapshot) {
+     public @Nullable org.bukkit.inventory.InventoryHolder getOwner(boolean useSnapshot) {

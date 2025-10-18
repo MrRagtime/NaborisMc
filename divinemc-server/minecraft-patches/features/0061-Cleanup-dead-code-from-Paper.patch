@@ -5,10 +5,10 @@ Subject: [PATCH] Cleanup dead code from Paper
 
 
 diff --git a/net/minecraft/network/Connection.java b/net/minecraft/network/Connection.java
-index 987edb0a89c00695c6620a8996c063d3f88fc549..b63e976bfa89c0be75910954788500901c322ba1 100644
+index 5b31eed8f91b45b46521da5169d8003dfd5ec669..bd0712025fd20fbbc24d86f29700f7a28ed81921 100644
 --- a/net/minecraft/network/Connection.java
 +++ b/net/minecraft/network/Connection.java
-@@ -610,13 +610,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -608,13 +608,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
              if (!(this.packetListener instanceof net.minecraft.server.network.ServerLoginPacketListenerImpl loginPacketListener)
                  || loginPacketListener.state != net.minecraft.server.network.ServerLoginPacketListenerImpl.State.VERIFYING
                  || Connection.joinAttemptsThisTick++ < MAX_PER_TICK) {
@@ -70,7 +70,7 @@ index 98b101fde04fbf5507f021bb8d8e6bed334de5b6..e76530da9641acc482aa0f030c4dc267
      }
  }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index f4399659d084ed9703052b3ce2c82a9e198cd514..668e20075c875775ac0bf355d7318c3ff1426fc0 100644
+index e550e647693c27c8f8c4f9718d4fe1210e07aa76..21f9b04927418778645475fda51d2d978215dc1c 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -1385,13 +1385,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -102,7 +102,7 @@ index f4399659d084ed9703052b3ce2c82a9e198cd514..668e20075c875775ac0bf355d7318c3f
  
      private void tickPassenger(Entity ridingEntity, Entity passengerEntity, final boolean isActive) { // Paper - EAR 2
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index b26226f6479f7b9c58a1355639c6f264e161ab50..ee33af29c7f98df04f687dde627413e186c42221 100644
+index 0e7a870e85be7f3a2856ce0ca9c861295a66e032..e8fdcb827af1d7e04bcf1918922e89929d29eba0 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1117,29 +1117,10 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
@@ -149,7 +149,7 @@ index b26226f6479f7b9c58a1355639c6f264e161ab50..ee33af29c7f98df04f687dde627413e1
      }
  
      private void applyMovementEmissionAndPlaySound(Entity.MovementEmission movementEmission, Vec3 movement, BlockPos pos, BlockState state) {
-@@ -5027,9 +5001,7 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -5026,9 +5000,7 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
      }
  
      public void setDeltaMovement(Vec3 deltaMovement) {
@@ -159,7 +159,7 @@ index b26226f6479f7b9c58a1355639c6f264e161ab50..ee33af29c7f98df04f687dde627413e1
      }
  
      public void addDeltaMovement(Vec3 addend) {
-@@ -5127,9 +5099,7 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -5126,9 +5098,7 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
          }
          // Paper end - Block invalid positions and bounding box
          if (this.position.x != x || this.position.y != y || this.position.z != z) {

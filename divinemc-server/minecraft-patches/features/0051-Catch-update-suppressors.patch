@@ -20,10 +20,10 @@ index 3e4241976fdfe65bc0aae90a9097770745c0ddf1..98b101fde04fbf5507f021bb8d8e6bed
                      if (var3 instanceof ReportedException reportedException && reportedException.getCause() instanceof OutOfMemoryError) {
                          throw PacketUtils.makeReportedException(var3, this.packet, this.listener);
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 1c60d0384e3f5cc9f719fdd2ca2960af407114a0..949b8129ec014c76a1558a9011633f1a6405f2d7 100644
+index 6a714d59d01eafcd833f05208a948bf33b797392..f654664fb06556125cbd2a213c9fb89eabb329e7 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1725,6 +1725,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1744,6 +1744,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              serverLevel.tickTimes10s.add(this.tickCount, j);
              serverLevel.tickTimes60s.add(this.tickCount, j);
              // DivineMC end - MSPT Tracking for each world
@@ -35,7 +35,7 @@ index 1c60d0384e3f5cc9f719fdd2ca2960af407114a0..949b8129ec014c76a1558a9011633f1a
              CrashReport crashReport = CrashReport.forThrowable(levelTickingException, "Exception ticking world");
              serverLevel.fillReportDetails(crashReport);
 diff --git a/net/minecraft/world/level/block/ShulkerBoxBlock.java b/net/minecraft/world/level/block/ShulkerBoxBlock.java
-index f3bc957110ef60ad5e4384b934b60dccea76d5a7..18a1ed31575bec6fdbeed5d394c9f90e48ea9ba4 100644
+index e08083fbb6c3090c9a6f78dbbe487cbd4fec485a..d5d77110e7799223a66c2d6e47a1d9b4653f3ec4 100644
 --- a/net/minecraft/world/level/block/ShulkerBoxBlock.java
 +++ b/net/minecraft/world/level/block/ShulkerBoxBlock.java
 @@ -183,7 +183,17 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
@@ -58,7 +58,7 @@ index f3bc957110ef60ad5e4384b934b60dccea76d5a7..18a1ed31575bec6fdbeed5d394c9f90e
  
      public static Block getBlockByColor(@Nullable DyeColor color) {
 diff --git a/net/minecraft/world/level/redstone/NeighborUpdater.java b/net/minecraft/world/level/redstone/NeighborUpdater.java
-index 332b33a004ab11150cca0cc2cefc26d0286648f5..261f3fb9981342330a31d4a4f317d1c93120012d 100644
+index 3f4b17a222fdbf97ca8979a43f1f231d9e9d8ddb..1b7a1481d4d4167036185ddcbafe7c11a1b84a52 100644
 --- a/net/minecraft/world/level/redstone/NeighborUpdater.java
 +++ b/net/minecraft/world/level/redstone/NeighborUpdater.java
 @@ -60,9 +60,19 @@ public interface NeighborUpdater {

@@ -31,7 +31,7 @@ index ca21597263cb430e2a5ae07e8cecfb0d53a270d2..226088405c019922085285ba5d04d7c1
          }
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 4f4ede83b6ca5e1884607410b526a675fed4d42d..b240c7f2579e25d520fbc0ab08e801028bc15192 100644
+index 97ecdd880c0225d176859517ed715e2b4159ddeb..2aac1cdfa0c3cdf3d56d57452d45318ef6793cbb 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -830,6 +830,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -43,7 +43,7 @@ index 4f4ede83b6ca5e1884607410b526a675fed4d42d..b240c7f2579e25d520fbc0ab08e80102
                              if (!tickRateManager.isEntityFrozen(entity)) {
                                  entity.checkDespawn();
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index b5004de3ca8951a5884a3b62b129aa2588a67af7..6724ef32e4d0de6ca0965b8b96430b68179b4bd7 100644
+index c36d133e877353f9509543b0833be745286574e9..ee8cdf62642b2713dbae9d1735db7c5e5fd55a55 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -367,6 +367,8 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
@@ -56,7 +56,7 @@ index b5004de3ca8951a5884a3b62b129aa2588a67af7..6724ef32e4d0de6ca0965b8b96430b68
      // Paper start - EAR 2
      public final boolean defaultActivationState;
 diff --git a/net/minecraft/world/entity/EntityType.java b/net/minecraft/world/entity/EntityType.java
-index c7544cad07293a504204cfa8bf9d8322ef16118c..e680780a0e46e9e5f9126bd11a20b918e8c36066 100644
+index 881575864f864305973033ac6e664fc47e49ca16..7d5940327c5e7a945165228d502f678a8234cd02 100644
 --- a/net/minecraft/world/entity/EntityType.java
 +++ b/net/minecraft/world/entity/EntityType.java
 @@ -1192,6 +1192,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
@@ -68,7 +68,7 @@ index c7544cad07293a504204cfa8bf9d8322ef16118c..e680780a0e46e9e5f9126bd11a20b918
      @Nullable
      private Component description;
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index c3a7a41b399590e2c004fda4e97b1935575c4972..dd25b049615c4465c1bf9ea0004dd649f5c55c5f 100644
+index c551b8c8c9b9d070afdbcf5cfcdb35e99830fd91..b61b9c512f23d5ae0465fe7196fbb222918b0988 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
 @@ -220,10 +220,10 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
@@ -147,7 +147,7 @@ index 653c58c7637c46c8b46a5082f671324a2221d431..a4328a427636aa845d6627ecb75a9efe
      public boolean hasTasks() {
          for (WrappedGoal task : this.availableGoals) {
 diff --git a/net/minecraft/world/entity/animal/allay/Allay.java b/net/minecraft/world/entity/animal/allay/Allay.java
-index 3a2451bfa5e59de51d703eac8a536284e1d3348b..2422895ca4a2939f52f119384f498bd23bf9b7cc 100644
+index ae68a19a0b13bc626efec6a028f3abba4a436f3b..c5526952961c3c2705f946021ff3a8306ad2bde1 100644
 --- a/net/minecraft/world/entity/animal/allay/Allay.java
 +++ b/net/minecraft/world/entity/animal/allay/Allay.java
 @@ -112,6 +112,7 @@ public class Allay extends PathfinderMob implements InventoryCarrier, VibrationS
@@ -156,8 +156,8 @@ index 3a2451bfa5e59de51d703eac8a536284e1d3348b..2422895ca4a2939f52f119384f498bd2
      private org.purpurmc.purpur.controller.FlyingMoveControllerWASD purpurController; // Purpur - Ridables
 +    private int behaviorTick = 0; // DivineMC - Dynamic Activation of Brain
  
-     public Allay(EntityType<? extends Allay> entityType, Level level) {
-         super(entityType, level);
+     public Allay(EntityType<? extends Allay> type, Level level) {
+         super(type, level);
 @@ -266,10 +267,13 @@ public class Allay extends PathfinderMob implements InventoryCarrier, VibrationS
  
      @Override
@@ -177,7 +177,7 @@ index 3a2451bfa5e59de51d703eac8a536284e1d3348b..2422895ca4a2939f52f119384f498bd2
  
      @Override
 diff --git a/net/minecraft/world/entity/animal/axolotl/Axolotl.java b/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-index 1927f8be451258d9f0f8eec1617d103a4140e1e7..781ce63ff615d718cdf14bf6c3a4c742f628a920 100644
+index a952e78ac0c1fa7a2728fc3036b93e69e2fefb8d..8540ee65e1733ab37f77c964b8514e08d08781f3 100644
 --- a/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 +++ b/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 @@ -111,6 +111,7 @@ public class Axolotl extends Animal implements Bucketable {
@@ -186,8 +186,8 @@ index 1927f8be451258d9f0f8eec1617d103a4140e1e7..781ce63ff615d718cdf14bf6c3a4c742
      private static final int REGEN_BUFF_BASE_DURATION = 100;
 +    private int behaviorTick = 0; // DivineMC - Dynamic Activation of Brain
  
-     public Axolotl(EntityType<? extends Axolotl> entityType, Level level) {
-         super(entityType, level);
+     public Axolotl(EntityType<? extends Axolotl> type, Level level) {
+         super(type, level);
 @@ -372,13 +373,16 @@ public class Axolotl extends Animal implements Bucketable {
  
      @Override
@@ -212,7 +212,7 @@ index 1927f8be451258d9f0f8eec1617d103a4140e1e7..781ce63ff615d718cdf14bf6c3a4c742
  
      public static AttributeSupplier.Builder createAttributes() {
 diff --git a/net/minecraft/world/entity/animal/frog/Frog.java b/net/minecraft/world/entity/animal/frog/Frog.java
-index 1a504e30602d7d8feaf7a9180adf6382596aae02..9656c1bf22b1b6c945a8ba5603742261db650fd5 100644
+index 7643e8d1b89a23354c27395509407c20e3d93b69..ccd4a12b5bf2a064f8ea7d49113a18b541778ca5 100644
 --- a/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/net/minecraft/world/entity/animal/frog/Frog.java
 @@ -105,6 +105,7 @@ public class Frog extends Animal {
@@ -221,8 +221,8 @@ index 1a504e30602d7d8feaf7a9180adf6382596aae02..9656c1bf22b1b6c945a8ba5603742261
      private org.purpurmc.purpur.controller.WaterMoveControllerWASD purpurWaterController; // Purpur - Ridables
 +    private int behaviorTick = 0; // DivineMC - Dynamic Activation of Brain
  
-     public Frog(EntityType<? extends Animal> entityType, Level level) {
-         super(entityType, level);
+     public Frog(EntityType<? extends Animal> type, Level level) {
+         super(type, level);
 @@ -258,10 +259,13 @@ public class Frog extends Animal {
  
      @Override
@@ -242,7 +242,7 @@ index 1a504e30602d7d8feaf7a9180adf6382596aae02..9656c1bf22b1b6c945a8ba5603742261
  
      @Override
 diff --git a/net/minecraft/world/entity/animal/frog/Tadpole.java b/net/minecraft/world/entity/animal/frog/Tadpole.java
-index 8312a0d5229043fd84125db809c4346bb80f2bc0..1a437d3e09484f4bacc4ef22b3e5f1c3c58ca42f 100644
+index 37b1674c3f89d7ddba054b066df957f3337f4a89..e437dad4f65a77b1ecbefe324355e33e0abcb76d 100644
 --- a/net/minecraft/world/entity/animal/frog/Tadpole.java
 +++ b/net/minecraft/world/entity/animal/frog/Tadpole.java
 @@ -64,6 +64,7 @@ public class Tadpole extends AbstractFish {
@@ -251,8 +251,8 @@ index 8312a0d5229043fd84125db809c4346bb80f2bc0..1a437d3e09484f4bacc4ef22b3e5f1c3
      private org.purpurmc.purpur.controller.WaterMoveControllerWASD purpurController; // Purpur - Ridables
 +    private int behaviorTick = 0; // DivineMC - Dynamic Activation of Brain
  
-     public Tadpole(EntityType<? extends AbstractFish> entityType, Level level) {
-         super(entityType, level);
+     public Tadpole(EntityType<? extends AbstractFish> type, Level level) {
+         super(type, level);
 @@ -134,10 +135,13 @@ public class Tadpole extends AbstractFish {
  
      @Override
@@ -272,7 +272,7 @@ index 8312a0d5229043fd84125db809c4346bb80f2bc0..1a437d3e09484f4bacc4ef22b3e5f1c3
  
      public static AttributeSupplier.Builder createAttributes() {
 diff --git a/net/minecraft/world/entity/animal/goat/Goat.java b/net/minecraft/world/entity/animal/goat/Goat.java
-index 73fe7a8c216aed7dc2274fd53fb126d85ec5137d..d4de51a8fd1f2adfc35eb6e23cda6905bd376515 100644
+index 58ee22461c0330e2fbbbf283c154b8141e2d1953..1ef0fa87f55a4fe6309ed456b0458287925f9835 100644
 --- a/net/minecraft/world/entity/animal/goat/Goat.java
 +++ b/net/minecraft/world/entity/animal/goat/Goat.java
 @@ -93,6 +93,7 @@ public class Goat extends Animal {
@@ -281,8 +281,8 @@ index 73fe7a8c216aed7dc2274fd53fb126d85ec5137d..d4de51a8fd1f2adfc35eb6e23cda6905
      private int lowerHeadTick;
 +    private int behaviorTick = 0; // DivineMC - Dynamic Activation of Brain
  
-     public Goat(EntityType<? extends Goat> entityType, Level level) {
-         super(entityType, level);
+     public Goat(EntityType<? extends Goat> type, Level level) {
+         super(type, level);
 @@ -232,10 +233,13 @@ public class Goat extends Animal {
  
      @Override
@@ -302,7 +302,7 @@ index 73fe7a8c216aed7dc2274fd53fb126d85ec5137d..d4de51a8fd1f2adfc35eb6e23cda6905
  
      @Override
 diff --git a/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index b22519a6d39bd52381fa6c17b9a415944374368b..10e36ec8d5e3ee44400e916632771a9cc1381664 100644
+index d115155616a0a76a8429c0f5645a8cba73d8bc80..e998708d6f0a588710d3fc8dea08bac2470d5557 100644
 --- a/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -87,6 +87,7 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
@@ -311,8 +311,8 @@ index b22519a6d39bd52381fa6c17b9a415944374368b..10e36ec8d5e3ee44400e916632771a9c
      );
 +    private int behaviorTick; // DivineMC - Dynamic Activation of Brain
  
-     public Hoglin(EntityType<? extends Hoglin> entityType, Level level) {
-         super(entityType, level);
+     public Hoglin(EntityType<? extends Hoglin> type, Level level) {
+         super(type, level);
 @@ -205,18 +206,21 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
  
      @Override
@@ -346,7 +346,7 @@ index b22519a6d39bd52381fa6c17b9a415944374368b..10e36ec8d5e3ee44400e916632771a9c
  
      @Override
 diff --git a/net/minecraft/world/entity/monster/piglin/Piglin.java b/net/minecraft/world/entity/monster/piglin/Piglin.java
-index dea7c211a2d2ee8f1833eaad49513b3690b06c55..e2b467cfc19dfcf1fb617e57251451aa88de727d 100644
+index 359665cfb2004c49f8e8a19edc7b31c99ce863bf..011d293a3cf7d0d2510619bcd282a51b4b84606c 100644
 --- a/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -128,6 +128,7 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
@@ -355,8 +355,8 @@ index dea7c211a2d2ee8f1833eaad49513b3690b06c55..e2b467cfc19dfcf1fb617e57251451aa
      // CraftBukkit end
 +    private int behaviorTick; // DivineMC - Dynamic Activation of Brain
  
-     public Piglin(EntityType<? extends AbstractPiglin> entityType, Level level) {
-         super(entityType, level);
+     public Piglin(EntityType<? extends AbstractPiglin> type, Level level) {
+         super(type, level);
 @@ -345,10 +346,13 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
  
      @Override
@@ -376,7 +376,7 @@ index dea7c211a2d2ee8f1833eaad49513b3690b06c55..e2b467cfc19dfcf1fb617e57251451aa
  
      @Override
 diff --git a/net/minecraft/world/entity/monster/warden/Warden.java b/net/minecraft/world/entity/monster/warden/Warden.java
-index ac7691a2a3e4c9db040408d1ecba780a89dea50e..e3478244e430faa614f23c288019303bd6bb0e04 100644
+index e9881eac70feebeb08f464efd4fa953cec9f62bf..6edd808e8d0c940dfa6dea463d549d6e80a5d465 100644
 --- a/net/minecraft/world/entity/monster/warden/Warden.java
 +++ b/net/minecraft/world/entity/monster/warden/Warden.java
 @@ -107,6 +107,7 @@ public class Warden extends Monster implements VibrationSystem {
@@ -385,8 +385,8 @@ index ac7691a2a3e4c9db040408d1ecba780a89dea50e..e3478244e430faa614f23c288019303b
      AngerManagement angerManagement = new AngerManagement(this::canTargetEntity, Collections.emptyList());
 +    private int behaviorTick = 0; // DivineMC - Dynamic Activation of Brain
  
-     public Warden(EntityType<? extends Monster> entityType, Level level) {
-         super(entityType, level);
+     public Warden(EntityType<? extends Monster> type, Level level) {
+         super(type, level);
 @@ -300,19 +301,22 @@ public class Warden extends Monster implements VibrationSystem {
  
      @Override
@@ -422,7 +422,7 @@ index ac7691a2a3e4c9db040408d1ecba780a89dea50e..e3478244e430faa614f23c288019303b
  
      @Override
 diff --git a/net/minecraft/world/entity/npc/Villager.java b/net/minecraft/world/entity/npc/Villager.java
-index 3bcd3b7c9f7ad408d66fad5b1b70ebee96a61b43..94424c01b0c4a28c7eafd5c02d068b9c41e451e2 100644
+index e89ff53c568013a5f53afcf5759314221d37adf4..5443677ed4ecaaf3b647e3f72802e80d7d22fad9 100644
 --- a/net/minecraft/world/entity/npc/Villager.java
 +++ b/net/minecraft/world/entity/npc/Villager.java
 @@ -178,6 +178,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
@@ -432,8 +432,8 @@ index 3bcd3b7c9f7ad408d66fad5b1b70ebee96a61b43..94424c01b0c4a28c7eafd5c02d068b9c
 +    public long nextGolemPanic = -1; // DivineMC - Dynamic Activation of Brain
 +    private int behaviorTick = 0; // DivineMC - Dynamic Activation of Brain
  
-     public Villager(EntityType<? extends Villager> entityType, Level level) {
-         this(entityType, level, VillagerType.PLAINS);
+     public Villager(EntityType<? extends Villager> type, Level level) {
+         this(type, level, VillagerType.PLAINS);
 @@ -398,7 +400,7 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
          } else {
              this.isLobotomized = false;

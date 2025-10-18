@@ -10,7 +10,7 @@ Original project: https://github.com/LogisticsCraft/OcclusionCulling
 Original license: MIT
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 167c244433fd77b5d0cc0975965f04c5d88001fa..b26226f6479f7b9c58a1355639c6f264e161ab50 100644
+index 714a7722a45798a445acf3aeb1e7db5d250a9670..0e7a870e85be7f3a2856ce0ca9c861295a66e032 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -147,7 +147,7 @@ import net.minecraft.world.waypoints.WaypointTransmitter;
@@ -22,7 +22,7 @@ index 167c244433fd77b5d0cc0975965f04c5d88001fa..b26226f6479f7b9c58a1355639c6f264
      public static javax.script.ScriptEngine scriptEngine = new javax.script.ScriptEngineManager().getEngineByName("rhino"); // Purpur - Configurable entity base attributes
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
-@@ -5565,4 +5565,47 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -5564,4 +5564,47 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
          return false;
      }
      // Purpur end - Ridables
@@ -71,7 +71,7 @@ index 167c244433fd77b5d0cc0975965f04c5d88001fa..b26226f6479f7b9c58a1355639c6f264
 +    // DivineMC end - Raytrace Entity Tracker
  }
 diff --git a/net/minecraft/world/entity/EntityType.java b/net/minecraft/world/entity/EntityType.java
-index e680780a0e46e9e5f9126bd11a20b918e8c36066..3a50f4d2e434e9766656a7e2a1da8c1ed483c97d 100644
+index 7d5940327c5e7a945165228d502f678a8234cd02..5a4a337694c36e6342c0b0ae5034ac2f11d205a1 100644
 --- a/net/minecraft/world/entity/EntityType.java
 +++ b/net/minecraft/world/entity/EntityType.java
 @@ -1201,6 +1201,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
@@ -83,7 +83,7 @@ index e680780a0e46e9e5f9126bd11a20b918e8c36066..3a50f4d2e434e9766656a7e2a1da8c1e
      private static <T extends Entity> EntityType<T> register(ResourceKey<EntityType<?>> key, EntityType.Builder<T> builder) {
          return Registry.register(BuiltInRegistries.ENTITY_TYPE, key, builder.build(key));
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index 9a6355328ca25ae7c183b68e890106776d82204e..6a8e50598da5e08ce6694c226012a44f88483f71 100644
+index d5337d37be18d2ebb047e122b220e1a694f46696..bd41bbac179460d38edee624334cdcd0efb5504c 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -183,6 +183,25 @@ public abstract class Player extends Avatar implements ContainerUser {

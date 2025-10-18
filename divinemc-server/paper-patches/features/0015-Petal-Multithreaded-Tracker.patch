@@ -45,10 +45,10 @@ index 6b8841a1a84f6316b89b052328bbb549b4acbe21..56aac091b6c126132d75835af340fae4
                  break;
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 782cfca296cd0f5cced549d29ce6eb94ec74319c..36be4be04cc63b387680be6233fed00123fe6c9f 100644
+index 9baeecc248fe9ee6d7bb6c63d6b390b048a5649c..3a36b1c3602292a0264cfbe02b9659878fd7a217 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1804,6 +1804,26 @@ public class CraftEventFactory {
+@@ -1803,6 +1803,26 @@ public class CraftEventFactory {
      }
  
      public static boolean handleBlockFormEvent(Level world, BlockPos pos, net.minecraft.world.level.block.state.BlockState state, int flags, @Nullable Entity entity, boolean checkSetResult) {

@@ -17,7 +17,7 @@
              return;
          }
          // CraftBukkit end
-@@ -2793,6 +_,7 @@
+@@ -2799,6 +_,7 @@
      }
  
      protected void updateSwingTime() {
@@ -25,7 +25,7 @@
          int currentSwingDuration = this.getCurrentSwingDuration();
          if (this.swinging) {
              this.swingTime++;
-@@ -3309,7 +_,13 @@
+@@ -3315,7 +_,13 @@
      }
  
      protected float getFlyingSpeed() {
@@ -40,7 +40,7 @@
      }
  
      public float getSpeed() {
-@@ -3758,6 +_,7 @@
+@@ -3764,6 +_,7 @@
      protected void updateFallFlying() {
          this.checkFallDistanceAccumulation();
          if (!this.level().isClientSide()) {

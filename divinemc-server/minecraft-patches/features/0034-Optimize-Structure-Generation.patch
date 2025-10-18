@@ -7,7 +7,7 @@ Original project: https://github.com/TelepathicGrunt/StructureLayoutOptimizer
 Original license: MIT
 
 diff --git a/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java b/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java
-index 4e3302e8f28c7f12dc5fbaeb6c1f5715a9afc8e5..3b66b16612b8328eaea786cc8ba3a59fd67900e4 100644
+index 103d604797bed34c2e357d01c2f7324dea3e9026..4aa68163958e89521f542470c473f8d5980f5d4b 100644
 --- a/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java
 +++ b/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java
 @@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
@@ -233,7 +233,7 @@ index 5c081a5b3d10f713e4e82fe1a43758f553fe50e0..85e84603a19964f05d9d5e62eb096ca7
 +    // DivineMC end - Optimize Structure Generation
  }
 diff --git a/net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate.java b/net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate.java
-index 4068becb9eca9cbbb67e6d6fb9ff848bfc25877e..d8756e4bfc669eb17c60429c4b532b13f1c308ec 100644
+index 85f9b9a7df18a34fa7f8999b887bd444c3d3d067..0d98eee31f053614b9d4fddd811b6d17bd3a7a50 100644
 --- a/net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate.java
 +++ b/net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate.java
 @@ -256,6 +256,12 @@ public class StructureTemplate {
@@ -246,7 +246,7 @@ index 4068becb9eca9cbbb67e6d6fb9ff848bfc25877e..d8756e4bfc669eb17c60429c4b532b13
 +    }
 +    // DivineMC end - Optimize Structure Generation
 +
-     public boolean placeInWorld(ServerLevelAccessor serverLevel, BlockPos offset, BlockPos pos, StructurePlaceSettings settings, RandomSource random, int flags) {
+     public boolean placeInWorld(ServerLevelAccessor level, BlockPos offset, BlockPos pos, StructurePlaceSettings settings, RandomSource random, int flags) {
          if (this.palettes.isEmpty()) {
              return false;
 @@ -273,7 +279,11 @@ public class StructureTemplate {

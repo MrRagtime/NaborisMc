@@ -10,7 +10,7 @@ As part of: Airplane (https://github.com/TECHNOVE/Airplane)
 Licensed under: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 
 diff --git a/net/minecraft/world/phys/shapes/EntityCollisionContext.java b/net/minecraft/world/phys/shapes/EntityCollisionContext.java
-index a2467db9f096368810e3c1ab8ddabf610fa38379..953c28670cecd6a8ceae1c9c3a490df99acd1a73 100644
+index a2d7eb19fc8963f80c94761138b7c43af0e44fe9..c9b1f73cffd2bcfb426324dcbe15fd599fac0bbf 100644
 --- a/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 +++ b/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 @@ -12,40 +12,35 @@ import net.minecraft.world.level.block.state.BlockState;
@@ -41,18 +41,18 @@ index a2467db9f096368810e3c1ab8ddabf610fa38379..953c28670cecd6a8ceae1c9c3a490df9
      }
  
      @Deprecated
-     protected EntityCollisionContext(Entity entity, boolean canStandOnFluid, boolean placement) {
+     protected EntityCollisionContext(Entity entity, boolean alwaysCollideWithFluid, boolean placement) {
 -        this(
 -            entity.isDescending(),
 -            placement,
 -            entity.getY(),
 -            entity instanceof LivingEntity livingEntity ? livingEntity.getMainHandItem() : ItemStack.EMPTY,
--            canStandOnFluid,
+-            alwaysCollideWithFluid,
 -            entity
 -        );
 +        // DivineMC start - Pufferfish: Make EntityCollisionContext a live representation
 +        this.placement = placement;
-+        this.alwaysCollideWithFluid = canStandOnFluid;
++        this.alwaysCollideWithFluid = alwaysCollideWithFluid;
 +        this.entity = entity;
 +        // DivineMC end - Pufferfish: Make EntityCollisionContext a live representation
      }

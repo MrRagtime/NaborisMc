@@ -5,10 +5,10 @@ Subject: [PATCH] Optimize Fluids
 
 
 diff --git a/net/minecraft/world/level/block/LiquidBlock.java b/net/minecraft/world/level/block/LiquidBlock.java
-index 34a10afcc242e4e37673918ee271d683e35385b7..2f278b528acfd3df1aff4438e31e6e81fbd6cf70 100644
+index 283e5fc879fd9869205549d66b3b99662ec56564..8aa9dac64bcfb81fdfebd1327a0f18bbc104b9d8 100644
 --- a/net/minecraft/world/level/block/LiquidBlock.java
 +++ b/net/minecraft/world/level/block/LiquidBlock.java
-@@ -197,6 +197,7 @@ public class LiquidBlock extends Block implements BucketPickup {
+@@ -199,6 +199,7 @@ public class LiquidBlock extends Block implements BucketPickup {
                      Block block = level.getFluidState(pos).isSource() ? Blocks.OBSIDIAN : Blocks.COBBLESTONE;
                      // CraftBukkit start
                      if (org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockFormEvent(level, pos, block.defaultBlockState(), 3)) {
@@ -17,7 +17,7 @@ index 34a10afcc242e4e37673918ee271d683e35385b7..2f278b528acfd3df1aff4438e31e6e81
                      }
                      // CraftBukkit end
 diff --git a/net/minecraft/world/level/material/FlowingFluid.java b/net/minecraft/world/level/material/FlowingFluid.java
-index e1a96f2448de90efef48e21ce4d673edbceda59a..7a14227f07b2b94bff7c67eb7f7f11cdd45c7b62 100644
+index 18f008dceff896a405970afe157321105d55405f..1de0ef32b6519cad10c8ebf0ed328b6773bcb3ff 100644
 --- a/net/minecraft/world/level/material/FlowingFluid.java
 +++ b/net/minecraft/world/level/material/FlowingFluid.java
 @@ -200,6 +200,7 @@ public abstract class FlowingFluid extends Fluid {
@@ -132,7 +132,7 @@ index e1a96f2448de90efef48e21ce4d673edbceda59a..7a14227f07b2b94bff7c67eb7f7f11cd
          return canPassThroughWall(Direction.DOWN, level, pos, state, belowPos, belowState)
              && (belowState.getFluidState().getType().isSame(this) || canHoldFluid(level, belowPos, belowState, this.getFlowing()));
 diff --git a/net/minecraft/world/level/material/LavaFluid.java b/net/minecraft/world/level/material/LavaFluid.java
-index 545c75cfd03a36d4e8b96a69fc8dcd893b548eeb..bbc658abfb2df1b3ee3a31d46c4b9014bb34e0a2 100644
+index b7da2efaa784ef470029410be3e2359c5bf6dace..2d845b09abe3354f0999b117e78ffd00c41e8924 100644
 --- a/net/minecraft/world/level/material/LavaFluid.java
 +++ b/net/minecraft/world/level/material/LavaFluid.java
 @@ -237,6 +237,7 @@ public abstract class LavaFluid extends FlowingFluid {

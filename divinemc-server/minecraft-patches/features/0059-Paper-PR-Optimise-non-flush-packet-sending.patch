@@ -24,7 +24,7 @@ up on this optimisation before he came along.
 Locally this patch drops the entity tracker tick by a full 1.5x.
 
 diff --git a/net/minecraft/network/Connection.java b/net/minecraft/network/Connection.java
-index 2da4ba00963c9ff6715fe60aa2f6af724fa8ed61..987edb0a89c00695c6620a8996c063d3f88fc549 100644
+index e28d859b457ca0e24bc6dc9d6cd4a97f12ae0671..5b31eed8f91b45b46521da5169d8003dfd5ec669 100644
 --- a/net/minecraft/network/Connection.java
 +++ b/net/minecraft/network/Connection.java
 @@ -150,6 +150,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
@@ -36,14 +36,14 @@ index 2da4ba00963c9ff6715fe60aa2f6af724fa8ed61..987edb0a89c00695c6620a8996c063d3
  
      public Connection(PacketFlow receiving) {
 @@ -160,6 +161,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
-     public void channelActive(ChannelHandlerContext context) throws Exception {
-         super.channelActive(context);
-         this.channel = context.channel();
+     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+         super.channelActive(ctx);
+         this.channel = ctx.channel();
 +        this.eventLoop = (io.netty.channel.SingleThreadEventLoop) this.channel.eventLoop(); // Paper - Optimise non-flush packet sending
          this.address = this.channel.remoteAddress();
          this.preparing = false; // Spigot
          if (this.delayedDisconnect != null) {
-@@ -474,7 +476,13 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -472,7 +474,13 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
          if (this.channel.eventLoop().inEventLoop()) {
              this.doSendPacket(packet, sendListener, flush);
          } else {

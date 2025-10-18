@@ -32,7 +32,7 @@
                  if (this.repositionEntityAfterLoad()) {
                      this.reapplyPosition();
                  }
-@@ -4298,6 +_,7 @@
+@@ -4297,6 +_,7 @@
      }
  
      public boolean canTeleport(Level fromLevel, Level toLevel) {
@@ -40,7 +40,7 @@
          if (!this.isAlive() || !this.valid) return false; // Paper - Fix item duplication and teleport issues
          if (fromLevel.dimension() == Level.END && toLevel.dimension() == Level.OVERWORLD) {
              for (Entity entity : this.getPassengers()) {
-@@ -4527,6 +_,7 @@
+@@ -4526,6 +_,7 @@
      }
  
      public final void setBoundingBox(AABB bb) {

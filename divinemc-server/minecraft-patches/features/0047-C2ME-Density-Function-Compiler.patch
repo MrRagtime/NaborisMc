@@ -11,28 +11,28 @@ All functions provided by vanilla are implemented.
 About Density function: https://minecraft.wiki/w/Density_function
 
 diff --git a/net/minecraft/util/CubicSpline.java b/net/minecraft/util/CubicSpline.java
-index c04229bbed9d1162ecec99b8042d1707e2fc09bc..45b01de060362d88a5f02a76d6e6dc01748a55f5 100644
+index e4e1ecdfd28a1c6d0fd518668caed33a8ec45ec3..929820fcab17b1b804759c5e9fa36606e3add72c 100644
 --- a/net/minecraft/util/CubicSpline.java
 +++ b/net/minecraft/util/CubicSpline.java
 @@ -254,31 +254,47 @@ public interface CubicSpline<C, I extends BoundedFloatFunction<C>> extends Bound
  
          @Override
-         public float apply(C input) {
--            float f = this.coordinate.apply(input);
+         public float apply(C value) {
+-            float f = this.coordinate.apply(value);
 -            int i = findIntervalStart(this.locations, f);
 -            int i1 = this.locations.length - 1;
 -            if (i < 0) {
--                return linearExtend(f, this.locations, this.values.get(0).apply(input), this.derivatives, 0);
+-                return linearExtend(f, this.locations, this.values.get(0).apply(value), this.derivatives, 0);
 -            } else if (i == i1) {
--                return linearExtend(f, this.locations, this.values.get(i1).apply(input), this.derivatives, i1);
+-                return linearExtend(f, this.locations, this.values.get(i1).apply(value), this.derivatives, i1);
 +            // DivineMC start - Density Function Compiler
-+            float point = this.coordinate.apply(input);
++            float point = this.coordinate.apply(value);
 +            int rangeForLocation = findIntervalStart(this.locations, point);
 +            int last = this.locations.length - 1;
 +            if (rangeForLocation < 0) {
-+                return linearExtend(point, this.locations, this.values.get(0).apply(input), this.derivatives, 0);
++                return linearExtend(point, this.locations, this.values.get(0).apply(value), this.derivatives, 0);
 +            } else if (rangeForLocation == last) {
-+                return linearExtend(point, this.locations, this.values.get(last).apply(input), this.derivatives, last);
++                return linearExtend(point, this.locations, this.values.get(last).apply(value), this.derivatives, last);
              } else {
 -                float f1 = this.locations[i];
 -                float f2 = this.locations[i + 1];
@@ -41,8 +41,8 @@ index c04229bbed9d1162ecec99b8042d1707e2fc09bc..45b01de060362d88a5f02a76d6e6dc01
 -                BoundedFloatFunction<C> boundedFloatFunction1 = (BoundedFloatFunction<C>)this.values.get(i + 1);
 -                float f4 = this.derivatives[i];
 -                float f5 = this.derivatives[i + 1];
--                float f6 = boundedFloatFunction.apply(input);
--                float f7 = boundedFloatFunction1.apply(input);
+-                float f6 = boundedFloatFunction.apply(value);
+-                float f7 = boundedFloatFunction1.apply(value);
 -                float f8 = f4 * (f2 - f1) - (f7 - f6);
 -                float f9 = -f5 * (f2 - f1) + (f7 - f6);
 -                return Mth.lerp(f3, f6, f7) + f3 * (1.0F - f3) * Mth.lerp(f3, f8, f9);
@@ -50,8 +50,8 @@ index c04229bbed9d1162ecec99b8042d1707e2fc09bc..45b01de060362d88a5f02a76d6e6dc01
 +                float loc1 = this.locations[rangeForLocation + 1];
 +                float locDist = loc1 - loc0;
 +                float k = (point - loc0) / locDist;
-+                float n = this.values.get(rangeForLocation).apply(input);
-+                float o = this.values.get(rangeForLocation + 1).apply(input);
++                float n = this.values.get(rangeForLocation).apply(value);
++                float o = this.values.get(rangeForLocation + 1).apply(value);
 +                float onDist = o - n;
 +                float p = this.derivatives[rangeForLocation] * locDist - onDist;
 +                float q = -this.derivatives[rangeForLocation + 1] * locDist + onDist;
@@ -111,7 +111,7 @@ index c04229bbed9d1162ecec99b8042d1707e2fc09bc..45b01de060362d88a5f02a76d6e6dc01
      }
  }
 diff --git a/net/minecraft/world/level/levelgen/DensityFunctions.java b/net/minecraft/world/level/levelgen/DensityFunctions.java
-index f2fd59359c69a379b9b0a359c7fc917890b3bb74..90531d659d8be9178d8e7ed9fc20a57d204cf07e 100644
+index 73412c5b89b38f90a4c941acb3ce6f13e026c303..40d7965d95b78c6046b0da33f290eaeadd99c9b5 100644
 --- a/net/minecraft/world/level/levelgen/DensityFunctions.java
 +++ b/net/minecraft/world/level/levelgen/DensityFunctions.java
 @@ -281,38 +281,66 @@ public final class DensityFunctions {
@@ -339,7 +339,7 @@ index f2fd59359c69a379b9b0a359c7fc917890b3bb74..90531d659d8be9178d8e7ed9fc20a57d
              FlatCache("flat_cache"),
              Cache2D("cache_2d"),
 diff --git a/net/minecraft/world/level/levelgen/NoiseChunk.java b/net/minecraft/world/level/levelgen/NoiseChunk.java
-index ff0c2aa0cdf7a88f67e6438dbd17d9c2bc39107a..3c3615043ab87da45b7ea47bf2f632a91a60dbc6 100644
+index 39efa4329e7517fe0ec47d1e1975fc0d4ec5727c..a743c142b152ad696506dca7b04462d2af3c6893 100644
 --- a/net/minecraft/world/level/levelgen/NoiseChunk.java
 +++ b/net/minecraft/world/level/levelgen/NoiseChunk.java
 @@ -8,6 +8,7 @@ import java.util.Arrays;
@@ -640,8 +640,8 @@ index ff0c2aa0cdf7a88f67e6438dbd17d9c2bc39107a..3c3615043ab87da45b7ea47bf2f632a9
 +        }
 +        // DivineMC end - Density Function Compiler
  
-         CacheAllInCell(final DensityFunction noiseFilter) {
-             this.noiseFiller = noiseFilter;
+         CacheAllInCell(final DensityFunction noiseFiller) {
+             this.noiseFiller = noiseFiller;
 @@ -539,18 +737,51 @@ public class NoiseChunk implements DensityFunction.ContextProvider, DensityFunct
  
          @Override
@@ -1071,8 +1071,8 @@ index ff0c2aa0cdf7a88f67e6438dbd17d9c2bc39107a..3c3615043ab87da45b7ea47bf2f632a9
 +        }
 +        // DivineMC end - Density Function Compiler
  
-         NoiseInterpolator(final DensityFunction noiseFilter) {
-             this.noiseFiller = noiseFilter;
+         NoiseInterpolator(final DensityFunction noiseFiller) {
+             this.noiseFiller = noiseFiller;
 @@ -754,16 +1256,18 @@ public class NoiseChunk implements DensityFunction.ContextProvider, DensityFunct
  
          @Override

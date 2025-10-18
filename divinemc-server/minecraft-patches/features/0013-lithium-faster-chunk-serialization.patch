@@ -84,7 +84,7 @@ index 09fd99c9cbd23b5f3c899bfb00c9b89651948ed8..6fdd51c767399bce29dce1ecea2e1307
 +    @Override public <T> void compact(net.minecraft.world.level.chunk.Palette<T> srcPalette, net.minecraft.world.level.chunk.Palette<T> dstPalette, short[] out, net.minecraft.world.level.chunk.PalettedContainer<T> resizeHandler) { } // DivineMC - lithium: faster chunk serialization
  }
 diff --git a/net/minecraft/world/level/chunk/PalettedContainer.java b/net/minecraft/world/level/chunk/PalettedContainer.java
-index 1843046fe145bb23f2e9cf3269fb05c0fb617603..f1cae4cab36546d5798d2b59ac59774d1c9838c0 100644
+index 54d71bd666a946bdf6eece520e080c3f96003452..51ece91c956fd4d55eaef34a534fdb38c6d24446 100644
 --- a/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/net/minecraft/world/level/chunk/PalettedContainer.java
 @@ -29,6 +29,23 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
@@ -111,7 +111,7 @@ index 1843046fe145bb23f2e9cf3269fb05c0fb617603..f1cae4cab36546d5798d2b59ac59774d
      public void acquire() {
          // this.threadingDetector.checkAndLock(); // Paper - disable this - use proper synchronization
      }
-@@ -340,29 +357,49 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -338,29 +355,49 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
      public synchronized PalettedContainerRO.PackedData<T> pack(Strategy<T> strategy) { // Paper - synchronize
          this.acquire();
  
@@ -176,8 +176,8 @@ index 1843046fe145bb23f2e9cf3269fb05c0fb617603..f1cae4cab36546d5798d2b59ac59774d
 +        // DivineMC end - lithium: faster chunk serialization
      }
  
-     private static <T> int[] reencodeContents(BitStorage storage, Palette<T> oldPalette, Palette<T> newPalette) {
-@@ -412,13 +449,31 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+     private static <T> int[] reencodeContents(BitStorage bitStorage, Palette<T> oldPalette, Palette<T> newPalette) {
+@@ -410,13 +447,31 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(PalettedContainer.CountConsumer<T> countConsumer) {
@@ -185,8 +185,8 @@ index 1843046fe145bb23f2e9cf3269fb05c0fb617603..f1cae4cab36546d5798d2b59ac59774d
 -            countConsumer.accept(this.data.palette.valueFor(0), this.data.storage.getSize());
 -        } else {
 -            Int2IntOpenHashMap map = new Int2IntOpenHashMap();
--            this.data.storage.getAll(i -> map.addTo(i, 1));
--            map.int2IntEntrySet().forEach(entry -> countConsumer.accept(this.data.palette.valueFor(entry.getIntKey()), entry.getIntValue()));
+-            this.data.storage.getAll(id -> map.addTo(id, 1));
+-            map.int2IntEntrySet().forEach(idEntry -> countConsumer.accept(this.data.palette.valueFor(idEntry.getIntKey()), idEntry.getIntValue()));
 +        // DivineMC start - lithium: faster chunk serialization
 +        int len = this.data.palette().getSize();
 +

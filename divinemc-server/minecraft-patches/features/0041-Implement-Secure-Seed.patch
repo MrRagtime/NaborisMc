@@ -52,7 +52,7 @@ index a9cd61f0a7bde931e59f1496191f1f8d465aec5e..7711cc269b97811836f1b1dafd0f38ea
              this.get("generator-settings", property -> GsonHelper.parse(!property.isEmpty() ? property : "{}"), new JsonObject()),
              this.get("level-type", property -> property.toLowerCase(Locale.ROOT), WorldPresets.NORMAL.location().toString())
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index 301b45e375dafeefed56eb0db5dd51eea4c97459..65607de63f6ea900599660485861860b71e1aef3 100644
+index 94851554c2c3e0f5a2d72606fda166adb586bbca..ca0c38974d75e95d258978ff9c8a2749ad741aa5 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
 @@ -614,6 +614,7 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
@@ -64,7 +64,7 @@ index 301b45e375dafeefed56eb0db5dd51eea4c97459..65607de63f6ea900599660485861860b
      }
  
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 2f09f9c02e63563828dd7000352baf2723a0ac59..4f4ede83b6ca5e1884607410b526a675fed4d42d 100644
+index e6e54f23e302292aa9e9495c00aaae22cf18dd94..97ecdd880c0225d176859517ed715e2b4159ddeb 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -655,6 +655,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -76,7 +76,7 @@ index 2f09f9c02e63563828dd7000352baf2723a0ac59..4f4ede83b6ca5e1884607410b526a675
          DataFixer fixerUpper = server.getFixerUpper();
          // Paper - rewrite chunk system
 diff --git a/net/minecraft/world/entity/monster/Slime.java b/net/minecraft/world/entity/monster/Slime.java
-index 970105d598964194e167ad243f6e2fc2a19fba08..74893d67a3fb6fd906afe9253f191f0e635f3277 100644
+index 97d15b759d65e32df4d780ec4850b986fcaf6ead..bd9dbf142a303893709ff6d5e9159d12fe892bf1 100644
 --- a/net/minecraft/world/entity/monster/Slime.java
 +++ b/net/minecraft/world/entity/monster/Slime.java
 @@ -408,7 +408,11 @@ public class Slime extends Mob implements Enemy {
@@ -93,7 +93,7 @@ index 970105d598964194e167ad243f6e2fc2a19fba08..74893d67a3fb6fd906afe9253f191f0e
                  final double maxHeightSlimeChunk = level.getMinecraftWorld().paperConfig().entities.spawning.slimeSpawnHeight.slimeChunk.maximum;
                  if (random.nextInt(10) == 0 && flag && pos.getY() < maxHeightSlimeChunk) {
 diff --git a/net/minecraft/world/level/chunk/ChunkAccess.java b/net/minecraft/world/level/chunk/ChunkAccess.java
-index 2457247d2bc1c3e3b042a091c3a8290d55203da8..97b17c07b86f188e04cf747770be37b530f1dc61 100644
+index f6f9a88283e051e6a7c96f461b68b3881b3361d2..421133e5e1ff37b0a50173bd69faef50e5b5c252 100644
 --- a/net/minecraft/world/level/chunk/ChunkAccess.java
 +++ b/net/minecraft/world/level/chunk/ChunkAccess.java
 @@ -82,6 +82,10 @@ public abstract class ChunkAccess implements BiomeManager.NoiseBiomeSource, Ligh
@@ -126,7 +126,7 @@ index 2457247d2bc1c3e3b042a091c3a8290d55203da8..97b17c07b86f188e04cf747770be37b5
  
      @Nullable
 diff --git a/net/minecraft/world/level/chunk/ChunkGenerator.java b/net/minecraft/world/level/chunk/ChunkGenerator.java
-index 213fd45bd70d347a91c46244b61d8b77f11bf6fb..30cb24503fb2e1e3743e6d19634d77cd7de48e13 100644
+index 4e4a5595ccbadf7e2df0f6de1c8e2ceb00b9ec90..180103f3712b459b4f4202959b900a1ddf4aba61 100644
 --- a/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/net/minecraft/world/level/chunk/ChunkGenerator.java
 @@ -346,7 +346,11 @@ public abstract class ChunkGenerator {
@@ -388,13 +388,13 @@ index ee0d9dddb36b6879fa113299e24f1aa3b2b151cc..3af3bf800215ef78b98a4866df572f3b
          int i3 = this.spreadType.evaluate(worldgenRandom, i2);
          int i4 = this.spreadType.evaluate(worldgenRandom, i2);
 diff --git a/net/minecraft/world/level/levelgen/structure/placement/StructurePlacement.java b/net/minecraft/world/level/levelgen/structure/placement/StructurePlacement.java
-index 26b1b448c95ab38a449843a0ce929a008019b151..5660c6b1a60f78faa3a0e15f8317fea68ced7c83 100644
+index b3a538f9aebf5b6e965e1140b8fc558eb394605b..892bba74ef5bd670f30d8ab3bdb3b363ec89103d 100644
 --- a/net/minecraft/world/level/levelgen/structure/placement/StructurePlacement.java
 +++ b/net/minecraft/world/level/levelgen/structure/placement/StructurePlacement.java
 @@ -119,8 +119,17 @@ public abstract class StructurePlacement {
      public abstract StructurePlacementType<?> type();
  
-     private static boolean probabilityReducer(long levelSeed, int regionX, int regionZ, int salt, float probability, @javax.annotation.Nullable Integer saltOverride) { // Paper - Add missing structure set seed configs; ignore here
+     private static boolean probabilityReducer(long levelSeed, int regionX, int regionZ, int salt, float frequency, @javax.annotation.Nullable Integer saltOverride) { // Paper - Add missing structure set seed configs; ignore here
 -        WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
 -        worldgenRandom.setLargeFeatureWithSalt(levelSeed, regionX, regionZ, salt);
 +        // DivineMC start - Implement Secure Seed
@@ -408,11 +408,11 @@ index 26b1b448c95ab38a449843a0ce929a008019b151..5660c6b1a60f78faa3a0e15f8317fea6
 +            worldgenRandom.setLargeFeatureWithSalt(levelSeed, regionX, regionZ, salt);
 +        }
 +        // DivineMC end - Implement Secure Seed
-         return worldgenRandom.nextFloat() < probability;
+         return worldgenRandom.nextFloat() < frequency;
      }
  
 diff --git a/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java b/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java
-index 3b66b16612b8328eaea786cc8ba3a59fd67900e4..fc31c2419fc895942391bbace8323791e0c7bf38 100644
+index 4aa68163958e89521f542470c473f8d5980f5d4b..527e8e874bf4496504c9499a6ba6dce56d50e983 100644
 --- a/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java
 +++ b/net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement.java
 @@ -66,7 +66,11 @@ public class JigsawPlacement {

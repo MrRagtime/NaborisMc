@@ -5,7 +5,7 @@ Subject: [PATCH] Implement NoChatReports
 
 
 diff --git a/net/minecraft/network/FriendlyByteBuf.java b/net/minecraft/network/FriendlyByteBuf.java
-index 70b35188e4762c8dcd46b2df14d4efd85e147dcd..8861148b0598891e7851d2c9cc6d79edfc26e55e 100644
+index be5ac057737fd67fbf2f80f879f8e2816750f041..85faebf1d75bc6d4e6b01d0dad1920069f6fd98d 100644
 --- a/net/minecraft/network/FriendlyByteBuf.java
 +++ b/net/minecraft/network/FriendlyByteBuf.java
 @@ -105,7 +105,28 @@ public class FriendlyByteBuf extends ByteBuf {
@@ -206,10 +206,10 @@ index 88447fc2108126ccfad2fb7eb79ac94537f132d3..571cbe6844ebb330801dd893a45c1f73
          private static final String PREFIX = "data:image/png;base64,";
          public static final Codec<ServerStatus.Favicon> CODEC = Codec.STRING.comapFlatMap(string -> {
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index 7486df33cedea98695c614bb3d584e1d8e84314f..f9ec63ed7feb67e558abed99746726c10e9e10f4 100644
+index 6a8f501883a5b5697d3ebf401f6b7aa6145479ea..d2ac3057cd6d27c9f0ec043421cbb72b57853b97 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -833,6 +833,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -832,6 +832,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
  
      @Override
      public boolean enforceSecureProfile() {
@@ -287,7 +287,7 @@ index 4a333e87af17bd5b673b57c0fa0d3a239fb8db59..e5569978a23c5bde673146421963a2ff
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 6c6213323df278391b30dd9f22c408a34ec052c8..c8e68bbb210457366822f2c4a01afb49693035ac 100644
+index 78d0595edb26a8ee29143c86164d01056132fa08..2425ecc8c27647acb5cb6ef1989cc7db715d2392 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -181,7 +181,7 @@ public abstract class PlayerList {
@@ -299,7 +299,7 @@ index 6c6213323df278391b30dd9f22c408a34ec052c8..c8e68bbb210457366822f2c4a01afb49
              )
          );
          player.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
-@@ -1255,6 +1255,7 @@ public abstract class PlayerList {
+@@ -1245,6 +1245,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) {

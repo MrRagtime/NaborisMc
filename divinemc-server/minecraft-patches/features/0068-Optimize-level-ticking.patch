@@ -5,7 +5,7 @@ Subject: [PATCH] Optimize level ticking
 
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 668e20075c875775ac0bf355d7318c3ff1426fc0..8c9a1266bfbd1eb2b7612a07df126ea1ba792027 100644
+index 21f9b04927418778645475fda51d2d978215dc1c..f9d4d8ba415864019bca2a69a142ff1ce0307072 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -944,9 +944,10 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -73,7 +73,7 @@ index 668e20075c875775ac0bf355d7318c3ff1426fc0..8c9a1266bfbd1eb2b7612a07df126ea1
  
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index f68731273f9ca583b3dac6ecb13c1ac9fcc06bed..ac56a14097a9f61bb9aa46e8bc3e01e6d82ba496 100644
+index 76ba642de5673b407e3a802db9de060bcffae9b0..29f4cce6823ad13bec607523f059166f97a48c22 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -84,7 +84,7 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
@@ -86,7 +86,7 @@ index f68731273f9ca583b3dac6ecb13c1ac9fcc06bed..ac56a14097a9f61bb9aa46e8bc3e01e6
      public final ServerLevel level; // CraftBukkit - type
      @Nullable
 diff --git a/net/minecraft/world/ticks/LevelChunkTicks.java b/net/minecraft/world/ticks/LevelChunkTicks.java
-index 66d0a6390febe929ef774b0a7813329015bc8cc2..c17549c4f8a877852c4b86453b1db7b17aab4665 100644
+index 2e28cc201e4557ff603aba7a6ed997b8d36fbb4a..37d9459a905ef8e05400d821db24f61a2dd03f10 100644
 --- a/net/minecraft/world/ticks/LevelChunkTicks.java
 +++ b/net/minecraft/world/ticks/LevelChunkTicks.java
 @@ -14,10 +14,10 @@ import javax.annotation.Nullable;
@@ -137,7 +137,7 @@ index 66d0a6390febe929ef774b0a7813329015bc8cc2..c17549c4f8a877852c4b86453b1db7b1
  
          for (ScheduledTick<T> scheduledTick : this.tickQueue) {
 +            if (scheduledTick == null) continue; // DivineMC - Optimize level ticking
-             list.add(scheduledTick.toSavedTick(gametime));
+             list.add(scheduledTick.toSavedTick(gameTime));
          }
  
 diff --git a/net/minecraft/world/ticks/LevelTicks.java b/net/minecraft/world/ticks/LevelTicks.java
