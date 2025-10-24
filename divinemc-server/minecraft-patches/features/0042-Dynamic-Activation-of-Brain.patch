@@ -31,7 +31,7 @@ index ca21597263cb430e2a5ae07e8cecfb0d53a270d2..226088405c019922085285ba5d04d7c1
          }
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 97ecdd880c0225d176859517ed715e2b4159ddeb..2aac1cdfa0c3cdf3d56d57452d45318ef6793cbb 100644
+index 646ca37bba6da8ab0babbf4a1e6ba88e75658e72..1d9b32476c1b89984f1afa8e906ca09472b8d6b2 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -830,6 +830,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -302,7 +302,7 @@ index 58ee22461c0330e2fbbbf283c154b8141e2d1953..1ef0fa87f55a4fe6309ed456b0458287
  
      @Override
 diff --git a/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index d115155616a0a76a8429c0f5645a8cba73d8bc80..e998708d6f0a588710d3fc8dea08bac2470d5557 100644
+index c309b01a461ddb47d20a6c96bd693e4850bd731b..5ccf6e916c5c5ebe034a55b71725f740a21f4f83 100644
 --- a/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -87,6 +87,7 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
@@ -346,7 +346,7 @@ index d115155616a0a76a8429c0f5645a8cba73d8bc80..e998708d6f0a588710d3fc8dea08bac2
  
      @Override
 diff --git a/net/minecraft/world/entity/monster/piglin/Piglin.java b/net/minecraft/world/entity/monster/piglin/Piglin.java
-index 359665cfb2004c49f8e8a19edc7b31c99ce863bf..011d293a3cf7d0d2510619bcd282a51b4b84606c 100644
+index b21ca373220f80c81cadab1eda482057d6366caf..8d0b364149c3772b95e97136f77749f7aadd442a 100644
 --- a/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -128,6 +128,7 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
@@ -357,7 +357,7 @@ index 359665cfb2004c49f8e8a19edc7b31c99ce863bf..011d293a3cf7d0d2510619bcd282a51b
  
      public Piglin(EntityType<? extends AbstractPiglin> type, Level level) {
          super(type, level);
-@@ -345,10 +346,13 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
+@@ -350,10 +351,13 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
  
      @Override
      protected void customServerAiStep(ServerLevel level) {

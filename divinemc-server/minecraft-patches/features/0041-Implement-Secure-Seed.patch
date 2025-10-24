@@ -64,7 +64,7 @@ index 94851554c2c3e0f5a2d72606fda166adb586bbca..ca0c38974d75e95d258978ff9c8a2749
      }
  
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index e6e54f23e302292aa9e9495c00aaae22cf18dd94..97ecdd880c0225d176859517ed715e2b4159ddeb 100644
+index f038c8fe7fa84457dcee2276bbbdb7ec8533d430..646ca37bba6da8ab0babbf4a1e6ba88e75658e72 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -655,6 +655,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -76,10 +76,10 @@ index e6e54f23e302292aa9e9495c00aaae22cf18dd94..97ecdd880c0225d176859517ed715e2b
          DataFixer fixerUpper = server.getFixerUpper();
          // Paper - rewrite chunk system
 diff --git a/net/minecraft/world/entity/monster/Slime.java b/net/minecraft/world/entity/monster/Slime.java
-index 97d15b759d65e32df4d780ec4850b986fcaf6ead..bd9dbf142a303893709ff6d5e9159d12fe892bf1 100644
+index a03b1d15aa8b41e7c22464e8b66811c41acdcef2..00d172e663ae9aa880fa267792899a79f912ea01 100644
 --- a/net/minecraft/world/entity/monster/Slime.java
 +++ b/net/minecraft/world/entity/monster/Slime.java
-@@ -408,7 +408,11 @@ public class Slime extends Mob implements Enemy {
+@@ -413,7 +413,11 @@ public class Slime extends Mob implements Enemy {
              }
  
              ChunkPos chunkPos = new ChunkPos(pos);
