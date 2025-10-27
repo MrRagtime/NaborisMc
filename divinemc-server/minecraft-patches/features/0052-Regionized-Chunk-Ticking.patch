@@ -21,7 +21,7 @@ index 411e1284a208ca1a097cf6eaa92e1e0d2203d83d..3f60d1b0ac91cfd3418e791222cd7267
              if (var2 instanceof ClosedChannelException) {
                  LOGGER.info("Connection closed during protocol change");
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index 7ca147cf9da67c399806056e5092841f7ca32321..b77f702398d7c04258974cc7cd25ed044603b417 100644
+index 7ca147cf9da67c399806056e5092841f7ca32321..81a174111dc2ebc9df428a67936c302ae9ec95e3 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
 @@ -730,7 +730,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -29,12 +29,12 @@ index 7ca147cf9da67c399806056e5092841f7ca32321..b77f702398d7c04258974cc7cd25ed04
          final ca.spottedleaf.moonrise.common.list.ReferenceList<net.minecraft.world.level.chunk.LevelChunk> tickingChunks = ((ca.spottedleaf.moonrise.patches.chunk_tick_iteration.ChunkTickServerLevel)this.level).moonrise$getPlayerTickingChunks();
  
 -        final LevelChunk[] raw = tickingChunks.getRawDataUnchecked();
-+        final LevelChunk[] raw = tickingChunks.toArray(new LevelChunk[0]); //DivineMC Regionized Chunk Ticking sync fix
++        final LevelChunk[] raw = tickingChunks.toArray(new LevelChunk[0]); // DivineMC - Regionized Chunk Ticking - sync fix
          final int size = tickingChunks.size();
  
          Objects.checkFromToIndex(0, size, raw.length);
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index 2039e636b1a52aff5403621e7281d618e4b87864..6c0398a8118463ef7c606229cc0078324ebba3f5 100644
+index 2039e636b1a52aff5403621e7281d618e4b87864..855ec5c636b9f8ca504425dafd49c4a71b1e2456 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
 @@ -56,7 +56,7 @@ import org.slf4j.Logger;
@@ -42,7 +42,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..6c0398a8118463ef7c606229cc007832
      private static final Logger LOGGER = LogUtils.getLogger();
      private final DistanceManager distanceManager;
 -    private final ServerLevel level;
-+    protected final ServerLevel level; //DivineMC Regionized Chunk Ticking private -> protected
++    protected final ServerLevel level; // DivineMC - Regionized Chunk Ticking - private -> protected
      public final Thread mainThread;
      final ThreadedLevelLightEngine lightEngine;
      public final ServerChunkCache.MainThreadExecutor mainThreadProcessor;
@@ -59,11 +59,8 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..6c0398a8118463ef7c606229cc007832
      @Nullable
      @VisibleForDebug
      private NaturalSpawner.SpawnState lastSpawnState;
-@@ -153,36 +155,49 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
-         return load ? this.syncLoad(chunkX, chunkZ, toStatus) : null;
-     }
+@@ -155,34 +157,46 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
      // Paper end - rewrite chunk system
-+
      // Paper start - chunk tick iteration optimisations
      private final ca.spottedleaf.moonrise.common.util.SimpleThreadUnsafeRandom shuffleRandom = new ca.spottedleaf.moonrise.common.util.SimpleThreadUnsafeRandom(0L);
 -    private void iterateTickingChunksFaster() {
@@ -123,7 +120,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..6c0398a8118463ef7c606229cc007832
      }
      // Paper end - chunk tick iteration optimisations
  
-@@ -507,14 +522,21 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -507,14 +521,21 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          long gameTime = this.level.getGameTime();
          long l = gameTime - this.lastInhabitedUpdate;
          this.lastInhabitedUpdate = gameTime;
@@ -149,7 +146,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..6c0398a8118463ef7c606229cc007832
          // DivineMC start - Pufferfish: Optimize mob spawning
          if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableAsyncSpawning) {
              for (ServerPlayer player : this.level.players) {
-@@ -558,14 +580,18 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -558,14 +579,18 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
      }
  
      private void broadcastChangedChunks() {
@@ -174,7 +171,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..6c0398a8118463ef7c606229cc007832
      }
  
      private void tickChunks(long timeInhabited) {
-@@ -615,13 +641,32 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -615,6 +640,24 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
              filteredSpawningCategories = List.of();
          }
  
@@ -199,16 +196,7 @@ index 2039e636b1a52aff5403621e7281d618e4b87864..6c0398a8118463ef7c606229cc007832
          List<LevelChunk> list = this.spawningChunks;
  
          try {
-             this.chunkMap.collectSpawningChunks(list);
-             // Paper start - chunk tick iteration optimisation
-             this.shuffleRandom.setSeed(this.level.random.nextLong());
--            if (!this.level.paperConfig().entities.spawning.perPlayerMobSpawns) Util.shuffle(list, this.shuffleRandom); // Paper - Optional per player mob spawns; do not need this when per-player is enabled
-+            if (!this.level.paperConfig().entities.spawning.perPlayerMobSpawns)
-+                Util.shuffle(list, this.shuffleRandom); // Paper - Optional per player mob spawns; do not need this when per-player is enabled
-             // Paper end - chunk tick iteration optimisation
- 
-             for (LevelChunk levelChunk : list) {
-@@ -630,12 +675,12 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -630,12 +673,12 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          } finally {
              list.clear();
          }

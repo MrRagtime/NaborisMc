@@ -465,10 +465,10 @@ index 50bc5b940812432bc472e5b272582efb8bbfc7a7..0bece4ed69b332174cbe37f82df1f7da
      }
  
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index df84bd2a2e306776ba92da74168b7c6c06c94beb..2da02f04606be99bfb691207886b623c1a35af7d 100644
+index 855ec5c636b9f8ca504425dafd49c4a71b1e2456..71b0b72c0c65fada33bdf732aa8b366a6ab8e472 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
-@@ -467,8 +467,7 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -466,8 +466,7 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
  
      public boolean isPositionTicking(long chunkPos) {
          // Paper start - rewrite chunk system
