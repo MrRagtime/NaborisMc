@@ -221,6 +221,7 @@ public class DivineConfig {
 
         // Async mob spawning settings
         public static boolean enableAsyncSpawning = true;
+        public static boolean asyncNaturalSpawn = true;
 
         public static void load() {
             parallelWorldTicking();
@@ -335,6 +336,8 @@ public class DivineConfig {
         private static void asyncMobSpawning() {
             enableAsyncSpawning = getBoolean(ConfigCategory.ASYNC.key("mob-spawning.enable"), enableAsyncSpawning,
                 "Enables optimization that will offload much of the computational effort involved with spawning new mobs to a different thread.");
+            asyncNaturalSpawn = getBoolean(ConfigCategory.ASYNC.key("async-ticking-of-natural-spawns"), asyncNaturalSpawn,
+                "Enables offloading of natural spawning to a different thread");
         }
     }
 
