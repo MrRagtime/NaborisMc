@@ -71,10 +71,10 @@ index 2b8d394dc30d459127289a1afeee0780003f4c79..2fd2712550a9b8ac79974f113ebcea5d
          }
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 973b98d8a074b4461723fc695523b240365244dd..1a669ebe6e6cc777d1c15b20c396f8c8d894e136 100644
+index 14790f65b00ede0c063c567f524674270ca58b5c..f0ad8c869e22c7c10e59e88effd4b0ebffb3f62c 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2508,6 +2508,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -2520,6 +2520,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
  
          for (TickingBlockEntity tickingBlockEntity : this.blockEntityTickers) {
              BlockPos pos = tickingBlockEntity.getPos();
@@ -264,7 +264,7 @@ index 0f9bfcd1eab023c1772e9fafcda85d110904bd1c..a54dbf14af2abcf0307c1c43fb82cfd6
 +    // DivineMC end - lithium: sleeping_block_entity
  }
 diff --git a/net/minecraft/world/inventory/AbstractContainerMenu.java b/net/minecraft/world/inventory/AbstractContainerMenu.java
-index c88b0567d1b9377bfca4e4a62d8eb22daccd83a8..487c8812f921ecc7b00ecac7deee5ac76954aa40 100644
+index 7d35e587508f24401a998de27f88ce9cef961b8a..343bfbb8b122b5c1d6fd8de736a8ad7ed5367cd6 100644
 --- a/net/minecraft/world/inventory/AbstractContainerMenu.java
 +++ b/net/minecraft/world/inventory/AbstractContainerMenu.java
 @@ -901,6 +901,12 @@ public abstract class AbstractContainerMenu {
@@ -417,10 +417,10 @@ index 52a8a818a636e35b486b8aaf482cd68849a0bbcd..7706bf3cdd8017eb0591a4002489835b
 +    // DivineMC end - lithium: sleeping_block_entity
  }
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 604b4670f59e0c3ed5c287e8a0c573560826ed78..2f031b9119f7b520d736223ab8a7d96d79b17d52 100644
+index b799bcd450da148a941289a23bd3758cc75245d2..2c06a6dd8d6164818777753f6572e1f07043abae 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -1475,7 +1475,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1476,7 +1476,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
              // Spigot end
              if (tickingBlockEntity.isRemoved()) {
                  this.blockEntityTickers.markAsRemoved(this.tileTickPosition); // DivineMC - optimize block entity removals - Fix MC-117075
@@ -429,7 +429,7 @@ index 604b4670f59e0c3ed5c287e8a0c573560826ed78..2f031b9119f7b520d736223ab8a7d96d
                  tickingBlockEntity.tick();
                  // DivineMC start - Parallel world ticking
                  ++tickedEntities;
-@@ -2195,4 +2195,25 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -2196,4 +2196,25 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
          return getWorld().getEnvironment() == org.bukkit.World.Environment.THE_END;
      }
      // Purpur end - Add allow water in end world option

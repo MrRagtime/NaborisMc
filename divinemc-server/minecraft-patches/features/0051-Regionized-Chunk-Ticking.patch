@@ -214,7 +214,7 @@ index e23f2004705fc299934a8b30e736ddf0a8eb2147..e8efa7b12746423de11b6970efe1651d
      private void tickSpawningChunk(LevelChunk chunk, long timeInhabited, List<MobCategory> spawnCategories, NaturalSpawner.SpawnState spawnState) {
          ChunkPos pos = chunk.getPos();
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 8bd2e419791f0dffbcbc43edd93178dead0c9620..86469253ecc2a142b70c2601cbc50fe9ffbfedea 100644
+index ca9883277c0f036c94e861f7917ca42facd3c47b..8c98c2593eec14a8a378041e94cf52b8fbfedc30 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -197,7 +197,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -277,7 +277,7 @@ index 8bd2e419791f0dffbcbc43edd93178dead0c9620..86469253ecc2a142b70c2601cbc50fe9
          this.chunkSource.getGeneratorState().ensureStructuresGenerated();
          this.portalForcer = new PortalForcer(this);
          this.updateSkyBrightness();
-@@ -834,6 +852,13 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -846,6 +864,13 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
                  this.dragonFight.tick();
              }
  
@@ -291,7 +291,7 @@ index 8bd2e419791f0dffbcbc43edd93178dead0c9620..86469253ecc2a142b70c2601cbc50fe9
              io.papermc.paper.entity.activation.ActivationRange.activateEntities(this); // Paper - EAR
              this.entityTickList
                  .forEach(
-@@ -1862,22 +1887,16 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1874,22 +1899,16 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          if (Shapes.joinIsNotEmpty(collisionShape, collisionShape1, BooleanOp.NOT_SAME)) {
              List<PathNavigation> list = new ObjectArrayList<>();
  
@@ -323,7 +323,7 @@ index 8bd2e419791f0dffbcbc43edd93178dead0c9620..86469253ecc2a142b70c2601cbc50fe9
              try {
                  this.isUpdatingNavigations = true;
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index a8c2e02450caa52714bc3e064237d12fa56b4207..ebe34866e79397ac4c6a6bba97c99f5354adbe64 100644
+index 1f00b7ddf6c470c8a32e418775fa40e90ec88dbe..5e6306c5322d46c051aea02525d49ae9ed76b85f 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -112,7 +112,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
@@ -344,7 +344,7 @@ index a8c2e02450caa52714bc3e064237d12fa56b4207..ebe34866e79397ac4c6a6bba97c99f53
      public Map<BlockPos, BlockEntity> capturedTileEntities = new java.util.LinkedHashMap<>(); // Paper - Retain block place order when capturing blockstates
      @Nullable
      public List<net.minecraft.world.entity.item.ItemEntity> captureDrops;
-@@ -1457,10 +1457,14 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1458,10 +1458,14 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
  
      public void tickBlockEntities() {
          this.tickingBlockEntities = true;

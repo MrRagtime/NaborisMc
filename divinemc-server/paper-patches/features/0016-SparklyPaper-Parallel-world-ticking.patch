@@ -222,33 +222,24 @@ index 69cdd304d255d52c9b7dc9b6a33ffdb630b79abe..73475f21a65395ab3f888d04d4860acd
      }
 +    // DivineMC end - Parallel world ticking
  }
-diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index ab499a7eaccdc1578ec64f90f54f79b0da3c0e96..6bcb8069de18e8a0f4ee9d5c71b6bdd1afe640dd 100644
---- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-+++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -28,6 +28,7 @@ import java.util.logging.Level;
- class PaperEventManager {
- 
-     private final Server server;
-+    private final org.purpurmc.purpur.util.MinecraftInternalPlugin minecraftInternalPlugin = new org.purpurmc.purpur.util.MinecraftInternalPlugin(); // DivineMC - Parallel world ticking
- 
-     public PaperEventManager(Server server) {
-         this.server = server;
-@@ -40,6 +41,12 @@ class PaperEventManager {
-         if (listeners.length == 0) return;
-         // DivineMC end - Skip event if no listeners
-         if (event.isAsynchronous() && this.server.isPrimaryThread()) {
-+            // DivineMC start - Parallel world ticking
-+            if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking && org.bxteam.divinemc.config.DivineConfig.AsyncCategory.pwtCompatabilityMode) {
-+                org.bukkit.Bukkit.getAsyncScheduler().runNow(minecraftInternalPlugin, task -> event.callEvent());
-+                return;
-+            }
-+            // DivineMC end - Parallel world ticking
-             throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
-         } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
-             // DivineMC start - Multithreaded Tracker
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 560f7192b45399947e9a805d80c36a65aa0a53eb..8889864e988e0df590a1dcf407428f0de35f4d03 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -3067,4 +3067,11 @@ public final class CraftServer implements Server {
+         return getServer().lagging;
+     }
+     // Purpur end - Lagging threshold
++
++    // DivineMC start - Parallel world ticking
++    @Override
++    public boolean isParallelWorldTickingEnabled() {
++        return org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking;
++    }
++    // DivineMC end - Parallel world ticking
+ }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 89df0225f6544e226afe57b3dd19eadcb5631111..738b9000dfc72016707a2f985b9612b9f9dba7f2 100644
+index 89df0225f6544e226afe57b3dd19eadcb5631111..8480004bcefee0a5d190dcf7136df18f13bb7db2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -462,7 +462,13 @@ public class CraftWorld extends CraftRegionAccessor implements World {
@@ -329,6 +320,22 @@ index 89df0225f6544e226afe57b3dd19eadcb5631111..738b9000dfc72016707a2f985b9612b9
          getHandle().gameEvent(sourceEntity != null ? ((CraftEntity) sourceEntity).getHandle(): null, net.minecraft.core.registries.BuiltInRegistries.GAME_EVENT.get(org.bukkit.craftbukkit.util.CraftNamespacedKey.toMinecraft(gameEvent.getKey())).orElseThrow(), org.bukkit.craftbukkit.util.CraftVector.toBlockPos(position));
      }
      // Paper end
+@@ -2112,4 +2130,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+         return POINTERS_SUPPLIER.view(this);
+     }
+     // Paper end
++
++    // DivineMC start - Parallel world ticking
++    @Override
++    public long @NotNull [] getTickTimes() {
++        return this.world.tickTimes5s.getTimes();
++    }
++    @Override
++    public double getAverageTickTime() {
++        return this.world.tickTimes5s.getAverage();
++    }
++    // DivineMC end - Parallel world ticking
+ }
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 index 52b3362259ed1ba2ce5379230b2c3b06b0ff6249..1d8c9f94198b558a6b4cdc5d4981b6b4e946903b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
@@ -592,45 +599,11 @@ index 03418a9d7cca79a6fa682b64f9d901a4af3e1d58..f0af6319089b477c5d63aec521aee4cc
          }
      }
  
-diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftAsyncTask.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftAsyncTask.java
-index e4e2e42d0ca25df7fe9f2dd4275610e45fcb2c84..93bf7beab3b00973a19e51d48a9dfb26dd0a254c 100644
---- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftAsyncTask.java
-+++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftAsyncTask.java
-@@ -19,11 +19,28 @@ class CraftAsyncTask extends CraftTask {
- 
-     @Override
-     public boolean isSync() {
--        return false;
-+        return org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking && org.bxteam.divinemc.config.DivineConfig.AsyncCategory.pwtCompatabilityMode; // DivineMC - Parallel world ticking
-     }
- 
-     @Override
-     public void run() {
-+        // DivineMC start - Parallel world ticking
-+        if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking && org.bxteam.divinemc.config.DivineConfig.AsyncCategory.pwtCompatabilityMode) {
-+            try {
-+                super.run();
-+            } catch (final Throwable t) {
-+                this.getOwner().getLogger().log(
-+                    Level.WARNING,
-+                    String.format(
-+                        "Plugin %s generated an exception while executing task %s (sync mode)",
-+                        this.getOwner().getDescription().getFullName(),
-+                        this.getTaskId()),
-+                    t);
-+            }
-+            return;
-+        }
-+        // DivineMC end - Parallel world ticking
-+
-         final Thread thread = Thread.currentThread();
-         // Paper start - name threads according to running plugin
-         final String nameBefore = thread.getName();
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 0e5b10153821fda6056791e1c216d05a9ac8e5bc..85699885e6be932758978eec5d2b8ff22944c7c3 100644
+index 0e5b10153821fda6056791e1c216d05a9ac8e5bc..89e12d30d0815d93842b59642178b4558ee9aae3 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
-@@ -112,6 +112,23 @@ public class WatchdogThread extends ca.spottedleaf.moonrise.common.util.TickThre
+@@ -112,6 +112,18 @@ public class WatchdogThread extends ca.spottedleaf.moonrise.common.util.TickThre
                  WatchdogThread.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(MinecraftServer.getServer().serverThread.threadId(), Integer.MAX_VALUE), logger);
                  logger.log(Level.SEVERE, "------------------------------");
  
@@ -638,13 +611,8 @@ index 0e5b10153821fda6056791e1c216d05a9ac8e5bc..85699885e6be932758978eec5d2b8ff2
 +                if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking) {
 +                    logger.log(Level.SEVERE, "Parallel world ticking thread dump");
 +                    for (Thread thread : org.apache.commons.lang3.ThreadUtils.getAllThreads()) {
-+                        if (MinecraftServer.getServer().serverThread == thread || thread instanceof WatchdogThread) {
-+                            continue;
-+                        }
-+                        if (thread instanceof ca.spottedleaf.moonrise.common.util.TickThread tickThread) {
-+                            if (tickThread instanceof ServerLevelTickThread tickThread1) {
-+                                WatchdogThread.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(tickThread1.threadId(), Integer.MAX_VALUE), logger);
-+                            }
++                        if (thread instanceof ServerLevelTickThread tickThread) {
++                            WatchdogThread.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(tickThread.threadId(), Integer.MAX_VALUE), logger);
 +                        }
 +                    }
 +                    logger.log(Level.SEVERE, "------------------------------");

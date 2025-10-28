@@ -191,7 +191,6 @@ public class DivineConfig {
         public static int parallelThreadCount = 4;
         public static boolean logContainerCreationStacktraces = false;
         public static boolean disableHardThrow = false;
-        public static boolean pwtCompatabilityMode = false;
         public static boolean usePerWorldTpsBar = true;
         public static boolean showTPSOfServerInsteadOfWorld = true;
 
@@ -241,8 +240,6 @@ public class DivineConfig {
             logContainerCreationStacktraces = getBoolean(ConfigCategory.ASYNC.key("parallel-world-ticking.log-container-creation-stacktraces"), logContainerCreationStacktraces);
             disableHardThrow = getBoolean(ConfigCategory.ASYNC.key("parallel-world-ticking.disable-hard-throw"), disableHardThrow,
                 "Disables annoying 'not on main thread' throws. But, THIS IS NOT RECOMMENDED because you SHOULD FIX THE ISSUES THEMSELVES instead of RISKING DATA CORRUPTION! If you lose something, take the blame on yourself.");
-            pwtCompatabilityMode = getBoolean(ConfigCategory.ASYNC.key("parallel-world-ticking.compatability-mode"), pwtCompatabilityMode,
-                "Enables compatibility mode for plugins that are not compatible with Parallel World Ticking. This makes all async tasks run synchronously.");
             usePerWorldTpsBar = getBoolean(ConfigCategory.ASYNC.key("parallel-world-ticking.use-per-world-tps-bar"), usePerWorldTpsBar,
                 "Enables per-world TPS bar, which shows the TPS of the world the player is currently in. TPS bar can be turned on/off with /tpsbar command.");
             showTPSOfServerInsteadOfWorld = getBoolean(ConfigCategory.ASYNC.key("parallel-world-ticking.show-tps-of-server-instead-of-world"), showTPSOfServerInsteadOfWorld,
