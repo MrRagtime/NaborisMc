@@ -5,10 +5,10 @@ Subject: [PATCH] Optimize level ticking
 
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 21f9b04927418778645475fda51d2d978215dc1c..f9d4d8ba415864019bca2a69a142ff1ce0307072 100644
+index 66eddcb27d9d3e8af7a5911225397aef10ba48e4..16b5e2959526cd9f394991730fd179496719ecc4 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -944,9 +944,10 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -962,9 +962,10 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      // Paper start - optimise random ticking
      private final ca.spottedleaf.moonrise.common.util.SimpleThreadUnsafeRandom simpleRandom = new ca.spottedleaf.moonrise.common.util.SimpleThreadUnsafeRandom(net.minecraft.world.level.levelgen.RandomSupport.generateUniqueSeed());
  
@@ -20,7 +20,7 @@ index 21f9b04927418778645475fda51d2d978215dc1c..f9d4d8ba415864019bca2a69a142ff1c
          final ca.spottedleaf.moonrise.common.util.SimpleThreadUnsafeRandom simpleRandom = this.simpleRandom;
          final boolean doubleTickFluids = !ca.spottedleaf.moonrise.common.PlatformHooks.get().configFixMC224294();
  
-@@ -955,42 +956,38 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -973,42 +974,38 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          final int offsetZ = cpos.z << 4;
  
          for (int sectionIndex = 0, sectionsLen = sections.length; sectionIndex < sectionsLen; sectionIndex++) {

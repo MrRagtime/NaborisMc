@@ -15,7 +15,6 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.level.progress.ChunkProgressListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
@@ -44,8 +43,8 @@ public final class RegionizedChunkTicking extends ServerChunkCache {
         new NamedAgnosticThreadFactory<>("Region Ticking", TickThread::new, DivineConfig.AsyncCategory.regionizedChunkTickingExecutorThreadPriority)
     );
 
-    public RegionizedChunkTicking(final ServerLevel level, final LevelStorageSource.LevelStorageAccess levelStorageAccess, final DataFixer fixerUpper, final StructureTemplateManager structureManager, final Executor dispatcher, final ChunkGenerator generator, final int viewDistance, final int simulationDistance, final boolean sync, final ChunkProgressListener progressListener, final ChunkStatusUpdateListener chunkStatusListener, final Supplier<DimensionDataStorage> overworldDataStorage) {
-        super(level, levelStorageAccess, fixerUpper, structureManager, dispatcher, generator, viewDistance, simulationDistance, sync, progressListener, chunkStatusListener, overworldDataStorage);
+    public RegionizedChunkTicking(final ServerLevel level, final LevelStorageSource.LevelStorageAccess levelStorageAccess, final DataFixer fixerUpper, final StructureTemplateManager structureManager, final Executor dispatcher, final ChunkGenerator generator, final int viewDistance, final int simulationDistance, final boolean sync, final ChunkStatusUpdateListener chunkStatusListener, final Supplier<DimensionDataStorage> overworldDataStorage) {
+        super(level, levelStorageAccess, fixerUpper, structureManager, dispatcher, generator, viewDistance, simulationDistance, sync, chunkStatusListener, overworldDataStorage);
     }
 
     public void execute(CompletableFuture<Void> spawns, final LevelChunk[] raw) {
