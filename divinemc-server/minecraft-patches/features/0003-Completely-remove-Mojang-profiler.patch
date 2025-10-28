@@ -1208,7 +1208,7 @@ index e957ddea7c6cd9685e362a4b1adc09fdd3bfd359..188a62f00bd541f27adaaa4250b56276
  
      public boolean hasWork() {
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index 488fc6088d69148f60a913b42ffb964c48eb0324..94851554c2c3e0f5a2d72606fda166adb586bbca 100644
+index d4858fe6a195acd17aea098401a5ee7baa5ad4d1..3aa09ea7498fb0d790cc47c66a8e89df981671e2 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
 @@ -27,8 +27,6 @@ import net.minecraft.network.protocol.Packet;
@@ -1297,7 +1297,7 @@ index 488fc6088d69148f60a913b42ffb964c48eb0324..94851554c2c3e0f5a2d72606fda166ad
          int naturalSpawnChunkCount = this.distanceManager.getNaturalSpawnChunkCount();
          // Paper start - Optional per player mob spawns
          NaturalSpawner.SpawnState spawnState;
-@@ -580,14 +560,11 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -580,16 +560,13 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          List<LevelChunk> list = this.spawningChunks;
  
          try {
@@ -1305,14 +1305,16 @@ index 488fc6088d69148f60a913b42ffb964c48eb0324..94851554c2c3e0f5a2d72606fda166ad
              this.chunkMap.collectSpawningChunks(list);
 -            profiler.popPush("shuffleSpawningChunks");
              // Paper start - chunk tick iteration optimisation
-             this.shuffleRandom.setSeed(this.level.random.nextLong());
-             if (!this.level.paperConfig().entities.spawning.perPlayerMobSpawns) Util.shuffle(list, this.shuffleRandom); // Paper - Optional per player mob spawns; do not need this when per-player is enabled
+             if (!this.level.paperConfig().entities.spawning.perPlayerMobSpawns) {
+                 this.shuffleRandom.setSeed(this.level.random.nextLong());
+                 Util.shuffle(list, this.shuffleRandom); // Paper - Optional per player mob spawns; do not need this when per-player is enabled
+             }
              // Paper end - chunk tick iteration optimisation
 -            profiler.popPush("tickSpawningChunks");
  
              for (LevelChunk levelChunk : list) {
                  this.tickSpawningChunk(levelChunk, timeInhabited, filteredSpawningCategories, spawnState);
-@@ -596,14 +573,10 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -598,14 +575,10 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
              list.clear();
          }
  
@@ -1327,7 +1329,7 @@ index 488fc6088d69148f60a913b42ffb964c48eb0324..94851554c2c3e0f5a2d72606fda166ad
      }
  
      private void tickSpawningChunk(LevelChunk chunk, long timeInhabited, List<MobCategory> spawnCategories, NaturalSpawner.SpawnState spawnState) {
-@@ -824,7 +797,6 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -826,7 +799,6 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
  
          @Override
          protected void doRunTask(Runnable task) {

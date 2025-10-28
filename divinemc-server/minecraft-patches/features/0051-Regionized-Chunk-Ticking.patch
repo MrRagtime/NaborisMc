@@ -34,7 +34,7 @@ index 04dd1bec1aff470e67a21fb0b25932685992ec82..72a0a80f1fffa43e143c80c689db5302
  
          Objects.checkFromToIndex(0, size, raw.length);
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index e23f2004705fc299934a8b30e736ddf0a8eb2147..e8efa7b12746423de11b6970efe1651db2509511 100644
+index 6ea62fbffda38e477ef8e119608fc93793db95c3..dda53860397ee52f64209a8d08a7707cfa2f7592 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
 @@ -57,7 +57,7 @@ import org.slf4j.Logger;
@@ -196,7 +196,7 @@ index e23f2004705fc299934a8b30e736ddf0a8eb2147..e8efa7b12746423de11b6970efe1651d
          List<LevelChunk> list = this.spawningChunks;
  
          try {
-@@ -625,12 +668,12 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
+@@ -627,12 +670,12 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
          } finally {
              list.clear();
          }
