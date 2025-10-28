@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
+Date: Thu, 24 Jul 2025 14:07:47 +0300
+Subject: [PATCH] Optimize collections
+
+
+diff --git a/net/minecraft/core/NonNullList.java b/net/minecraft/core/NonNullList.java
+index feefe51469843707afb2ecd4aaa3c9da2e089eb5..c7e418e5f7ca7f177df4e9432a0963f89b972a61 100644
+--- a/net/minecraft/core/NonNullList.java
++++ b/net/minecraft/core/NonNullList.java
+@@ -14,23 +14,23 @@ public class NonNullList<E> extends AbstractList<E> {
+     private final E defaultValue;
+ 
+     public static <E> NonNullList<E> create() {
+-        return new NonNullList<>(Lists.newArrayList(), null);
++        return new NonNullList<>(new it.unimi.dsi.fastutil.objects.ObjectArrayList<>(), null); // DivineMC - Optimize collections
+     }
+ 
+     public static <E> NonNullList<E> createWithCapacity(int initialCapacity) {
+-        return new NonNullList<>(Lists.newArrayListWithCapacity(initialCapacity), null);
++        return new NonNullList<>(new it.unimi.dsi.fastutil.objects.ObjectArrayList<>(initialCapacity), null); // DivineMC - Optimize collections
+     }
+ 
+     public static <E> NonNullList<E> withSize(int size, E defaultValue) {
+         Objects.requireNonNull(defaultValue);
+         Object[] objects = new Object[size];
+         Arrays.fill(objects, defaultValue);
+-        return new NonNullList<>(Arrays.asList((E[])objects), defaultValue);
++        return new NonNullList<>(new it.unimi.dsi.fastutil.objects.ObjectArrayList<>((E[])objects), defaultValue); // DivineMC - Optimize collections
+     }
+ 
+     @SafeVarargs
+     public static <E> NonNullList<E> of(E defaultValue, E... elements) {
+-        return new NonNullList<>(Arrays.asList(elements), defaultValue);
++        return new NonNullList<>(new it.unimi.dsi.fastutil.objects.ObjectArrayList<>(elements), defaultValue); // DivineMC - Optimize collections
+     }
+ 
+     protected NonNullList(List<E> list, @Nullable E defaultValue) {
+diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
+index 71fafa5cf67cd1e460b0be14ecfe0c922b666704..993c03f1957b6905ed943ff34ec9c530fdf69928 100644
+--- a/net/minecraft/server/level/ChunkMap.java
++++ b/net/minecraft/server/level/ChunkMap.java
+@@ -132,8 +132,10 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+     public final ChunkMap.DistanceManager distanceManager;
+     private final String storageName;
+     private final PlayerMap playerMap = new PlayerMap();
+-    public final Int2ObjectMap<ChunkMap.TrackedEntity> entityMap = new Int2ObjectOpenHashMap<>();
+-    private final Long2ByteMap chunkTypeCache = new Long2ByteOpenHashMap();
++    // DivineMC start - Optimize collections
++    public final Int2ObjectMap<ChunkMap.TrackedEntity> entityMap = new org.bxteam.divinemc.util.map.Int2ObjectConcurrentHashMap<>();
++    private final Long2ByteMap chunkTypeCache = it.unimi.dsi.fastutil.longs.Long2ByteMaps.synchronize(new Long2ByteOpenHashMap());
++    // DivineMC end - Optimize collections
+     // Paper - rewrite chunk system
+     public int serverViewDistance;
+     public final WorldGenContext worldGenContext; // Paper - public
+diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
+index ebe34866e79397ac4c6a6bba97c99f5354adbe64..604b4670f59e0c3ed5c287e8a0c573560826ed78 100644
+--- a/net/minecraft/world/level/Level.java
++++ b/net/minecraft/world/level/Level.java
+@@ -259,7 +259,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+ 
+     @Override
+     public final <T extends Entity> List<T> getEntitiesOfClass(final Class<T> entityClass, final AABB boundingBox, final Predicate<? super T> predicate) {
+-        final List<T> ret = new java.util.ArrayList<>();
++        final List<T> ret = new it.unimi.dsi.fastutil.objects.ObjectArrayList<>(); // DivineMC - Optimize collections
+ 
+         ((ca.spottedleaf.moonrise.patches.chunk_system.level.ChunkSystemLevel)this).moonrise$getEntityLookup().getEntities(entityClass, null, boundingBox, ret, predicate);
+ 
+@@ -268,7 +268,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+ 
+     @Override
+     public final List<Entity> moonrise$getHardCollidingEntities(final Entity entity, final AABB box, final Predicate<? super Entity> predicate) {
+-        final List<Entity> ret = new java.util.ArrayList<>();
++        final List<Entity> ret = new it.unimi.dsi.fastutil.objects.ObjectArrayList<>(); // DivineMC - Optimize collections
+ 
+         ((ca.spottedleaf.moonrise.patches.chunk_system.level.ChunkSystemLevel)this).moonrise$getEntityLookup().getHardCollidingEntities(entity, box, ret, predicate);
+ 
+diff --git a/net/minecraft/world/level/chunk/ProtoChunk.java b/net/minecraft/world/level/chunk/ProtoChunk.java
+index 456d301d45350fb15de5ab663c482257e607f3aa..6fe4dd49256325908e49c02728a5b51964a96c12 100644
+--- a/net/minecraft/world/level/chunk/ProtoChunk.java
++++ b/net/minecraft/world/level/chunk/ProtoChunk.java
+@@ -45,7 +45,7 @@ public class ProtoChunk extends ChunkAccess {
+     @Nullable
+     private volatile LevelLightEngine lightEngine;
+     private volatile ChunkStatus status = ChunkStatus.EMPTY;
+-    private final List<CompoundTag> entities = Lists.newArrayList();
++    private final List<CompoundTag> entities = Collections.synchronizedList(Lists.newArrayList()); // DivineMC - Optimize collections
+     @Nullable
+     private CarvingMask carvingMask;
+     @Nullable

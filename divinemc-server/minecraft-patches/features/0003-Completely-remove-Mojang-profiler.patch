@@ -1537,7 +1537,7 @@ index b8b641caf8b82f4071bfeff37d50ef65ff2a0505..d182aafc4c8b4ea657ec3228c45fb29f
              for (Entity entity : passengerEntity.getPassengers()) {
                  this.tickPassenger(passengerEntity, entity, isActive); // Paper - EAR 2
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index a5fbd6140cd7564afeab6b5f60a7409dd567efd1..507b5cba7b67752e33e04d53a25f437fc451dae5 100644
+index 6836632940a8831f9020443d1c8a930e22fc054a..43cb158bee132cce0f3b09e31bc8ac83245ed3ea 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -110,8 +110,6 @@ import net.minecraft.util.Mth;
@@ -1549,22 +1549,20 @@ index a5fbd6140cd7564afeab6b5f60a7409dd567efd1..507b5cba7b67752e33e04d53a25f437f
  import net.minecraft.world.Container;
  import net.minecraft.world.Difficulty;
  import net.minecraft.world.InteractionHand;
-@@ -1560,14 +1558,10 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1568,20 +1566,15 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+                 this.portalProcess = null; // SPIGOT-7785: there is no need to carry this over as it contains the old world/location and we might run into trouble if there is a portal in the same spot in both worlds
+                 serverLevel.removePlayerImmediately(this, Entity.RemovalReason.CHANGED_DIMENSION);
                  this.unsetRemoved();
-                 */
-                 // CraftBukkit end
 -                ProfilerFiller profilerFiller = Profiler.get();
 -                profilerFiller.push("moving");
-                 if (level != null && resourceKey == net.minecraft.world.level.dimension.LevelStem.OVERWORLD && level.getTypeKey() == net.minecraft.world.level.dimension.LevelStem.NETHER) { // CraftBukkit - empty to fall through to null to event
+                 if (resourceKey == net.minecraft.world.level.dimension.LevelStem.OVERWORLD && level.getTypeKey() == net.minecraft.world.level.dimension.LevelStem.NETHER) { // CraftBukkit - empty to fall through to null to event
                      this.enteredNetherPosition = this.position();
                  }
  
 -                profilerFiller.pop();
 -                profilerFiller.push("placing");
-                 // CraftBukkit start
-                 this.isChangingDimension = true; // CraftBukkit - Set teleport invulnerability only if player changing worlds
-                 LevelData worlddata = level.getLevelData();
-@@ -1585,7 +1579,6 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+                 this.portalPos = org.bukkit.craftbukkit.util.CraftLocation.toBlockPosition(exit); // Purpur - Fix stuck in portals
+                 this.setServerLevel(level);
                  this.connection.internalTeleport(PositionMoveRotation.of(teleportTransition), teleportTransition.relatives()); // CraftBukkit - use internal teleport without event
                  this.connection.resetPosition();
                  level.addDuringTeleport(this);
@@ -1799,7 +1797,7 @@ index 39a604c9a53930b53d959b1d2eb504aa964e9a58..0d0380e3955836ce125f777841477503
  
      @Override
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3c8e8bb75 100644
+index e162b53f54c47ad29c80c39a14493a0fbf59dd12..36d1fd45772240aa963fcad67f15f37fc35d591f 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -82,8 +82,6 @@ import net.minecraft.util.RandomSource;
@@ -1811,7 +1809,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
  import net.minecraft.world.InteractionHand;
  import net.minecraft.world.InteractionResult;
  import net.minecraft.world.Nameable;
-@@ -880,8 +878,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -879,8 +877,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
      // CraftBukkit end
  
      public void baseTick() {
@@ -1820,7 +1818,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
          if (firstTick && this instanceof net.minecraft.world.entity.NeutralMob neutralMob) neutralMob.tickInitialPersistentAnger(level); // Paper - Prevent entity loading causing async lookups
          this.inBlockState = null;
          if (this.isPassenger() && this.getVehicle().isRemoved()) {
-@@ -935,8 +931,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -934,8 +930,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
          if (this.level() instanceof ServerLevel serverLevelx && this instanceof Leashable) {
              Leashable.tickLeash(serverLevelx, (Entity & Leashable)this);
          }
@@ -1829,7 +1827,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
      }
  
      public void setSharedFlagOnFire(boolean isOnFire) {
-@@ -1162,8 +1156,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -1161,8 +1155,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
                  }
              }
  
@@ -1838,7 +1836,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
              if (this.stuckSpeedMultiplier.lengthSqr() > 1.0E-7) {
                  if (type != MoverType.PISTON) {
                      movement = movement.multiply(this.stuckSpeedMultiplier);
-@@ -1175,7 +1167,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -1174,7 +1166,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
              // Paper start - ignore movement changes while inactive.
              if (isTemporarilyActive && !(this instanceof ItemEntity) && movement == getDeltaMovement() && type == MoverType.SELF) {
                  setDeltaMovement(Vec3.ZERO);
@@ -1846,7 +1844,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
                  return;
              }
              // Paper end
-@@ -1200,8 +1191,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -1199,8 +1190,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
                  this.setPos(vec33);
              }
  
@@ -1855,7 +1853,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
              boolean flag = !Mth.equal(movement.x, vec3.x);
              boolean flag1 = !Mth.equal(movement.z, vec3.z);
              this.horizontalCollision = flag || flag1;
-@@ -1224,7 +1213,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -1223,7 +1212,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
              }
  
              if (this.isRemoved()) {
@@ -1863,7 +1861,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
              } else {
                  if (this.horizontalCollision) {
                      Vec3 deltaMovement = this.getDeltaMovement();
-@@ -1268,7 +1256,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -1267,7 +1255,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
  
                  float blockSpeedFactor = this.getBlockSpeedFactor();
                  this.setDeltaMovement(this.getDeltaMovement().multiply(blockSpeedFactor, 1.0, blockSpeedFactor));
@@ -1871,7 +1869,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
              }
          }
          // Paper start - detailed watchdog information
-@@ -3540,8 +3527,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -3532,8 +3519,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
              this.processPortalCooldown();
              if (this.portalProcess != null) {
                  if (this.portalProcess.processPortalTeleportation(serverLevel, this, this.canUsePortal(false))) {
@@ -1880,7 +1878,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
                      this.setPortalCooldown();
                      TeleportTransition portalDestination = this.portalProcess.getPortalDestination(serverLevel, this);
                      if (portalDestination != null) {
-@@ -3551,8 +3536,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -3543,8 +3528,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
                              this.teleport(portalDestination);
                          }
                      }
@@ -1889,7 +1887,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
                  } else if (this.portalProcess.hasExpired()) {
                      this.portalProcess = null;
                  }
-@@ -4119,15 +4102,12 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -4111,15 +4094,12 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
              entity.teleport(this.calculatePassengerTransition(teleportTransition, entity));
          }
  
@@ -1905,7 +1903,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
          return this;
      }
  
-@@ -4144,11 +4124,8 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -4136,11 +4116,8 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
              }
          }
  
@@ -1917,7 +1915,7 @@ index 8c6554965fb0db76cf8ca0f1c905b0a1ab15ea2f..4cb08e5d70dc98fda437c8fbdb27aca3
              return null;
          } else {
              // Paper start - Fix item duplication and teleport issues
-@@ -4168,7 +4145,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
+@@ -4160,7 +4137,6 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
              newLevel.resetEmptyTime();
              teleportTransition.postTeleportTransition().onTransition(entityx);
              this.teleportSpectators(teleportTransition, oldLevel);

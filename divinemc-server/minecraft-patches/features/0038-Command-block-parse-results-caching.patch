@@ -1,0 +1,83 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
+Date: Sat, 15 Mar 2025 22:01:08 +0300
+Subject: [PATCH] Command block parse results caching
+
+
+diff --git a/net/minecraft/world/level/BaseCommandBlock.java b/net/minecraft/world/level/BaseCommandBlock.java
+index b6cebd8f5741cd3058d4ab3996d15d9e1e0fc3b4..a0e2ec323b07a85a91c36bc222df671ae491955e 100644
+--- a/net/minecraft/world/level/BaseCommandBlock.java
++++ b/net/minecraft/world/level/BaseCommandBlock.java
+@@ -35,6 +35,10 @@ public abstract class BaseCommandBlock {
+     private String command = "";
+     @Nullable
+     private Component customName;
++    // DivineMC start - Caching command block parse results
++    private String lastExecutedCommand;
++    private com.mojang.brigadier.ParseResults<CommandSourceStack> parseResultsCache;
++    // DivineMC end - Caching command block parse results
+     // CraftBukkit start
+     protected abstract org.bukkit.command.CommandSender getBukkitSender(CommandSourceStack wrapper);
+     // CraftBukkit end
+@@ -115,13 +119,41 @@ public abstract class BaseCommandBlock {
+                                 this.successCount++;
+                             }
+                         });
+-                        // Paper start - ServerCommandEvent
+-                        org.bukkit.event.server.ServerCommandEvent event = new org.bukkit.event.server.ServerCommandEvent(commandSourceStack.getBukkitSender(), net.minecraft.commands.Commands.trimOptionalPrefix(this.command));
+-                        if (!event.callEvent()) {
+-                            return true;
++                        // DivineMC start - Command block parse results caching
++                        if (org.bxteam.divinemc.config.DivineConfig.PerformanceCategory.commandBlockParseResultsCaching) {
++                            String commandCache = this.command;
++                            // noinspection DuplicatedCode
++                            com.google.common.base.Joiner joiner = com.google.common.base.Joiner.on(" ");
++
++                            if (commandCache.startsWith("/")) {
++                                commandCache = commandCache.substring(1);
++                            }
++
++                            org.bukkit.event.server.ServerCommandEvent event = new org.bukkit.event.server.ServerCommandEvent(commandSourceStack.getBukkitSender(), commandCache);
++                            org.bukkit.Bukkit.getPluginManager().callEvent(event);
++                            if (!event.isCancelled()) {
++                                commandCache = event.getCommand();
++                                String[] args = commandCache.split(" ");
++
++                                if (args.length != 0) {
++                                    String newCommand = joiner.join(args);
++                                    if (!newCommand.equals(lastExecutedCommand) || parseResultsCache == null) {
++                                        MinecraftServer.LOGGER.info("Recompiling parse results cache for command block at ({}, {}, {})", this.getPosition().x, this.getPosition().y, this.getPosition().z);
++                                        this.cache(server.getCommands().getDispatcher(), commandSourceStack, newCommand);
++                                    }
++                                    server.getCommands().performCommand(parseResultsCache, newCommand);
++                                }
++                            }
++                        } else {
++                            // Paper start - ServerCommandEvent
++                            org.bukkit.event.server.ServerCommandEvent event = new org.bukkit.event.server.ServerCommandEvent(commandSourceStack.getBukkitSender(), net.minecraft.commands.Commands.trimOptionalPrefix(this.command));
++                            if (!event.callEvent()) {
++                                return true;
++                            }
++                            server.getCommands().performPrefixedCommand(commandSourceStack, event.getCommand());
++                            // Paper end - ServerCommandEvent
+                         }
+-                        server.getCommands().performPrefixedCommand(commandSourceStack, event.getCommand());
+-                        // Paper end - ServerCommandEvent
++                        // DivineMC end - Command block parse results caching
+                     }
+                 } catch (Throwable var8) {
+                     CrashReport crashReport = CrashReport.forThrowable(var8, "Executing command block");
+@@ -142,6 +174,13 @@ public abstract class BaseCommandBlock {
+         }
+     }
+ 
++    // DivineMC start - Command block parse results caching
++    private void cache(com.mojang.brigadier.CommandDispatcher<CommandSourceStack> dispatcher, CommandSourceStack commandSourceStack, String commandCache) {
++        this.parseResultsCache = dispatcher.parse(commandCache, commandSourceStack);
++        this.lastExecutedCommand = commandCache;
++    }
++    // DivineMC end - Command block parse results caching
++
+     @Nullable
+     private BaseCommandBlock.CloseableCommandBlockSource createSource() {
+         return this.trackOutput ? new BaseCommandBlock.CloseableCommandBlockSource() : null;
