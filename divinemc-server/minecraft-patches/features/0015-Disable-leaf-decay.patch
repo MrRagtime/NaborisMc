@@ -5,7 +5,7 @@ Subject: [PATCH] Disable leaf decay
 
 
 diff --git a/net/minecraft/world/level/block/LeavesBlock.java b/net/minecraft/world/level/block/LeavesBlock.java
-index 66be73fe9ad14646057fa51b7c537a86c1e84ab9..4371fd03e4b5bd3a18024e0a9ee0e75cd77137e9 100644
+index b507dbb6ab345cf754775226c59320526d7b94f0..884f102836ff1ea08632804465f21a18bb7cd18d 100644
 --- a/net/minecraft/world/level/block/LeavesBlock.java
 +++ b/net/minecraft/world/level/block/LeavesBlock.java
 @@ -70,12 +70,29 @@ public abstract class LeavesBlock extends Block implements SimpleWaterloggedBloc
@@ -18,7 +18,7 @@ index 66be73fe9ad14646057fa51b7c537a86c1e84ab9..4371fd03e4b5bd3a18024e0a9ee0e75c
  
      @Override
      protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
--        level.setBlock(pos, updateDistance(state, level, pos), 3);
+-        level.setBlock(pos, updateDistance(state, level, pos), Block.UPDATE_ALL);
 +        // DivineMC start - Disable leaf decay
 +        if (org.bxteam.divinemc.config.DivineConfig.FixesCategory.disableLeafDecay) return; // DivineMC - Disable leaf decay
 +        int newValue = 7;
@@ -34,7 +34,7 @@ index 66be73fe9ad14646057fa51b7c537a86c1e84ab9..4371fd03e4b5bd3a18024e0a9ee0e75c
 +        }
 +
 +        if (newValue != oldValue) {
-+            level.setBlock(pos, state.setValue(DISTANCE, newValue), 3);
++            level.setBlock(pos, state.setValue(DISTANCE, newValue), Block.UPDATE_ALL);
 +        }
 +        // DivineMC end - Disable leaf decay
      }

@@ -73,7 +73,7 @@ index 4788686f0bd8ab67700bf3687560ff4a26a8e493..ba496e78740218a176d8e3117a21cbfc
  
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 76ba642de5673b407e3a802db9de060bcffae9b0..29f4cce6823ad13bec607523f059166f97a48c22 100644
+index 0e505ad2ce4c8b79df95f08ca948c9687e07fa4c..9b8aa40984d87ab1078fe71b5ccc0ca04f67a55c 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -84,7 +84,7 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot

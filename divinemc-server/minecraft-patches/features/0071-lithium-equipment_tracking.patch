@@ -187,10 +187,10 @@ index 1e00a7bd89d885cabb4b9ca3c86fbd8cd93cebf5..4fb31f578c2a4a5dc137c38de8f64159
 +    // DivineMC end - lithium: equipment_tracking
  }
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index ca392664826ca8ced5a1c2c8b2d22eb87c5bd139..c08fb102fb9d325cf7c41e32b32833e70474fecb 100644
+index 7ec1c2f39981b60343f152a5432b3677574ee46c..e3e64a0bf7b8b9e04114a2b0b363932517deea0f 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -439,9 +439,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -440,9 +440,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              this.getSleepingPos().ifPresent(this::setPosToBed);
          }
  
@@ -210,7 +210,7 @@ index ca392664826ca8ced5a1c2c8b2d22eb87c5bd139..c08fb102fb9d325cf7c41e32b32833e7
  
          super.baseTick();
          if (this.isAlive() && this.level() instanceof ServerLevel serverLevel1) {
-@@ -3451,6 +3459,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3454,6 +3462,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      public void detectEquipmentUpdates() {
          Map<EquipmentSlot, ItemStack> map = this.collectEquipmentChanges();
          if (map != null) {
@@ -218,7 +218,7 @@ index ca392664826ca8ced5a1c2c8b2d22eb87c5bd139..c08fb102fb9d325cf7c41e32b32833e7
              this.handleHandSwap(map);
              if (!map.isEmpty()) {
                  this.handleEquipmentChanges(map);
-@@ -3460,6 +3469,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3463,6 +3472,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
  
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
@@ -234,10 +234,10 @@ index ca392664826ca8ced5a1c2c8b2d22eb87c5bd139..c08fb102fb9d325cf7c41e32b32833e7
          // Paper start - EntityEquipmentChangedEvent
          record EquipmentChangeImpl(org.bukkit.inventory.ItemStack oldItem, org.bukkit.inventory.ItemStack newItem) implements io.papermc.paper.event.entity.EntityEquipmentChangedEvent.EquipmentChange {
 diff --git a/net/minecraft/world/entity/decoration/ArmorStand.java b/net/minecraft/world/entity/decoration/ArmorStand.java
-index 03a350b91948b8309a74edb5e1f35d336316ff34..71f9dac6d592a41d80d7563d3f71884e26d3ece4 100644
+index 9a298e111b9142dd878ee03b442d1110a9e0897e..ff3a4d740631d9f353cf1812f124b68aac144f64 100644
 --- a/net/minecraft/world/entity/decoration/ArmorStand.java
 +++ b/net/minecraft/world/entity/decoration/ArmorStand.java
-@@ -528,8 +528,9 @@ public class ArmorStand extends LivingEntity {
+@@ -529,8 +529,9 @@ public class ArmorStand extends LivingEntity {
          maxUpStep = level().purpurConfig.armorstandStepHeight; // Purpur - Add option to set armorstand step height
          if (!this.canTick) {
              if (this.noTickEquipmentDirty) {

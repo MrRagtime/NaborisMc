@@ -7,7 +7,7 @@
 +val bxTeamMavenPublicUrl = "https://repo.bxteam.org/snapshots/"
  
  dependencies {
-     mache("io.papermc:mache:1.21.10+build.7")
+     mache("io.papermc:mache:1.21.10+build.9")
 @@ -26,6 +_,7 @@
  
      // Purpur start - Rebrand

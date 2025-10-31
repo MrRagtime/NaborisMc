@@ -5,7 +5,7 @@ Subject: [PATCH] Implement NoChatReports
 
 
 diff --git a/net/minecraft/network/FriendlyByteBuf.java b/net/minecraft/network/FriendlyByteBuf.java
-index be5ac057737fd67fbf2f80f879f8e2816750f041..85faebf1d75bc6d4e6b01d0dad1920069f6fd98d 100644
+index 9c57702310f710a83971faaf9f658610e47334df..ddf3e514310f7c8990acb7d9d733e5cc07f33eea 100644
 --- a/net/minecraft/network/FriendlyByteBuf.java
 +++ b/net/minecraft/network/FriendlyByteBuf.java
 @@ -105,7 +105,28 @@ public class FriendlyByteBuf extends ByteBuf {
@@ -287,10 +287,10 @@ index 4a333e87af17bd5b673b57c0fa0d3a239fb8db59..e5569978a23c5bde673146421963a2ff
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index adefc10f96c8216a4ba467f1f50672478b27b428..f67e870ece3bbd6b7e8e194d3b2da989229110e7 100644
+index 457dfcb459f2618e6975ab3e4ff37d5988dd50c2..42af746efa840152dfb0a8d73d9d227115254acc 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -181,7 +181,7 @@ public abstract class PlayerList {
+@@ -182,7 +182,7 @@ public abstract class PlayerList {
                  !_boolean,
                  _boolean2,
                  player.createCommonSpawnInfo(serverLevel),
@@ -299,7 +299,7 @@ index adefc10f96c8216a4ba467f1f50672478b27b428..f67e870ece3bbd6b7e8e194d3b2da989
              )
          );
          player.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
-@@ -1196,6 +1196,7 @@ public abstract class PlayerList {
+@@ -1197,6 +1197,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) {

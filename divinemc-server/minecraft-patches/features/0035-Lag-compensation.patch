@@ -66,10 +66,10 @@ index 3275a8a3a57a6d836170efbf12bc1257282703c8..f038c8fe7fa84457dcee2276bbbdb7ec
          this.serverLevelData.setDayTime(time);
          // Purpur start - Configurable daylight cycle
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 509689bfffbe7b376ce3c4f9851342242ae3bab2..f15497ef868574ee2fe11611bfc31d9b102f80d0 100644
+index 288d23e443f495d7fbfd0bbbe1bca7a2ff9da64a..2dc2dd9dbbe63316827b620b991ad929ad7bb77e 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -525,6 +525,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -526,6 +526,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              }
          }
  
@@ -77,7 +77,7 @@ index 509689bfffbe7b376ce3c4f9851342242ae3bab2..f15497ef868574ee2fe11611bfc31d9b
          this.tickEffects();
          this.yHeadRotO = this.yHeadRot;
          this.yBodyRotO = this.yBodyRot;
-@@ -532,6 +533,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -533,6 +534,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          this.xRotO = this.getXRot();
      }
  
@@ -183,10 +183,10 @@ index 5305b72c37ba0fcde811d46e781fb4c74817da52..fbae6ab5d5a999039ae8d67cd3df193e
              BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
              return blocksAttacks != null ? 72000 : 0;
 diff --git a/net/minecraft/world/level/GameRules.java b/net/minecraft/world/level/GameRules.java
-index dbd3813cb0328b7b73c9b634b1b19be7ee3246f6..9b72f3266e3a7cf6bd934d2497f0c5332c09ae59 100644
+index 7141d2c69e27e9b14e99360686d9bff1d84c24e6..5eeaa5bca2c9482420990822781625a2c1a6e94e 100644
 --- a/net/minecraft/world/level/GameRules.java
 +++ b/net/minecraft/world/level/GameRules.java
-@@ -377,8 +377,31 @@ public class GameRules {
+@@ -378,8 +378,31 @@ public class GameRules {
      }
  
      public int getInt(GameRules.Key<GameRules.IntegerValue> key) {
@@ -220,7 +220,7 @@ index dbd3813cb0328b7b73c9b634b1b19be7ee3246f6..9b72f3266e3a7cf6bd934d2497f0c533
      public static class BooleanValue extends GameRules.Value<GameRules.BooleanValue> {
          private boolean value;
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 00ca563d6bfbe6182dc246d5f6ffca7fc9a5ba85..611b29ccba29558d8cf54eccb2136a305bf989db 100644
+index f9794da266b5f08f01f88184d3bcca9d8371e44f..a6c99a119a923dd890169888ff4e9852f6e27855 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -350,13 +350,21 @@ public abstract class BlockBehaviour implements FeatureElement {
@@ -248,10 +248,10 @@ index 00ca563d6bfbe6182dc246d5f6ffca7fc9a5ba85..611b29ccba29558d8cf54eccb2136a30
      }
  
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 84bc3ed25a30ede18f66859129dacd73d6837d1f..524f987ba5cbf3d9fa502b51419cb163e099597c 100644
+index a403b61e0300ecfff55f10009ecd3ad57f543808..529f8a3a4db2effaa91d5b95244717dc44d4c6f4 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -957,6 +957,19 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -959,6 +959,19 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
              this.ticker = ticker;
          }
  
@@ -271,7 +271,7 @@ index 84bc3ed25a30ede18f66859129dacd73d6837d1f..524f987ba5cbf3d9fa502b51419cb163
          @Override
          public void tick() {
              if (!this.blockEntity.isRemoved() && this.blockEntity.hasLevel()) {
-@@ -967,7 +980,11 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -969,7 +982,11 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
                          profilerFiller.push(this::getType);
                          BlockState blockState = LevelChunk.this.getBlockState(blockPos);
                          if (this.blockEntity.getType().isValid(blockState)) {
@@ -285,10 +285,10 @@ index 84bc3ed25a30ede18f66859129dacd73d6837d1f..524f987ba5cbf3d9fa502b51419cb163
                          // Paper start - Remove the Block Entity if it's invalid
                          } else {
 diff --git a/net/minecraft/world/level/material/LavaFluid.java b/net/minecraft/world/level/material/LavaFluid.java
-index 2d845b09abe3354f0999b117e78ffd00c41e8924..9630a1fd95853671812c3249f32a8a1e3a05f7ab 100644
+index b7c01dadd69ce314ef6066d4c5d7c27080c7af8f..f838577f0290a1d9bffb860cbeb2daaa6b19957d 100644
 --- a/net/minecraft/world/level/material/LavaFluid.java
 +++ b/net/minecraft/world/level/material/LavaFluid.java
-@@ -188,9 +188,22 @@ public abstract class LavaFluid extends FlowingFluid {
+@@ -190,9 +190,22 @@ public abstract class LavaFluid extends FlowingFluid {
          return fluidState.getHeight(level, pos) >= 0.44444445F && fluid.is(FluidTags.WATER);
      }
  

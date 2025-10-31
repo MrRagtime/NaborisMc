@@ -5,7 +5,7 @@ Subject: [PATCH] Optimize Fluids
 
 
 diff --git a/net/minecraft/world/level/block/LiquidBlock.java b/net/minecraft/world/level/block/LiquidBlock.java
-index 283e5fc879fd9869205549d66b3b99662ec56564..8aa9dac64bcfb81fdfebd1327a0f18bbc104b9d8 100644
+index 8c00026651da489ab954710b59d5a03bf54ffd0d..6b55c4110ebf0c8fa74ede3d33bd4ad121c51908 100644
 --- a/net/minecraft/world/level/block/LiquidBlock.java
 +++ b/net/minecraft/world/level/block/LiquidBlock.java
 @@ -199,6 +199,7 @@ public class LiquidBlock extends Block implements BucketPickup {
@@ -17,7 +17,7 @@ index 283e5fc879fd9869205549d66b3b99662ec56564..8aa9dac64bcfb81fdfebd1327a0f18bb
                      }
                      // CraftBukkit end
 diff --git a/net/minecraft/world/level/material/FlowingFluid.java b/net/minecraft/world/level/material/FlowingFluid.java
-index 18f008dceff896a405970afe157321105d55405f..1de0ef32b6519cad10c8ebf0ed328b6773bcb3ff 100644
+index 9685d02a9837c773094a5da5cff6fa6fcfeed86a..afab54ffe92241f8d549ebe9745a0b47bd3bada0 100644
 --- a/net/minecraft/world/level/material/FlowingFluid.java
 +++ b/net/minecraft/world/level/material/FlowingFluid.java
 @@ -200,6 +200,7 @@ public abstract class FlowingFluid extends Fluid {
@@ -132,10 +132,10 @@ index 18f008dceff896a405970afe157321105d55405f..1de0ef32b6519cad10c8ebf0ed328b67
          return canPassThroughWall(Direction.DOWN, level, pos, state, belowPos, belowState)
              && (belowState.getFluidState().getType().isSame(this) || canHoldFluid(level, belowPos, belowState, this.getFlowing()));
 diff --git a/net/minecraft/world/level/material/LavaFluid.java b/net/minecraft/world/level/material/LavaFluid.java
-index b7da2efaa784ef470029410be3e2359c5bf6dace..2d845b09abe3354f0999b117e78ffd00c41e8924 100644
+index 4df0dad91a5beeb0443ac1849e7783c470aae3d3..b7c01dadd69ce314ef6066d4c5d7c27080c7af8f 100644
 --- a/net/minecraft/world/level/material/LavaFluid.java
 +++ b/net/minecraft/world/level/material/LavaFluid.java
-@@ -237,6 +237,7 @@ public abstract class LavaFluid extends FlowingFluid {
+@@ -239,6 +239,7 @@ public abstract class LavaFluid extends FlowingFluid {
                      // CraftBukkit end
                  }
  

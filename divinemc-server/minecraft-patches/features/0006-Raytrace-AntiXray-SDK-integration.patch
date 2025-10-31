@@ -8,7 +8,7 @@ Integration with Imanity Software's Raytrace AntiXray for better use of this plu
 Original project: https://github.com/Imanity-Software/raytrace-antixray-spigot-sdk
 
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index 599d6a4f31e05369caf3ef9f5e54e83396743ec0..07dd9b8088e363110ecab24026a20485484710c4 100644
+index fad600f343ee0983efc183f083b1507648987575..9bbcffc77dcf0e062a7f3464aee7f8d0563a440f 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -316,6 +316,12 @@ public class ServerPlayerGameMode {
@@ -25,10 +25,10 @@ index 599d6a4f31e05369caf3ef9f5e54e83396743ec0..07dd9b8088e363110ecab24026a20485
      }
  
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 5b50b86c735fa2ba1b5452aacda7db5e64012076..b94b946986258fed3c6d68d9972a657e176d08a4 100644
+index d8b6f1b853609a7fcbd9c2fe6485e5080dece43a..21a20aa602f51bbd6c8cdcb52f6b485971834595 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -1125,6 +1125,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1126,6 +1126,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
                  snapshot.setFlags(flags); // Paper - always set the flag of the most recent call to mitigate issues with multiple update at the same pos with different flags
              }
              BlockState blockState = chunkAt.setBlockState(pos, state, flags);

@@ -5,10 +5,10 @@ Subject: [PATCH] Snowball and Egg knockback
 
 
 diff --git a/net/minecraft/world/entity/projectile/Snowball.java b/net/minecraft/world/entity/projectile/Snowball.java
-index 1dd963aae166e059107aac1d585ccc3199afb66d..0e594fe6cd25ac713ab70db167e276532d9fd993 100644
+index 97e6628e0717b3d11b91b5eead7b3b4373966e05..7afe2ce589a3c25ddabc707c7580751834c1940a 100644
 --- a/net/minecraft/world/entity/projectile/Snowball.java
 +++ b/net/minecraft/world/entity/projectile/Snowball.java
-@@ -54,6 +54,12 @@ public class Snowball extends ThrowableItemProjectile {
+@@ -55,6 +55,12 @@ public class Snowball extends ThrowableItemProjectile {
          Entity entity = result.getEntity();
          int i = entity.level().purpurConfig.snowballDamage >= 0 ? entity.level().purpurConfig.snowballDamage : entity instanceof Blaze ? 3 : 0; // Purpur - Add configurable snowball damage
          entity.hurt(this.damageSources().thrown(this, this.getOwner()), i);
@@ -22,10 +22,10 @@ index 1dd963aae166e059107aac1d585ccc3199afb66d..0e594fe6cd25ac713ab70db167e27653
  
      // Purpur start - options to extinguish fire blocks with snowballs - borrowed and modified code from ThrownPotion#onHitBlock and ThrownPotion#dowseFire
 diff --git a/net/minecraft/world/entity/projectile/ThrownEgg.java b/net/minecraft/world/entity/projectile/ThrownEgg.java
-index baa6f5ef67aeaa18c45e9de6e747aea9066e42b7..d27d7c14facb58807f5c1e36b0d9b690c2b6631e 100644
+index bbb364be2af16a3c200d2197166bb3ad28e5e35d..ff0453123efb7a751d576e5bd2864fa495f8ef3d 100644
 --- a/net/minecraft/world/entity/projectile/ThrownEgg.java
 +++ b/net/minecraft/world/entity/projectile/ThrownEgg.java
-@@ -54,7 +54,14 @@ public class ThrownEgg extends ThrowableItemProjectile {
+@@ -55,7 +55,14 @@ public class ThrownEgg extends ThrowableItemProjectile {
      @Override
      protected void onHitEntity(EntityHitResult result) {
          super.onHitEntity(result);

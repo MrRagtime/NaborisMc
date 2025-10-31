@@ -5,7 +5,7 @@ Subject: [PATCH] Do not send spectator change packet
 
 
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index e2040f79550bdfacf32c94c369284d28526ed2ea..9018f3fe36a2786de380bc8e4d5cfb9425325b36 100644
+index 9bbcffc77dcf0e062a7f3464aee7f8d0563a440f..4b0afe40a06c76b4378f7a5979d6217c4b947770 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -86,10 +86,7 @@ public class ServerPlayerGameMode {
@@ -39,10 +39,10 @@ index e2040f79550bdfacf32c94c369284d28526ed2ea..9018f3fe36a2786de380bc8e4d5cfb94
 +    // DivineMC end - Do not send spectator change packet
  }
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index dd592eae80b8869b9b40f04767a8ab8e10d4fe7e..df4b28f16e0cd2ddcf094b8bc60f13e7707ab84b 100644
+index bf26f788b3c77ef344f072e399cada116b95e757..551ba3a85f9bd3861512585939ab898d20e733a8 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -258,6 +258,7 @@ public abstract class PlayerList {
+@@ -259,6 +259,7 @@ public abstract class PlayerList {
  
          // CraftBukkit start - sendAll above replaced with this loop
          ClientboundPlayerInfoUpdatePacket packet = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(player)); // Paper - Add Listing API for Player
@@ -50,7 +50,7 @@ index dd592eae80b8869b9b40f04767a8ab8e10d4fe7e..df4b28f16e0cd2ddcf094b8bc60f13e7
  
          final List<ServerPlayer> onlinePlayers = Lists.newArrayListWithExpectedSize(this.players.size() - 1); // Paper - Use single player info update packet on join
          for (int i = 0; i < this.players.size(); ++i) {
-@@ -267,7 +268,7 @@ public abstract class PlayerList {
+@@ -268,7 +269,7 @@ public abstract class PlayerList {
                  // Paper start - Add Listing API for Player
                  if (entityplayer1.getBukkitEntity().isListed(bukkitPlayer)) {
                      // Paper end - Add Listing API for Player
@@ -59,7 +59,7 @@ index dd592eae80b8869b9b40f04767a8ab8e10d4fe7e..df4b28f16e0cd2ddcf094b8bc60f13e7
                      // Paper start - Add Listing API for Player
                  } else {
                      entityplayer1.connection.send(ClientboundPlayerInfoUpdatePacket.createSinglePlayerInitializing(player, false));
-@@ -283,7 +284,10 @@ public abstract class PlayerList {
+@@ -284,7 +285,10 @@ public abstract class PlayerList {
          }
          // Paper start - Use single player info update packet on join
          if (!onlinePlayers.isEmpty()) {
@@ -71,7 +71,7 @@ index dd592eae80b8869b9b40f04767a8ab8e10d4fe7e..df4b28f16e0cd2ddcf094b8bc60f13e7
          }
          // Paper end - Use single player info update packet on join
          player.sentListPacket = true;
-@@ -1337,4 +1341,69 @@ public abstract class PlayerList {
+@@ -1338,4 +1342,69 @@ public abstract class PlayerList {
      public boolean isAllowCommandsForAllPlayers() {
          return this.allowCommandsForAllPlayers;
      }

@@ -10,7 +10,7 @@ Original project: https://github.com/LogisticsCraft/OcclusionCulling
 Original license: MIT
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index b3fb97a255bae7bdf0ed1aa0b8b2c376b39bdce7..3248a68175708fd7b10020113475844ae3fd2a8f 100644
+index 56483d9e770e29526a36d4c8c5565092acb227c7..9db43874a94770d49ea5ff48a46c4657e4819e98 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -147,7 +147,7 @@ import net.minecraft.world.waypoints.WaypointTransmitter;
@@ -83,10 +83,10 @@ index 7d5940327c5e7a945165228d502f678a8234cd02..5a4a337694c36e6342c0b0ae5034ac2f
      private static <T extends Entity> EntityType<T> register(ResourceKey<EntityType<?>> key, EntityType.Builder<T> builder) {
          return Registry.register(BuiltInRegistries.ENTITY_TYPE, key, builder.build(key));
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index d5337d37be18d2ebb047e122b220e1a694f46696..bd41bbac179460d38edee624334cdcd0efb5504c 100644
+index 68942a2d15cfeddf1928a3ad270b1ce29685f8f0..149332116ff211c122b1dbf9b8010610174451db 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
-@@ -183,6 +183,25 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -184,6 +184,25 @@ public abstract class Player extends Avatar implements ContainerUser {
      public int burpDelay = 0; // Purpur - Burp delay
      public boolean canPortalInstant = false; // Purpur - Add portal permission bypass
      public int sixRowEnderchestSlotCount = -1; // Purpur - Barrels and enderchests 6 rows
@@ -112,7 +112,7 @@ index d5337d37be18d2ebb047e122b220e1a694f46696..bd41bbac179460d38edee624334cdcd0
  
      // CraftBukkit start
      public boolean fauxSleeping;
-@@ -269,6 +288,25 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -270,6 +289,25 @@ public abstract class Player extends Avatar implements ContainerUser {
  
      @Override
      public void tick() {
@@ -138,7 +138,7 @@ index d5337d37be18d2ebb047e122b220e1a694f46696..bd41bbac179460d38edee624334cdcd0
          // Purpur start - Burp delay
          if (this.burpDelay > 0 && --this.burpDelay == 0) {
              this.level().playSound(null, getX(), getY(), getZ(), SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 1.0F, this.level().random.nextFloat() * 0.1F + 0.9F);
-@@ -1314,6 +1352,7 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -1315,6 +1353,7 @@ public abstract class Player extends Avatar implements ContainerUser {
          if (this.hasContainerOpen()) {
              this.doCloseContainer();
          }

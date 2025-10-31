@@ -412,10 +412,10 @@ index 1d9b32476c1b89984f1afa8e906ca09472b8d6b2..0b1ea5c5248f0b54ba7b01d7bc89e154
                          }
                      }
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 53f3193cbd6ddb53dde771a28f15aec5aee49d66..64e5743aed23b4004de32122b880f99cb70eac8a 100644
+index 3bd279d72d06f30c9b20146ba932a8f4832dee50..ef578f42cceac5fd75d0d0528e2ec9791beff2d0 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -1942,7 +1942,6 @@ public class ServerGamePacketListenerImpl
+@@ -1943,7 +1943,6 @@ public class ServerGamePacketListenerImpl
      }
  
      public void internalTeleport(PositionMoveRotation posMoveRotation, Set<Relative> relatives) {
@@ -424,10 +424,10 @@ index 53f3193cbd6ddb53dde771a28f15aec5aee49d66..64e5743aed23b4004de32122b880f99c
          if (this.player.isRemoved()) {
              LOGGER.info("Attempt to teleport removed player {} restricted", player.getScoreboardName());
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index f15497ef868574ee2fe11611bfc31d9b102f80d0..ca392664826ca8ced5a1c2c8b2d22eb87c5bd139 100644
+index 2dc2dd9dbbe63316827b620b991ad929ad7bb77e..7ec1c2f39981b60343f152a5432b3677574ee46c 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -1360,13 +1360,13 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -1361,13 +1361,13 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      }
  
      private void refreshDirtyAttributes() {

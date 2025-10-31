@@ -23,10 +23,10 @@ index c58b4a5426dc2e502e240e9b9270ead2ef65ecbd..1618e1d985ea798c1d7485b30fad5b45
                      player.awardStat(Stats.ITEM_USED.get(item));
                      // level.setBlockAndUpdate(pos, Blocks.WATER_CAULDRON.defaultBlockState()); // CraftBukkit
 diff --git a/net/minecraft/core/dispenser/DispenseItemBehavior.java b/net/minecraft/core/dispenser/DispenseItemBehavior.java
-index 91a1ae527589ecab1322e97efd9e863a84fcb4fe..181fdb493f64442c659165c10e237ebc198fb6e2 100644
+index 5d0eb3893a0cca99ef53c2095b7b36a145dc15be..077ccddb7d358be352b6d497ed8b4e97b7d09262 100644
 --- a/net/minecraft/core/dispenser/DispenseItemBehavior.java
 +++ b/net/minecraft/core/dispenser/DispenseItemBehavior.java
-@@ -578,13 +578,25 @@ public interface DispenseItemBehavior {
+@@ -580,13 +580,25 @@ public interface DispenseItemBehavior {
                              blockStateBase -> blockStateBase.hasProperty(BeehiveBlock.HONEY_LEVEL) && blockStateBase.getBlock() instanceof BeehiveBlock
                          )
                          && blockState.getValue(BeehiveBlock.HONEY_LEVEL) >= 5) {
@@ -111,7 +111,7 @@ index 105f9166297de2bfa6bdcfa9f6a0ffb00c0242ac..111f43fc5c74577f8f3067a4f84be7a6
                  }
  
 diff --git a/net/minecraft/world/level/block/BeehiveBlock.java b/net/minecraft/world/level/block/BeehiveBlock.java
-index 0768619454a88f555dd81a609a61f49dc2578f06..4eaec4533497ec354646b75c77f74170cac672bb 100644
+index 02671ed6ba302c36d15896bd1fb3a0883b6e0940..8e9426784b46f8b988279c1dc4c6d2276f394422 100644
 --- a/net/minecraft/world/level/block/BeehiveBlock.java
 +++ b/net/minecraft/world/level/block/BeehiveBlock.java
 @@ -159,12 +159,26 @@ public class BeehiveBlock extends BaseEntityBlock {

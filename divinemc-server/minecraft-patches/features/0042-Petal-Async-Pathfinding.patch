@@ -557,10 +557,10 @@ index 1f96fd5085bacb4c584576c7cb9f51e7898e9b03..d975b89c7bb57562852596751a4ff881
 +    // DivineMC end - async pathfinding
  }
 diff --git a/net/minecraft/world/entity/animal/Bee.java b/net/minecraft/world/entity/animal/Bee.java
-index 968ec5a7188cc4e4a60956e12e44c4b746cf78d1..df32142019bc81896e3e84d3f69e23f5ae8cbd83 100644
+index 5e054044444b464243c11574bbac9a0eabcc4073..c52ed3f4744638922b585693e86fc71c356b0f82 100644
 --- a/net/minecraft/world/entity/animal/Bee.java
 +++ b/net/minecraft/world/entity/animal/Bee.java
-@@ -942,7 +942,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
+@@ -943,7 +943,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
                          } else {
                              Bee.this.pathfindRandomlyTowards(Bee.this.hivePos);
                          }
@@ -569,7 +569,7 @@ index 968ec5a7188cc4e4a60956e12e44c4b746cf78d1..df32142019bc81896e3e84d3f69e23f5
                          boolean flag = this.pathfindDirectlyTowards(Bee.this.hivePos);
                          if (!flag) {
                              this.dropAndBlacklistHive();
-@@ -996,7 +996,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
+@@ -997,7 +997,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
                  return true;
              } else {
                  Path path = Bee.this.navigation.getPath();
@@ -656,10 +656,10 @@ index da7644dd2b9e86ec8947250ff998fb554e881161..c842e500ddc229bc776c29a39c6f8a71
          }
  
 diff --git a/net/minecraft/world/entity/monster/warden/Warden.java b/net/minecraft/world/entity/monster/warden/Warden.java
-index 6edd808e8d0c940dfa6dea463d549d6e80a5d465..56f0aefd0f5c3087fc8122354fcb1b753aff2a4c 100644
+index 5bc5b7e89c87eef6031729f2f7185263da014540..f3a8e187740eacd4244da67d21b2ec7de1b2208a 100644
 --- a/net/minecraft/world/entity/monster/warden/Warden.java
 +++ b/net/minecraft/world/entity/monster/warden/Warden.java
-@@ -572,6 +572,16 @@ public class Warden extends Monster implements VibrationSystem {
+@@ -573,6 +573,16 @@ public class Warden extends Monster implements VibrationSystem {
              @Override
              protected PathFinder createPathFinder(int maxVisitedNodes) {
                  this.nodeEvaluator = new WalkNodeEvaluator();

@@ -26,7 +26,7 @@ index 0adfd1cd5c21f8a7823cd1bf7c9aa91dd2654150..ad1ebec9d47a4f70b51259cd5ad8a6e7
  
          super.onSyncedDataUpdated(key);
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 36d1fd45772240aa963fcad67f15f37fc35d591f..6b5b01b9525f51fe02f03f7249517599d1ba1945 100644
+index dc558a32d0cf2d1e2d5cbb09a9377313083e9a57..80b771f69549cf460b3d1fca2de8f27152e98f42 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1711,6 +1711,10 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
@@ -605,10 +605,10 @@ index 24d1928445b5571e040a2b12d5c82e77a880d9bd..dac0a23aebf2dea1972c07d5c82079da
      private boolean isVillagerBaby(LivingEntity livingEntity) {
          return livingEntity.getType() == EntityType.VILLAGER && livingEntity.isBaby();
 diff --git a/net/minecraft/world/entity/animal/goat/Goat.java b/net/minecraft/world/entity/animal/goat/Goat.java
-index 7ed4685600fb0d03d90e4b7e6044ee8c466ecd72..58ee22461c0330e2fbbbf283c154b8141e2d1953 100644
+index 674d3d69c797ef3ca5934466806831b2cbcbb93a..04a4cc148579904222b3c99a1ad4c64e5783afa2 100644
 --- a/net/minecraft/world/entity/animal/goat/Goat.java
 +++ b/net/minecraft/world/entity/animal/goat/Goat.java
-@@ -99,6 +99,13 @@ public class Goat extends Animal {
+@@ -100,6 +100,13 @@ public class Goat extends Animal {
          this.getNavigation().setCanFloat(true);
          this.setPathfindingMalus(PathType.POWDER_SNOW, -1.0F);
          this.setPathfindingMalus(PathType.DANGER_POWDER_SNOW, -1.0F);

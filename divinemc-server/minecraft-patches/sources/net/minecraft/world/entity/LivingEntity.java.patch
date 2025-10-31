@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -756,6 +_,7 @@
+@@ -757,6 +_,7 @@
  
          super.remove(reason, eventCause); // CraftBukkit
          this.brain.clearMemories();
@@ -8,7 +8,7 @@
      }
  
      @Override
-@@ -1431,7 +_,7 @@
+@@ -1432,7 +_,7 @@
                  player.setRealHealth(health);
              }
  
@@ -17,7 +17,7 @@
              return;
          }
          // CraftBukkit end
-@@ -2799,6 +_,7 @@
+@@ -2802,6 +_,7 @@
      }
  
      protected void updateSwingTime() {
@@ -25,7 +25,7 @@
          int currentSwingDuration = this.getCurrentSwingDuration();
          if (this.swinging) {
              this.swingTime++;
-@@ -3315,7 +_,13 @@
+@@ -3318,7 +_,13 @@
      }
  
      protected float getFlyingSpeed() {
@@ -40,11 +40,11 @@
      }
  
      public float getSpeed() {
-@@ -3764,6 +_,7 @@
+@@ -3767,6 +_,7 @@
      protected void updateFallFlying() {
          this.checkFallDistanceAccumulation();
          if (!this.level().isClientSide()) {
 +            if (!this.isFallFlying() && this.fallFlyTicks == 0) return; // DivineMC - lithium: entity.fast_elytra_check
              if (!this.canGlide()) {
                  if (this.getSharedFlag(7) != false && !CraftEventFactory.callToggleGlideEvent(this, false).isCancelled()) // CraftBukkit
-                 this.setSharedFlag(7, false);
+                 this.setSharedFlag(Entity.FLAG_FALL_FLYING, false);

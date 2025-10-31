@@ -43,7 +43,7 @@ index 646ca37bba6da8ab0babbf4a1e6ba88e75658e72..1d9b32476c1b89984f1afa8e906ca094
                              if (!tickRateManager.isEntityFrozen(entity)) {
                                  entity.checkDespawn();
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 6b5b01b9525f51fe02f03f7249517599d1ba1945..3dc742ca965a06629686c846c4018672576a9db1 100644
+index 80b771f69549cf460b3d1fca2de8f27152e98f42..5d5e125e55daf55764846c0d7ce2c3150847aeb8 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -366,6 +366,8 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
@@ -68,7 +68,7 @@ index 881575864f864305973033ac6e664fc47e49ca16..7d5940327c5e7a945165228d502f678a
      @Nullable
      private Component description;
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index c551b8c8c9b9d070afdbcf5cfcdb35e99830fd91..b61b9c512f23d5ae0465fe7196fbb222918b0988 100644
+index b2853b6a3bca0ea04c50fedf5e2f5ff633ac2a21..f7cdbc7ca10d4320da5deabe9e01ca774890d796 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
 @@ -220,10 +220,10 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
@@ -147,10 +147,10 @@ index 653c58c7637c46c8b46a5082f671324a2221d431..a4328a427636aa845d6627ecb75a9efe
      public boolean hasTasks() {
          for (WrappedGoal task : this.availableGoals) {
 diff --git a/net/minecraft/world/entity/animal/allay/Allay.java b/net/minecraft/world/entity/animal/allay/Allay.java
-index ae68a19a0b13bc626efec6a028f3abba4a436f3b..c5526952961c3c2705f946021ff3a8306ad2bde1 100644
+index c8487029d5707d75b83aebc6fab7c65391f102f9..af6670cff00a3c2de21b91d7c9353f2e4171df9c 100644
 --- a/net/minecraft/world/entity/animal/allay/Allay.java
 +++ b/net/minecraft/world/entity/animal/allay/Allay.java
-@@ -112,6 +112,7 @@ public class Allay extends PathfinderMob implements InventoryCarrier, VibrationS
+@@ -113,6 +113,7 @@ public class Allay extends PathfinderMob implements InventoryCarrier, VibrationS
      private float spinningAnimationTicks0;
      public boolean forceDancing = false; // CraftBukkit
      private org.purpurmc.purpur.controller.FlyingMoveControllerWASD purpurController; // Purpur - Ridables
@@ -158,7 +158,7 @@ index ae68a19a0b13bc626efec6a028f3abba4a436f3b..c5526952961c3c2705f946021ff3a830
  
      public Allay(EntityType<? extends Allay> type, Level level) {
          super(type, level);
-@@ -266,10 +267,13 @@ public class Allay extends PathfinderMob implements InventoryCarrier, VibrationS
+@@ -267,10 +268,13 @@ public class Allay extends PathfinderMob implements InventoryCarrier, VibrationS
  
      @Override
      protected void customServerAiStep(ServerLevel level) {
@@ -272,10 +272,10 @@ index 37b1674c3f89d7ddba054b066df957f3337f4a89..e437dad4f65a77b1ecbefe324355e33e
  
      public static AttributeSupplier.Builder createAttributes() {
 diff --git a/net/minecraft/world/entity/animal/goat/Goat.java b/net/minecraft/world/entity/animal/goat/Goat.java
-index 58ee22461c0330e2fbbbf283c154b8141e2d1953..1ef0fa87f55a4fe6309ed456b0458287925f9835 100644
+index 04a4cc148579904222b3c99a1ad4c64e5783afa2..b2c932706b8d910c6e10cfa0ca44bf77c4521835 100644
 --- a/net/minecraft/world/entity/animal/goat/Goat.java
 +++ b/net/minecraft/world/entity/animal/goat/Goat.java
-@@ -93,6 +93,7 @@ public class Goat extends Animal {
+@@ -94,6 +94,7 @@ public class Goat extends Animal {
      private static final boolean DEFAULT_HAS_RIGHT_HORN = true;
      private boolean isLoweringHead;
      private int lowerHeadTick;
@@ -283,7 +283,7 @@ index 58ee22461c0330e2fbbbf283c154b8141e2d1953..1ef0fa87f55a4fe6309ed456b0458287
  
      public Goat(EntityType<? extends Goat> type, Level level) {
          super(type, level);
-@@ -232,10 +233,13 @@ public class Goat extends Animal {
+@@ -233,10 +234,13 @@ public class Goat extends Animal {
  
      @Override
      protected void customServerAiStep(ServerLevel level) {
@@ -302,10 +302,10 @@ index 58ee22461c0330e2fbbbf283c154b8141e2d1953..1ef0fa87f55a4fe6309ed456b0458287
  
      @Override
 diff --git a/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index c309b01a461ddb47d20a6c96bd693e4850bd731b..5ccf6e916c5c5ebe034a55b71725f740a21f4f83 100644
+index 1abc4d0de2ff983fc0c30bbc8a356d78f1c23897..f23c3918adf0a654be4365370e132067e8574c5c 100644
 --- a/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-@@ -87,6 +87,7 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
+@@ -88,6 +88,7 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
          MemoryModuleType.PACIFIED,
          MemoryModuleType.IS_PANICKING
      );
@@ -313,7 +313,7 @@ index c309b01a461ddb47d20a6c96bd693e4850bd731b..5ccf6e916c5c5ebe034a55b71725f740
  
      public Hoglin(EntityType<? extends Hoglin> type, Level level) {
          super(type, level);
-@@ -205,18 +206,21 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
+@@ -206,18 +207,21 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
  
      @Override
      protected void customServerAiStep(ServerLevel level) {
@@ -376,10 +376,10 @@ index b21ca373220f80c81cadab1eda482057d6366caf..8d0b364149c3772b95e97136f77749f7
  
      @Override
 diff --git a/net/minecraft/world/entity/monster/warden/Warden.java b/net/minecraft/world/entity/monster/warden/Warden.java
-index e9881eac70feebeb08f464efd4fa953cec9f62bf..6edd808e8d0c940dfa6dea463d549d6e80a5d465 100644
+index 87976d8981f72732899c57a96971e851b86d5123..5bc5b7e89c87eef6031729f2f7185263da014540 100644
 --- a/net/minecraft/world/entity/monster/warden/Warden.java
 +++ b/net/minecraft/world/entity/monster/warden/Warden.java
-@@ -107,6 +107,7 @@ public class Warden extends Monster implements VibrationSystem {
+@@ -108,6 +108,7 @@ public class Warden extends Monster implements VibrationSystem {
      private final VibrationSystem.User vibrationUser;
      private VibrationSystem.Data vibrationData;
      AngerManagement angerManagement = new AngerManagement(this::canTargetEntity, Collections.emptyList());
@@ -387,7 +387,7 @@ index e9881eac70feebeb08f464efd4fa953cec9f62bf..6edd808e8d0c940dfa6dea463d549d6e
  
      public Warden(EntityType<? extends Monster> type, Level level) {
          super(type, level);
-@@ -300,19 +301,22 @@ public class Warden extends Monster implements VibrationSystem {
+@@ -301,19 +302,22 @@ public class Warden extends Monster implements VibrationSystem {
  
      @Override
      protected void customServerAiStep(ServerLevel level) {
@@ -422,10 +422,10 @@ index e9881eac70feebeb08f464efd4fa953cec9f62bf..6edd808e8d0c940dfa6dea463d549d6e
  
      @Override
 diff --git a/net/minecraft/world/entity/npc/Villager.java b/net/minecraft/world/entity/npc/Villager.java
-index e89ff53c568013a5f53afcf5759314221d37adf4..5443677ed4ecaaf3b647e3f72802e80d7d22fad9 100644
+index d99a6ade82bbd01e25137fecfbec5dcef6765e79..a356da48b20ab38648d75f9066b2ed4a013c13c2 100644
 --- a/net/minecraft/world/entity/npc/Villager.java
 +++ b/net/minecraft/world/entity/npc/Villager.java
-@@ -178,6 +178,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -179,6 +179,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
      );
      private boolean isLobotomized = false; public boolean isLobotomized() { return this.isLobotomized; } // Purpur - Lobotomize stuck villagers
      private int notLobotomizedCount = 0; // Purpur - Lobotomize stuck villagers
@@ -434,7 +434,7 @@ index e89ff53c568013a5f53afcf5759314221d37adf4..5443677ed4ecaaf3b647e3f72802e80d
  
      public Villager(EntityType<? extends Villager> type, Level level) {
          this(type, level, VillagerType.PLAINS);
-@@ -398,7 +400,7 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -399,7 +401,7 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
          } else {
              this.isLobotomized = false;
          }
