@@ -56,10 +56,10 @@ index 80b771f69549cf460b3d1fca2de8f27152e98f42..5d5e125e55daf55764846c0d7ce2c315
      // Paper start - EAR 2
      public final boolean defaultActivationState;
 diff --git a/net/minecraft/world/entity/EntityType.java b/net/minecraft/world/entity/EntityType.java
-index 881575864f864305973033ac6e664fc47e49ca16..7d5940327c5e7a945165228d502f678a8234cd02 100644
+index d6f7d96dbdff908c91fbe43432313d2221b57afc..d9d45a3e7436d5a211e3f2b6810f76e0a22766e8 100644
 --- a/net/minecraft/world/entity/EntityType.java
 +++ b/net/minecraft/world/entity/EntityType.java
-@@ -1192,6 +1192,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
+@@ -1193,6 +1193,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
      private final boolean canSpawnFarFromPlayer;
      private final int clientTrackingRange;
      private final int updateInterval;

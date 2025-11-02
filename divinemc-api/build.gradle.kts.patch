@@ -125,7 +125,7 @@
          "https://www.javadocs.dev/org.slf4j/slf4j-api/$slf4jVersion/",
          "https://logging.apache.org/log4j/2.x/javadoc/log4j-api/",
 -        "https://www.javadocs.dev/org.apache.maven.resolver/maven-resolver-api/1.7.3",
-+        "https://javadoc.io/doc/org.apache.maven.resolver/maven-resolver-api/1.9.22", // DivineMC - Bump dependencies
++        "https://www.javadocs.dev/org.apache.maven.resolver/maven-resolver-api/1.9.22", // DivineMC - Bump dependencies
      )
      options.tags("apiNote:a:API Note:")
  

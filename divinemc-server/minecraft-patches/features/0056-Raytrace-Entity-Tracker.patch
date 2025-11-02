@@ -71,10 +71,10 @@ index 56483d9e770e29526a36d4c8c5565092acb227c7..9db43874a94770d49ea5ff48a46c4657
 +    // DivineMC end - Raytrace Entity Tracker
  }
 diff --git a/net/minecraft/world/entity/EntityType.java b/net/minecraft/world/entity/EntityType.java
-index 7d5940327c5e7a945165228d502f678a8234cd02..5a4a337694c36e6342c0b0ae5034ac2f11d205a1 100644
+index d9d45a3e7436d5a211e3f2b6810f76e0a22766e8..4c6ca2979a370346008b981e045625668269e380 100644
 --- a/net/minecraft/world/entity/EntityType.java
 +++ b/net/minecraft/world/entity/EntityType.java
-@@ -1201,6 +1201,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
+@@ -1202,6 +1202,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
      private final float spawnDimensionsScale;
      private final FeatureFlagSet requiredFeatures;
      private final boolean allowedInPeaceful;

@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout DivineMC repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v5
         with:
           path: 'DivineMC'
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout Purpur repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v5
         with:
           path: 'Purpur'
           repository: "PurpurMC/Purpur"
@@ -50,7 +50,7 @@ jobs:
           chmod +x gradlew
 
       - name: Setup JDK 21
-        uses: actions/setup-java@main
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
