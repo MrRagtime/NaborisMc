@@ -5,10 +5,10 @@ Subject: [PATCH] MSPT Tracking for each world
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index fd9ef48ac8b23e8b409c00d154dbea27b701e3bc..6a714d59d01eafcd833f05208a948bf33b797392 100644
+index c4c4c0c76a1763fa4c7dadffc89376f796b2d93b..01a75f0a3692b954f43993b586945e26163e91e0 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1735,7 +1735,15 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1730,7 +1730,15 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // DivineMC start - Parallel world ticking
      private void tickLevel(ServerLevel serverLevel, BooleanSupplier hasTimeLeft) {
          try {
@@ -25,7 +25,7 @@ index fd9ef48ac8b23e8b409c00d154dbea27b701e3bc..6a714d59d01eafcd833f05208a948bf3
              CrashReport crashReport = CrashReport.forThrowable(levelTickingException, "Exception ticking world");
              serverLevel.fillReportDetails(crashReport);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index aa6d923d5e14aa0b2e920a7ae5c89dd151ad2c3c..8bd2e419791f0dffbcbc43edd93178dead0c9620 100644
+index 27a63526c4fde0a716eb9ac3f8f4d0fd84b550dc..ca9883277c0f036c94e861f7917ca42facd3c47b 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -596,6 +596,12 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe

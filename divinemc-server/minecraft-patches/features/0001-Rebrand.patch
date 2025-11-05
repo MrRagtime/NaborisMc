@@ -120,10 +120,10 @@ index 42841fdc7e64311ba9217789a3dc758a351cf674..036c3931f4c1e453892f32e59085be70
              String awtException = io.papermc.paper.util.ServerEnvironment.awtDependencyCheck();
              if (awtException != null) {
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index f3fc79b93efdd6cade9d2a49999f55031049da1d..247f2eb2414e15c56ee17c7f7efc21dfc6641ec9 100644
+index 8a9e97f3b92def14f40c246ca0ff713ed8192b08..f29cee41258a8220256bf6b3b5b04f79c142cc19 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1282,6 +1282,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1277,6 +1277,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      protected void runServer() {
          try {

@@ -5,7 +5,7 @@ Subject: [PATCH] Command block parse results caching
 
 
 diff --git a/net/minecraft/world/level/BaseCommandBlock.java b/net/minecraft/world/level/BaseCommandBlock.java
-index b6cebd8f5741cd3058d4ab3996d15d9e1e0fc3b4..a0e2ec323b07a85a91c36bc222df671ae491955e 100644
+index 390d9cbe8050b90e4bd9327cf4d80571fbd8ece4..1398fb38edfc975dc716a5147159e9da0443ca83 100644
 --- a/net/minecraft/world/level/BaseCommandBlock.java
 +++ b/net/minecraft/world/level/BaseCommandBlock.java
 @@ -35,6 +35,10 @@ public abstract class BaseCommandBlock {
@@ -78,6 +78,6 @@ index b6cebd8f5741cd3058d4ab3996d15d9e1e0fc3b4..a0e2ec323b07a85a91c36bc222df671a
 +    }
 +    // DivineMC end - Command block parse results caching
 +
-     @Nullable
-     private BaseCommandBlock.CloseableCommandBlockSource createSource() {
-         return this.trackOutput ? new BaseCommandBlock.CloseableCommandBlockSource() : null;
+     public BaseCommandBlock.CloseableCommandBlockSource createSource() { // Paper - public, remove nullable
+         return new BaseCommandBlock.CloseableCommandBlockSource(this.trackOutput); // Paper - add back source when output disabled
+     }

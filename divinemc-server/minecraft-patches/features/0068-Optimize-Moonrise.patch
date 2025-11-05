@@ -3,6 +3,7 @@ From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
 Date: Mon, 11 Aug 2025 02:42:19 +0300
 Subject: [PATCH] Optimize Moonrise
 
+TODO: Recheck this patch
 
 diff --git a/ca/spottedleaf/moonrise/common/misc/NearbyPlayers.java b/ca/spottedleaf/moonrise/common/misc/NearbyPlayers.java
 index 93272808d94e81d31af728ebe85df9a2bc7aedab..b47be4b838f4c7f6c3fb62e4e18105c6b4972016 100644
@@ -306,10 +307,10 @@ index 18822bed7986348bbbed1712db7dac65884d39a9..906c0019cae2529962d1221939ce276f
          boolean ret = false;
  
 diff --git a/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/NewChunkHolder.java b/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/NewChunkHolder.java
-index 2409c83b03cfa1f0285f6f7c3508dbdf53750316..6318aedb621134d4f3e33480a2e97ddf7be6b433 100644
+index 9a9a599ef178f851ee5c783631a724013a693586..7f8e7d0aac516489dbbc10da68161f3ff3b2908d 100644
 --- a/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/NewChunkHolder.java
 +++ b/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/NewChunkHolder.java
-@@ -645,12 +645,20 @@ public final class NewChunkHolder {
+@@ -646,12 +646,20 @@ public final class NewChunkHolder {
      }
  
      public final ChunkHolder vanillaChunkHolder;
@@ -330,7 +331,7 @@ index 2409c83b03cfa1f0285f6f7c3508dbdf53750316..6318aedb621134d4f3e33480a2e97ddf
          this.vanillaChunkHolder = new ChunkHolder(
                  new ChunkPos(chunkX, chunkZ), ChunkHolderManager.MAX_TICKET_LEVEL, world,
                  world.getLightEngine(), null, world.getChunkSource().chunkMap
-@@ -791,9 +799,11 @@ public final class NewChunkHolder {
+@@ -792,9 +800,11 @@ public final class NewChunkHolder {
  
      // note: these are completed with null to indicate that no write occurred
      // they are also completed with null to indicate a null write occurred
@@ -345,20 +346,7 @@ index 2409c83b03cfa1f0285f6f7c3508dbdf53750316..6318aedb621134d4f3e33480a2e97ddf
  
      public static final record UnloadTask(CallbackCompletable<CompoundTag> completable, PrioritisedExecutor.PrioritisedTask task,
                                            LazyRunnable toRun) {}
-@@ -878,7 +888,11 @@ public final class NewChunkHolder {
-             MoonriseRegionFileIO.scheduleSave(this.world, this.chunkX, this.chunkZ, data, type);
-         }
- 
--        this.getUnloadTask(type).completable().complete(data);
-+        // DivineMC start - Optimize Moonrise
-+        UnloadTask task = this.getUnloadTask(type);
-+        if (task == null) return;
-+        task.completable().complete(data);
-+        // DivineMC end - Optimize Moonrise
-         final ReentrantAreaLock.Node schedulingLock = this.scheduler.schedulingLockArea.lock(this.chunkX, this.chunkZ);
-         try {
-             // can only write to these fields while holding the schedule lock
-@@ -1191,6 +1205,7 @@ public final class NewChunkHolder {
+@@ -1168,6 +1178,7 @@ public final class NewChunkHolder {
              for (int dz = -NEIGHBOUR_RADIUS; dz <= NEIGHBOUR_RADIUS; ++dz) {
                  for (int dx = -NEIGHBOUR_RADIUS; dx <= NEIGHBOUR_RADIUS; ++dx) {
                      final NewChunkHolder holder = (dx | dz) == 0 ? this : this.scheduler.chunkHolderManager.getChunkHolder(dx + this.chunkX, dz + this.chunkZ);
@@ -366,7 +354,7 @@ index 2409c83b03cfa1f0285f6f7c3508dbdf53750316..6318aedb621134d4f3e33480a2e97ddf
                      if (loaded) {
                          if (holder.setNeighbourFullLoaded(-dx, -dz)) {
                              changedFullStatus.add(holder);
-@@ -1215,6 +1230,19 @@ public final class NewChunkHolder {
+@@ -1192,6 +1203,19 @@ public final class NewChunkHolder {
  
      private void updateCurrentState(final FullChunkStatus to) {
          this.currentFullChunkStatus = to;
@@ -386,7 +374,7 @@ index 2409c83b03cfa1f0285f6f7c3508dbdf53750316..6318aedb621134d4f3e33480a2e97ddf
      }
  
      // only to be called on the main thread, no locks need to be held
-@@ -1349,7 +1377,7 @@ public final class NewChunkHolder {
+@@ -1326,7 +1350,7 @@ public final class NewChunkHolder {
          return this.requestedGenStatus;
      }
  
@@ -395,7 +383,7 @@ index 2409c83b03cfa1f0285f6f7c3508dbdf53750316..6318aedb621134d4f3e33480a2e97ddf
  
      void addStatusConsumer(final ChunkStatus status, final Consumer<ChunkAccess> consumer) {
          this.statusWaiters.computeIfAbsent(status, (final ChunkStatus keyInMap) -> {
-@@ -1384,7 +1412,7 @@ public final class NewChunkHolder {
+@@ -1361,7 +1385,7 @@ public final class NewChunkHolder {
          }, Priority.HIGHEST);
      }
  
