@@ -716,7 +716,7 @@ index 4a17d60e09bc2a73c50a1c981e4b50ae3eabe9ee..7f4fd1bfb26651a0c61728479b4827c3
      }
  
 diff --git a/net/minecraft/world/level/pathfinder/PathFinder.java b/net/minecraft/world/level/pathfinder/PathFinder.java
-index f41f6c0be37f89c54cee3e02494c1412f309266f..57d9a53b75826472e24e2760046fe44a6fd7258c 100644
+index 477446a1bf38efb1e5b5b4513dd85808a5cd8cdb..b1849e431a8e22065c7f9c46412409148fa0df73 100644
 --- a/net/minecraft/world/level/pathfinder/PathFinder.java
 +++ b/net/minecraft/world/level/pathfinder/PathFinder.java
 @@ -23,11 +23,19 @@ public class PathFinder {
@@ -810,8 +810,8 @@ index f41f6c0be37f89c54cee3e02494c1412f309266f..57d9a53b75826472e24e2760046fe44a
          // Set<Target> set = targetPositions.keySet(); // Paper - unused
          node.g = 0.0F;
          node.h = this.getBestH(node, positions); // Paper - optimize collection
-@@ -96,7 +140,7 @@ public class PathFinder {
- 
+@@ -99,7 +143,7 @@ public class PathFinder {
+             }
  
              if (!(node1.distanceTo(node) >= maxRange)) {
 -                int neighbors = this.nodeEvaluator.getNeighbors(this.neighbors, node1);

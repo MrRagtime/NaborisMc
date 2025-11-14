@@ -2826,7 +2826,7 @@ index c0c87b7c8e0b6b941fe8a63dc361504e94459d86..3c4de8b43a5658e02ddce7db9f453bfd
  
          if (this.fire) {
 diff --git a/net/minecraft/world/level/pathfinder/PathFinder.java b/net/minecraft/world/level/pathfinder/PathFinder.java
-index f90c2bb95e304bd6b9b8539d89f38d2d718893d0..f41f6c0be37f89c54cee3e02494c1412f309266f 100644
+index 5894260481ea395c26a5b506e38530f7b2032b33..477446a1bf38efb1e5b5b4513dd85808a5cd8cdb 100644
 --- a/net/minecraft/world/level/pathfinder/PathFinder.java
 +++ b/net/minecraft/world/level/pathfinder/PathFinder.java
 @@ -13,9 +13,6 @@ import java.util.function.Function;
@@ -2849,14 +2849,14 @@ index f90c2bb95e304bd6b9b8539d89f38d2d718893d0..f41f6c0be37f89c54cee3e02494c1412
          // Set<Target> set = targetPositions.keySet(); // Paper - unused
          node.g = 0.0F;
          node.h = this.getBestH(node, positions); // Paper - optimize collection
-@@ -136,7 +130,6 @@ public class PathFinder {
+@@ -139,7 +133,6 @@ public class PathFinder {
                  best = path;
              }
          }
 -        profilerFiller.pop();
-         return best;
-         // Paper end - Perf: remove streams and optimize collection
-     }
+         if(asBoolean && best != null) {
+             Set<Target> set = Sets.newHashSet();
+             for(Map.Entry<Target, BlockPos> entry : positions) {
 diff --git a/net/minecraft/world/ticks/LevelTicks.java b/net/minecraft/world/ticks/LevelTicks.java
 index 7ea0273018b1a364a5e2b7bf57da840383c8ffa5..c7f9485191dc797de78e6524c5c2c737581ed838 100644
 --- a/net/minecraft/world/ticks/LevelTicks.java

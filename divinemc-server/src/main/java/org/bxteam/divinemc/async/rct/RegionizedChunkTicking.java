@@ -87,7 +87,9 @@ public final class RegionizedChunkTicking extends ServerChunkCache {
                 level.tickChunk(chunk, randomTickSpeed);
             }
             for (Entity entity : region.entities()) {
-                tickEntity(entity);
+                if (!entity.moonrise$isUpdatingSectionStatus()) {
+                    tickEntity(entity);
+                }
             }
 
             return regionChunksIDs;

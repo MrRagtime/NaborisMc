@@ -3,7 +3,6 @@ From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
 Date: Mon, 11 Aug 2025 02:42:19 +0300
 Subject: [PATCH] Optimize Moonrise
 
-TODO: Recheck this patch
 
 diff --git a/ca/spottedleaf/moonrise/common/misc/NearbyPlayers.java b/ca/spottedleaf/moonrise/common/misc/NearbyPlayers.java
 index 93272808d94e81d31af728ebe85df9a2bc7aedab..b47be4b838f4c7f6c3fb62e4e18105c6b4972016 100644
@@ -393,17 +392,18 @@ index 9a9a599ef178f851ee5c783631a724013a693586..7f8e7d0aac516489dbbc10da68161f3f
      void addFullStatusConsumer(final FullChunkStatus status, final Consumer<LevelChunk> consumer) {
          this.fullStatusWaiters.computeIfAbsent(status, (final FullChunkStatus keyInMap) -> {
 diff --git a/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java b/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java
-index 93fd23027c00cef76562098306737272fda1350a..10c9aecb99bc3055104f50266542e249dc842ee7 100644
+index 93fd23027c00cef76562098306737272fda1350a..40856bf4148ce59cf34a470df9fc7e64088b793a 100644
 --- a/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java
 +++ b/ca/spottedleaf/moonrise/patches/chunk_system/util/ParallelSearchRadiusIteration.java
-@@ -23,6 +23,7 @@ public final class ParallelSearchRadiusIteration {
+@@ -23,7 +23,7 @@ public final class ParallelSearchRadiusIteration {
      }
  
      public static long[] getSearchIteration(final int radius) {
-+        if (radius >= SEARCH_RADIUS_ITERATION_LIST.length) return SEARCH_RADIUS_ITERATION_LIST[SEARCH_RADIUS_ITERATION_LIST.length - 1]; // DivineMC - Optimize Moonrise
-         return SEARCH_RADIUS_ITERATION_LIST[radius];
+-        return SEARCH_RADIUS_ITERATION_LIST[radius];
++        return SEARCH_RADIUS_ITERATION_LIST[Math.min(SEARCH_RADIUS_ITERATION_LIST.length - 1, radius)]; // DivineMC - Optimize Moonrise - Fix #130
      }
  
+     private static class CustomLongArray extends LongArrayList {
 diff --git a/ca/spottedleaf/moonrise/patches/starlight/light/SWMRNibbleArray.java b/ca/spottedleaf/moonrise/patches/starlight/light/SWMRNibbleArray.java
 index 5c7b3804cdbcb0a873a0d195325c2658760a8914..4bb64bc5a31951a83d29d0c88919b1fa96e994a3 100644
 --- a/ca/spottedleaf/moonrise/patches/starlight/light/SWMRNibbleArray.java

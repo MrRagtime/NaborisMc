@@ -506,3 +506,16 @@ index ab2fa1563d5e32a5313dfcc1da411cab45fb5ca0..f568fcf85667cd3fe53f59e08451096d
  
      }
  
+diff --git a/src/main/java/ca/spottedleaf/moonrise/common/misc/SingleUserAreaMap.java b/src/main/java/ca/spottedleaf/moonrise/common/misc/SingleUserAreaMap.java
+index 7e85bb58b8a5de17fdab9ad3c574f2f80952e1ca..cd442923c3f52e6ab00b9e8d805095929446fad5 100644
+--- a/src/main/java/ca/spottedleaf/moonrise/common/misc/SingleUserAreaMap.java
++++ b/src/main/java/ca/spottedleaf/moonrise/common/misc/SingleUserAreaMap.java
+@@ -87,6 +87,8 @@ public abstract class SingleUserAreaMap<T> {
+             return false;
+         }
+ 
++        if (fromX == toX && fromZ == toZ && oldViewDistance == newViewDistance) return true; // DivineMC - Optimize Moonrise - by Leaf
++
+         this.lastChunkX = toX;
+         this.lastChunkZ = toZ;
+         this.distance = newViewDistance;
