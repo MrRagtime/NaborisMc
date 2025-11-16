@@ -77,9 +77,6 @@
  
  dependencies {
 -    implementation(project(":purpur-api")) // Purpur
--    implementation("ca.spottedleaf:concurrentutil:0.0.5")
--    implementation("org.jline:jline-terminal-ffm:3.27.1") // use ffm on java 22+
--    implementation("org.jline:jline-terminal-jni:3.27.1") // fall back to jni on java 21
 +    implementation(project(":divinemc-api")) // DivineMC - Rebrand
 +
 +    // DivineMC start - Dependencies
@@ -94,7 +91,9 @@
 +    implementation("net.objecthunter:exp4j:0.4.8")
 +    // DivineMC end - Dependencies
 +
-+    implementation("ca.spottedleaf:concurrentutil:0.0.7") // DivineMC - Bump dependencies - temporary
+     implementation("ca.spottedleaf:concurrentutil:0.0.7")
+-    implementation("org.jline:jline-terminal-ffm:3.27.1") // use ffm on java 22+
+-    implementation("org.jline:jline-terminal-jni:3.27.1") // fall back to jni on java 21
 +    implementation("org.jline:jline-terminal-ffm:3.29.0") // use ffm on java 22+ // DivineMC - Bump dependencies
 +    implementation("org.jline:jline-terminal-jni:3.29.0") // fall back to jni on java 21 // DivineMC - Bump dependencies
      implementation("net.minecrell:terminalconsoleappender:1.3.0")
