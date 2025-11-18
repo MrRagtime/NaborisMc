@@ -1,7 +1,7 @@
 <div align="center">
 
-# DivineMC
-DivineMC is a multi-functional fork of [Purpur](https://github.com/PurpurMC/Purpur), which focuses on the flexibility of your server and its optimization
+# NaborisMc
+NaborisMc is a multi-functional fork of [DivineMC](https://github.com/BX-Team/DivineMC) which focuses on the optimization of your server. 
 
 [![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg)](https://github.com/BX-Team/DivineMC/releases/latest)
 [![mcjars](https://raw.githubusercontent.com/NONPLAYT/badges/refs/heads/master/available-on-mcjars.svg)](https://mcjars.app/DIVINEMC/versions)
@@ -26,7 +26,7 @@ DivineMC is a multi-functional fork of [Purpur](https://github.com/PurpurMC/Purp
 *...and much more!*
 
 ## 📥 Downloading & Installing
-If you want to install DivineMC, you can read our [installation documentation](https://bxteam.org/docs/divinemc/getting-started/installation).
+If you want to install NaborisMc, you can read our [installation documentation](https://bxteam.org/docs/divinemc/getting-started/installation).
 
 You can find the latest successful build in [Releases](https://github.com/BX-Team/DivineMC/releases) or you can use [MCJars](https://mcjars.app/DIVINEMC/versions) website.
 
