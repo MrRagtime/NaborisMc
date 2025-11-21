@@ -1,20 +1,20 @@
 <div align="center">
 
 # NaborisMc
-NaborisMc is a multi-functional fork of [DivineMC](https://github.com/BX-Team/DivineMC) which focuses on the optimization of your server. 
+NaborisMc is a multi-functional fork of [DivineMC](https://github.com/BX-Team/DivineMC) which focuses on the optimization of your server.
 
 A duel project in collaboration with No Collision, NaborisMc will include the sane patches and features from [CollisionMc](https://github.com/No-Collision/CollisionMc) except incompatibility Folia Features that break most plugins. This software is meant for those who want our low-player optimizations without replacing or removing your favorite plugins. If you have plugins that already work and are compatible with Folia, than we recommend using CollisionMc!
 
 [![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg)](https://github.com/BX-Team/DivineMC/releases/latest)
 [![mcjars](https://raw.githubusercontent.com/NONPLAYT/badges/refs/heads/master/available-on-mcjars.svg)](https://mcjars.app/DIVINEMC/versions)
 
-[![Chat on Discord](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/qNyybSSPm5)
-[![Read the Docs](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/documentation/generic_vector.svg)](https://bxteam.org/docs/divinemc)
-[![Available on BStats](https://raw.githubusercontent.com/NONPLAYT/badges/refs/heads/master/available-on-bstats.svg)](https://bstats.org/plugin/server-implementation/DivineMC)
+[![Chat on Discord](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](http://discord.nocollision.uk)
+[![Read the Docs](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/documentation/generic_vector.svg)](https://www.nocollision.uk/our-servers/software/naborismc)
+Available on BStats WIP
 </div>
 
 ## ⚙️ Features
-- **Based on [Purpur](https://github.com/PurpurMC/Purpur)** - Adds a high customization level to your server
+- **Based on [DivineMC](https://github.com/BX-Team/DivineMC), a fork of [PurpurMC](https://github.com/PurpurMC/Purpur)** - Adds a high customization level to your server (Purpur) and focuses on the flexibility of your server and its optimization (Divine)
 - **Regionized Chunk Ticking** - Tick chunks in parallel, similar to how Folia does it
 - **Parallel World Ticking** - Leverage multiple CPU cores for world processing
 - **Async Operations** - Pathfinding, entity tracker, mob spawning and chunk sending
@@ -24,6 +24,8 @@ A duel project in collaboration with No Collision, NaborisMc will include the sa
 - **Fully Compatible** - Works seamlessly with Bukkit, Spigot and Paper plugins
 - **Bug Fixes** - Resolves various Minecraft issues (~10)
 - **Sentry Integration** - Detailed error tracking and monitoring (original by [Pufferfish](https://github.com/pufferfish-gg/Pufferfish))
+- **Tons of Patches** - [PlazmaBukkit](github.com/PlazmaMC/PlazmaBukkit)/[Thunderbolt](https://github.com/PlazmaMC/Thunderbolt), [PaperBin](https://github.com/x4e/PaperBin), [Sharkur](https://github.com/SharkurMC/Sharkur), & the rest of the [PufferFish](Pufferfish) patches that were not added to [Purpur](https://github.com/PurpurMC/Purpur). Also I could not find it again but add patches from a PaperMC fork for Small Redstone Creative Server.
+- **Slime and Linear Region Support Natively** - WIP
 
 *...and much more!*
 
@@ -34,6 +36,7 @@ You can find the latest successful build in [Releases](https://github.com/BX-Tea
 
 ## 📦 Building and setting up
 Run the following commands in the root directory:
+Requires Java =>24
 
 ```bash
 > ./gradlew applyAllPatches              # apply all patches
