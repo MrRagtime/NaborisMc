@@ -2,6 +2,7 @@
 
 # NaborisMc
 NaborisMc is a multi-functional fork of [DivineMC](https://github.com/BX-Team/DivineMC) which focuses on the optimization of your server.
+<img width="375" height="375" alt="NaborisMc" src="https://github.com/user-attachments/assets/88183aba-6ee9-4ebf-925a-c2bafab51a57" />
 
 A duel project in collaboration with [No Collision](https://youtube.com/@NoCollision), NaborisMc will include the same patches and features from [CollisionMc](https://github.com/No-Collision/CollisionMc) except incompatibility Folia Features that break most plugins. This software is meant for those who want our low-player optimizations without replacing or removing your favorite plugins. If you have plugins that already work and are compatible with Folia, than we recommend using CollisionMc!
 
